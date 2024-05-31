@@ -22,7 +22,7 @@ class Aplicacao:
         sg.theme('Darkgreen')
         layout = [
             [sg.Text('Nome:'), sg.Input(key='-NOME-', size=(20, 1))], 
-            [sg.Text('Email:'), sg.Input(key='-EMAIL-', size=(20, 1))],
+            [sg.Text('Email: '), sg.Input(key='-EMAIL-', size=(20, 1))],
             [sg.Text('Senha:'), sg.Input(key='-SENHA-', size=(20, 1))],
             [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='green')],
             [sg.Table(
@@ -42,5 +42,5 @@ class Aplicacao:
             )],
             [sg.Button('SAIR', button_color='#ac4e04')],]
 
-        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.0.01)", layout, resizable=True)
+        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.0.0)", layout, resizable=True)
         return janela
