@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import funcoes
+import constantes
 
 class Aplicacao:
     def __init__(self):
@@ -33,14 +34,18 @@ class Aplicacao:
                 '      Email      ',
                 '  Senha  '
             ],
-            num_rows=30,
+            num_rows=25,
             key='-TABLE-',
             hide_vertical_scroll=False,
             vertical_scroll_only=False,
             justification='left',
             auto_size_columns=True,
             )],
-            [sg.Button('SAIR', button_color='#ac4e04')],]
 
-        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.0.0)", layout, resizable=True)
+            [sg.Button('SAIR', button_color='#ac4e04')],
+
+            [sg.Text('', size=(15, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(15, 1))]
+            ]
+
+        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
