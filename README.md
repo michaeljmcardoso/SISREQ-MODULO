@@ -1,5 +1,6 @@
 # SISREQ-MODULO
 Versão modulada do programa.
+
 A verssão inicial do projeto SISREQ começou com um script pequeno porém, ao longo do desenvolvimento, houve necessidade de implementar mais fucnionalidades, tornando o código cada vez mais complexo, prejudicando a legibilidade e manutenção. Ao final do projeto o script ficou com mais de 3 mil limhas de código num único arquivo. Isso também impactou na hora de distribuir a aplicação. Pois a compilação de um arquivo muito longo em um executável, elevou o tempo de abertura do programa para cerca de 10 a 12 segundos.
 
 Desse modo, prezando por melhores práticas de programação, resolvemos implementar alterações para modular o programa e torná-lo um código mais limpo.
