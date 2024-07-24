@@ -38,7 +38,6 @@ ETAPA_RTID = [
 FASE_PROCESSO = [ 
     'Inicial', 
     'RTID',
-    'Andamento', 
     'Publicação', 
     'Notificação', 
     'Contestação', 
@@ -78,7 +77,7 @@ RELATORIO_ANTROPOLOGICO = [
     ]
 
 MUNICIPIOS = [
-    'Açailândia'
+    'Açailândia',
     'Afonso Cunha',
     'Água Doce do Maranhão',
     'Alcântara',
