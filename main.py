@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
-import funcoesRegistro
+import funcoes_banco_de_dados
 from aplicacao import Aplicacao
 
 def main():
-    conn = funcoesRegistro.conectar_banco_de_dados()
+    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
     if conn is not None:
-        funcoesRegistro.criar_tabela_se_nao_existir(conn)
+        funcoes_banco_de_dados.criar_tabela_se_nao_existir(conn)
     app = Aplicacao()
     app.iniciar()
     

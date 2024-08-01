@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
-import funcoesRegistro
-import funcoesPlanilha
+import funcoes_banco_de_dados
+import salvar
+import filtrar
+import funcoes_pesquisar
 import constantes
 
 class Aplicacao:
@@ -13,19 +15,67 @@ class Aplicacao:
             if event == 'SAIR' or event == sg.WIN_CLOSED:
                 break
             elif event == 'INSERIR':
-                funcoesRegistro.inserir_dados(values, self.janela)
-                funcoesRegistro.consultar_registros(self.janela)
+                funcoes_banco_de_dados.inserir_dados(values, self.janela)
+                funcoes_banco_de_dados.consultar_registros(self.janela)
             elif event == 'CONSULTAR':
-                funcoesRegistro.consultar_registros(self.janela)
+                funcoes_banco_de_dados.consultar_registros(self.janela)
             elif event == 'ALTERAR':
-                funcoesRegistro.alterar_registro(self.janela)
+                funcoes_banco_de_dados.alterar_registro(self.janela)
             elif event == 'Extrair Planilha':
-                funcoesPlanilha.extrair_planilha(self.janela)
+                salvar.planilha(self.janela)
+            elif event == 'Inicial':
+                filtrar.fase_inicial()
+            elif event == 'RTID':
+                filtrar.fase_Rtid()
+            elif event == 'Publicação':
+                filtrar.fase_publicacao()
+            elif event == 'Notificação':
+                filtrar.fase_notificacao()
+            elif event == 'Contestação':
+                filtrar.fase_contestacao()
+            elif event == 'Recurso':
+                filtrar.fase_recurso()
+            elif event == 'Portaria':
+                filtrar.fase_portaria()
+            elif event == 'Decreto':
+                filtrar.fase_decreto()
+            elif event == 'Titulação':
+                filtrar.fase_titulacao()
+            elif event == 'Desintrusão':
+                filtrar.fase_desintrusao()
+            elif event == 'Desapropriação':
+                filtrar.fase_desapropriacao()
+
+            # Evento de digitação no campo de entrada
+            elif event == '-NOME_COMUNIDADES-':
+                entrada = values['-NOME_COMUNIDADES-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.comunidades)
+
+                if sugestoes:
+                    self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
+                else:
+                    self.janela['-SUGESTOES-'].update(visible=False)
+            
+            # Evento de seleção na lista de sugestões
+            if  event == '-SUGESTOES-':
+                selecao = values['-SUGESTOES-'][0]
+                self.janela['-NOME_COMUNIDADES-'].update(selecao)
+                self.janela['-SUGESTOES-'].update(visible=False)
+
+            # Evento do botão OK ou pressionar Enter
+            if event == '-OK-' or event == '\r':
+                nome_comunidade = values['-NOME_COMUNIDADES-']
+                if nome_comunidade:
+                    funcoes_pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
+                else:
+                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
+            elif event == 'Buscar Comunidade':
+                funcoes_pesquisar.pesquisar_por_nome_comunidade(self.janela)
 
         self.janela.close()
 
     def criar_janela(self):
-        sg.theme('Darkgreen')
+        sg.theme('Dark')
 
         coluna_1 = [
             [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1))],
@@ -76,7 +126,8 @@ class Aplicacao:
              sg.Column(coluna_5)
             ],
 
-            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='green'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('Extrair Planilha', button_color='green')],
+            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Text('Pesquisar\nComunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-'), sg.Text('Pesquisar\nMunicípio:'), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-'), sg.Text('Pesquisar\nProcesso:'), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
+            [sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             
             [sg.Table(
                 values=[],
@@ -96,6 +147,8 @@ class Aplicacao:
             justification='left',
             auto_size_columns=True,
             )],
+
+            [sg.Button('Extrair Planilha', button_color='green')],
 
             [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]

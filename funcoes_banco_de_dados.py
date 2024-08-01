@@ -4,7 +4,7 @@ import constantes
 
 def conectar_banco_de_dados():
     try:
-        conn = sqlite3.connect('banco_dados.db')
+        conn = sqlite3.connect('sisreq.db')
         return conn
     except sqlite3.Error as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
@@ -173,6 +173,7 @@ def consultar_registros(janela):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM SISREQ")
         registros = cursor.fetchall()
+        
         if registros:
             janela['-TABLE-'].update(registros)
         else:
@@ -218,90 +219,57 @@ def alterar_registro(janela):
     teor_decisao = selected_row_values[24]
     outras_informacaoes = selected_row_values[25]
 
+    coluna_1 = [
+        [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
+        [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
+        [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1), default_text=nome_comunidade)],
+        [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
+        [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-', default_text=num_familia)]
+    ]
+
+    coluna_2 = [
+        [sg.Text('Fase:'), sg.Combo(constantes.FASE_PROCESSO, size=(24, 6), key='-FASE_PROCESSO-', default_value=fase_processo)],
+        [sg.Text('Etapa\nRTID:'), sg.Listbox(constantes.ETAPA_RTID, size=(24, 3), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-ETAPA_RTID-', default_values=etapa_rtid)],
+        [sg.Text('Antropológico:'), sg.Combo(constantes.RELATORIO_ANTROPOLOGICO, size=(17, 6), key='-RA-', default_value=relatorio_antropologico)],
+        [sg.Text('Certidão FCP:'), sg.Combo(constantes.CERTIFICACAO_FCP, size=(17, 6), key='-CERTIDAO-', default_value=certidao_fcp)],
+        [sg.CalendarButton('Data Certificação', target='-DATA_CERTIFICACAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(13, 1), key='-DATA_CERTIFICACAO-', default_text=data_certificacao, disabled=False)]
+    ]
+
+    coluna_3 = [
+        [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
+        [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
+        [sg.Text('% Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
+        [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
+        [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
+
+    ]
+
+    coluna_4 = [
+        [sg.Text('Edital DOU'), sg.Input(size=(18, 1), key='-EDITAL_DOU-', default_text=edital_dou)],
+        [sg.Text('Edital DOE'), sg.Input(size=(18, 1), key='-EDITAL_DOE-', default_text=edital_doe)],
+        [sg.CalendarButton('Portaria DOU:', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-PORTARIA_DOU-', size=(15, 1), default_text=portaria_dou)],
+        [sg.CalendarButton('Decreto DOU:', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DECRETO_DOU-', size=(15, 1), default_text=decreto_dou)],
+        [sg.Text('Sobreposição:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(27, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao)]
+    ]
+
+    coluna_5 = [
+        [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(32, 6), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)],
+        [sg.Text('Ação Civil Pública:'), sg.Combo(constantes.ACAO_CIVIL_PUBLICA, size=(19, 1), key='-ACP-', default_value=acp)],
+        [sg.CalendarButton('Data Sentença', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DATA_DECISAO-', size=(15, 1), default_text=data_decisao),],
+        [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 6), key='-TEOR_DECISAO-', default_text=teor_decisao)],
+        [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)]
+    ]
+
+
+
     layoutAlterarDados = [
         [
-            sg.Text('Numero:'), 
-            sg.Input(key='-NUMERO-', size=(20, 1), default_text=numero),
-            sg.CalendarButton('Data de Aberura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'),
-            sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False),
-            sg.Text('Nome da Comunidade:'), 
-            sg.Input(size=(20, 1), key='-NOME_COMUNIDADE-', default_text=nome_comunidade),
-            sg.Text('Município:'), 
-            sg.Combo(constantes.MUNICIPIOS, size=(18, 30), key='-MUNICIPIO-', default_value=municipio),
-            sg.Text('Área_ha:'), 
-            sg.Input(size=(14, 1), key='-AREA-', default_text=area_ha)
+            sg.Column(coluna_1), sg.VerticalSeparator(), 
+            sg.Column(coluna_2), sg.VerticalSeparator(), 
+            sg.Column(coluna_3), sg.VerticalSeparator(),
+            sg.Column(coluna_4), sg.VerticalSeparator(), 
+            sg.Column(coluna_5)
         ],
-
-        [sg.Text()],
-
-        [
-            sg.Text('Numero de famílias:'), 
-            sg.Input(size=(15, 1), key='-NUM_FAMILIA-', default_text=num_familia),
-            sg.Text('Fase do Processo:'),
-            sg.Combo(constantes.FASE_PROCESSO, size=(18, 6), key='-FASE_PROCESSO-', default_value=fase_processo),
-            sg.Text('Etapa do RTID:'),
-            sg.Listbox(constantes.ETAPA_RTID, size=(27, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-ETAPA_RTID-', default_values=etapa_rtid),
-            sg.Text('Edital DOU'), 
-            sg.Input(size=(18, 1), key='-EDITAL_DOU-', default_text=edital_dou),
-            sg.Text('Edital DOE'), 
-            sg.Input(size=(18, 1), key='-EDITAL_DOE-', default_text=edital_doe)
-        ],
-
-        [sg.Text()],
-
-        [
-            sg.CalendarButton('Portaria DOU:', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'),
-            sg.Input(key='-PORTARIA_DOU-', size=(15, 1), default_text=portaria_dou),
-            sg.CalendarButton('Decreto DOU:', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'),
-            sg.Input(key='-DECRETO_DOU-', size=(15, 1), default_text=decreto_dou), 
-            sg.Text(),
-            sg.Text('Área Título_ha:'), 
-            sg.Input(size=(15, 1), key='-TITULO-', default_text=titulo),
-            sg.Text('% de Área Titulada:'), 
-            sg.Input(size=(15, 1), key='-PNRA-', default_text=pnra),
-            sg.Text('Relatório\nAntropológico'),
-            sg.Combo(constantes.RELATORIO_ANTROPOLOGICO, size=(22, 6), key='-RA-', default_value=relatorio_antropologico)
-        ],
-            
-        [sg.Text()],
-
-        [
-            sg.Text('Coordenadas'), 
-            sg.Text('Latitude:'), 
-            sg.Input(size=(14, 1), key='-LATITUDE-', default_text=latitude),
-            sg.Text('Longitude:'), 
-            sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)
-        ],
-
-        [
-            sg.Text('Certidão FCP:'), 
-            sg.Combo(constantes.CERTIFICACAO_FCP, key='-CERTIDAO-', default_value=certidao_fcp),
-            sg.CalendarButton('Data Certificação:', target='-DATA_CERTIFICACAO-', key='-CALENDAR-', format='%d-%m-%Y'),
-            sg.Input(key='-DATA_CERTIFICACAO-', size=(15, 1), default_text=data_certificacao), 
-            sg.Text(), 
-            sg.Text(),
-            sg.Text(),
-            sg.Text('Sobreposição:'),
-            sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(27, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao),
-            sg.Text('Análise de\nSobreposição:'),
-            sg.Multiline(size=(32, 6), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)
-        ],
-
-        [sg.Text()],
-
-        [
-            sg.Text('Ação Civil Pública:'), 
-            sg.Combo(constantes.ACAO_CIVIL_PUBLICA, size=(19, 1), key='-ACP-', default_value=acp),
-            sg.Text('Data Sentença\nDecisão:'),
-            sg.CalendarButton('Selecionar Data', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'),
-            sg.Input(key='-DATA_DECISAO-', size=(15, 1), default_text=data_decisao),
-            sg.Text('Teor e Prazo\nda Sentença:'),
-            sg.Multiline(size=(32, 6), key='-TEOR_DECISAO-', default_text=teor_decisao),
-            sg.Text('Outras \ninformações: '),
-            sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)
-        ],
-
-        [sg.Text()],
 
         [sg.Button('Salvar Alterações', button_color='#ac4e04')],
 
@@ -356,8 +324,8 @@ def alterar_registro(janela):
                 Edital_DOE=?, 
                 Portaria_DOU=?, 
                 Decreto_DOU=?, 
-                Area_ha_Titulada=?,
-                Porcentagem_Titulada=?, 
+                Titulo=?,
+                PNRA=?, 
                 Relatorio_Antropologico=?, 
                 Latitude=?, 
                 Longitude=?, 

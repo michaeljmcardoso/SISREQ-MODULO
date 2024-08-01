@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
-import funcoesRegistro
+import funcoes_banco_de_dados
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
-def extrair_planilha(registros):
-    conn = funcoesRegistro.conectar_banco_de_dados()
+def planilha(registros):
+    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()
 
