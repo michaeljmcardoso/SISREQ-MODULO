@@ -45,6 +45,8 @@ class Aplicacao:
                 filtrar.fase_desintrusao()
             elif event == 'Desapropriação':
                 filtrar.fase_desapropriacao()
+            elif event == 'Pesquisar':
+                self.criar_janela_pesquisar()
 
             # Evento de digitação no campo de entrada
             elif event == '-NOME_COMUNIDADES-':
@@ -55,9 +57,9 @@ class Aplicacao:
                     self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
                 else:
                     self.janela['-SUGESTOES-'].update(visible=False)
-            
+
             # Evento de seleção na lista de sugestões
-            if  event == '-SUGESTOES-':
+            if event == '-SUGESTOES-':
                 selecao = values['-SUGESTOES-'][0]
                 self.janela['-NOME_COMUNIDADES-'].update(selecao)
                 self.janela['-SUGESTOES-'].update(visible=False)
@@ -75,7 +77,7 @@ class Aplicacao:
         self.janela.close()
 
     def criar_janela(self):
-        sg.theme('Dark')
+        sg.theme(constantes.JANELA_TEMA)
 
         coluna_1 = [
             [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1))],
@@ -84,14 +86,13 @@ class Aplicacao:
             [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-')],
             [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-')]
         ]
-        
+
         coluna_2 = [
             [sg.Text('Fase:'), sg.Combo(constantes.FASE_PROCESSO, size=(24, 6), key='-FASE_PROCESSO-')],
             [sg.Text('Etapa\nRTID:'), sg.Listbox(constantes.ETAPA_RTID, size=(24, 3), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-ETAPA_RTID-')],
             [sg.Text('Antropológico:'), sg.Combo(constantes.RELATORIO_ANTROPOLOGICO, size=(17, 6), key='-RA-')],
             [sg.Text('Certidão FCP:'), sg.Combo(constantes.CERTIFICACAO_FCP, size=(17, 6), key='-CERTIDAO-')],
             [sg.CalendarButton('Data Certificação', target='-DATA_CERTIFICACAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(13, 1), key='-DATA_CERTIFICACAO-', disabled=False)]
-            
         ]
 
         coluna_3 = [
@@ -118,17 +119,22 @@ class Aplicacao:
             [sg.Text('Outras Informações:'), sg.Multiline(size=(18, 2), key='-INFORMACAO-')]
         ]
 
+        coluna_botoes = [
+            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04')]
+        ]
+
         layout = [
-            [sg.Column(coluna_1), sg.VerticalSeparator(), 
-             sg.Column(coluna_2), sg.VerticalSeparator(), 
+            [sg.Column(coluna_1), sg.VerticalSeparator(),
+             sg.Column(coluna_2), sg.VerticalSeparator(),
              sg.Column(coluna_3), sg.VerticalSeparator(),
-             sg.Column(coluna_4), sg.VerticalSeparator(), 
+             sg.Column(coluna_4), sg.VerticalSeparator(),
              sg.Column(coluna_5)
             ],
 
-            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Text('Pesquisar\nComunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-'), sg.Text('Pesquisar\nMunicípio:'), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-'), sg.Text('Pesquisar\nProcesso:'), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
+            [sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Button('Pesquisar', button_color='green')],
+
             [sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
-            
+
             [sg.Table(
                 values=[],
                 headings=[
@@ -139,13 +145,12 @@ class Aplicacao:
                     'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                     '          Outras_Informacoes'
                 ],
-
-            num_rows=20,
-            key='-TABLE-',
-            hide_vertical_scroll=False,
-            vertical_scroll_only=False,
-            justification='left',
-            auto_size_columns=True,
+                num_rows=20,
+                key='-TABLE-',
+                hide_vertical_scroll=False,
+                vertical_scroll_only=False,
+                justification='left',
+                auto_size_columns=True,
             )],
 
             [sg.Button('Extrair Planilha', button_color='green')],
@@ -155,4 +160,48 @@ class Aplicacao:
 
         janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
-    
+
+    def criar_janela_pesquisar(self):
+        coluna_pesquisar = [
+            [sg.Text('Pesquisar Comunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
+            [sg.Text('Pesquisar Município:'), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
+            [sg.Text('Pesquisar Processo:'), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')]
+        ]
+
+        layout = [[sg.Column(coluna_pesquisar)]]
+
+        janela_pesquisar = sg.Window('Pesquisar Registros', layout, resizable=True)
+
+        while True:
+            event, values = janela_pesquisar.read()
+            if event == 'SAIR' or event == sg.WIN_CLOSED:
+                break
+            elif event == '-NOME_COMUNIDADES-':
+                entrada = values['-NOME_COMUNIDADES-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.comunidades)
+
+                if sugestoes:
+                    janela_pesquisar['-SUGESTOES-'].update(sugestoes, visible=True)
+                else:
+                    janela_pesquisar['-SUGESTOES-'].update(visible=False)
+            
+            elif event == '-SUGESTOES-':
+                selecao = values['-SUGESTOES-'][0]
+                janela_pesquisar['-NOME_COMUNIDADES-'].update(selecao)
+                janela_pesquisar['-SUGESTOES-'].update(visible=False)
+
+            elif event == '-OK-' or event == '\r':
+                nome_comunidade = values['-NOME_COMUNIDADES-']
+                if nome_comunidade:
+                    funcoes_pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
+                else:
+                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
+            elif event == 'Buscar Comunidade':
+                funcoes_pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
+
+        janela_pesquisar.close()
+
+
+# if __name__ == "__main__":
+#     app = Aplicacao()
+#     app.iniciar()
