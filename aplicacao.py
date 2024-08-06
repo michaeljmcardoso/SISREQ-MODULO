@@ -48,7 +48,7 @@ class Aplicacao:
             elif event == 'Pesquisar':
                 self.criar_janela_pesquisar()
 
-            # Evento de digitação no campo de entrada
+            # Evento de digitação no campo de entrada comunidade
             elif event == '-NOME_COMUNIDADES-':
                 entrada = values['-NOME_COMUNIDADES-']
                 sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.comunidades)
@@ -58,7 +58,7 @@ class Aplicacao:
                 else:
                     self.janela['-SUGESTOES-'].update(visible=False)
 
-            # Evento de seleção na lista de sugestões
+            # Evento de seleção na lista de sugestões comunidade
             if event == '-SUGESTOES-':
                 selecao = values['-SUGESTOES-'][0]
                 self.janela['-NOME_COMUNIDADES-'].update(selecao)
@@ -73,6 +73,32 @@ class Aplicacao:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
             elif event == 'Buscar Comunidade':
                 funcoes_pesquisar.pesquisar_por_nome_comunidade(self.janela)
+            
+             # Evento de digitação no campo de entrada municipio
+            elif event == '-MUNICIPIOS-':
+                entrada = values['-MUNICIPIOS-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.municipios)
+
+                if sugestoes:
+                    self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
+                else:
+                    self.janela['-SUGESTOES-'].update(visible=False)
+
+            # Evento de seleção na lista de sugestões municipio
+            if event == '-SUGESTOES-':
+                selecao = values['-SUGESTOES-'][0]
+                self.janela['-MUNICIPIOS-'].update(selecao)
+                self.janela['-SUGESTOES-'].update(visible=False)
+
+            # Evento do botão OK ou pressionar Enter
+            if event == '-OK-' or event == '\r':
+                nome_municipio = values['-MUNICIPIOS-']
+                if nome_municipio:
+                    funcoes_pesquisar.pesquisar_por_nome_municipio(nome_municipio)
+                else:
+                    sg.popup('Por favor, digite o nome de um município.', title='Erro')
+            elif event == 'Buscar Municipio':
+                funcoes_pesquisar.pesquisar_por_nome_municipio(self.janela)
 
         self.janela.close()
 
@@ -131,7 +157,7 @@ class Aplicacao:
              sg.Column(coluna_5)
             ],
 
-            [sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Button('Pesquisar', button_color='green')],
+            [sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Button('Pesquisar', button_color='#3169F5')],
 
             [sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
 
@@ -164,13 +190,13 @@ class Aplicacao:
     def criar_janela_pesquisar(self):
         coluna_pesquisar = [
             [sg.Text('Pesquisar Comunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
-            [sg.Text('Pesquisar Município:'), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
-            [sg.Text('Pesquisar Processo:'), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')]
+            [sg.Text('Pesquisar Município:    '), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-')],
+            [sg.Text('Pesquisar Processo:    '), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')]
         ]
 
         layout = [[sg.Column(coluna_pesquisar)]]
 
-        janela_pesquisar = sg.Window('Pesquisar Registros', layout, resizable=True)
+        janela_pesquisar = sg.Window('Pesquisar Registros', layout, resizable=False)
 
         while True:
             event, values = janela_pesquisar.read()
@@ -199,9 +225,28 @@ class Aplicacao:
             elif event == 'Buscar Comunidade':
                 funcoes_pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
 
+
+            elif event == '-MUNICIPIOS-':
+                entrada = values['-MUNICIPIOS-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.municipios)
+
+                if sugestoes:
+                    janela_pesquisar['-SUGESTOES1-'].update(sugestoes, visible=True)
+                else:
+                    janela_pesquisar['-SUGESTOES1-'].update(visible=False)
+            
+            elif event == '-SUGESTOES1-':
+                selecao = values['-SUGESTOES1-'][0]
+                janela_pesquisar['-MUNICIPIOS-'].update(selecao)
+                janela_pesquisar['-SUGESTOES1-'].update(visible=False)
+
+            elif event == '-OK1-' or event == '\r':
+                nome_municipio = values['-MUNICIPIOS-']
+                if nome_municipio:
+                    funcoes_pesquisar.pesquisar_por_nome_municipio(nome_municipio)
+                else:
+                    sg.popup('Por favor, digite o nome de um municipio.', title='Erro')
+            elif event == 'Buscar Municipio':
+                funcoes_pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
+
         janela_pesquisar.close()
-
-
-# if __name__ == "__main__":
-#     app = Aplicacao()
-#     app.iniciar()
