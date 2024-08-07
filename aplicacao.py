@@ -74,7 +74,7 @@ class Aplicacao:
             elif event == 'Buscar Comunidade':
                 funcoes_pesquisar.pesquisar_por_nome_comunidade(self.janela)
             
-             # Evento de digitação no campo de entrada municipio
+            # Evento de digitação no campo de entrada municipio
             elif event == '-MUNICIPIOS-':
                 entrada = values['-MUNICIPIOS-']
                 sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.municipios)
@@ -99,6 +99,32 @@ class Aplicacao:
                     sg.popup('Por favor, digite o nome de um município.', title='Erro')
             elif event == 'Buscar Municipio':
                 funcoes_pesquisar.pesquisar_por_nome_municipio(self.janela)
+
+             # Evento de digitação no campo de entrada processo
+            elif event == '-NUMEROS-':
+                entrada = values['-NUMEROS-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.processos)
+
+                if sugestoes:
+                    self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
+                else:
+                    self.janela['-SUGESTOES-'].update(visible=False)
+
+            # Evento de seleção na lista de sugestões processo
+            if event == '-SUGESTOES-':
+                selecao = values['-SUGESTOES-'][0]
+                self.janela['-NUMEROS-'].update(selecao)
+                self.janela['-SUGESTOES-'].update(visible=False)
+
+            # Evento do botão OK ou pressionar Enter
+            if event == '-OK2-' or event == '\r':
+                num_processo = values['-NUMEROS-']
+                if num_processo:
+                    funcoes_pesquisar.pesquisar_por_num_processo(num_processo)
+                else:
+                    sg.popup('Por favor, digite o número de um processo.', title='Erro')
+            elif event == 'Buscar Processo':
+                funcoes_pesquisar.pesquisar_por_num_processo(self.janela)
 
         self.janela.close()
 
@@ -191,7 +217,7 @@ class Aplicacao:
         coluna_pesquisar = [
             [sg.Text('Pesquisar Comunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
             [sg.Text('Pesquisar Município:    '), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-')],
-            [sg.Text('Pesquisar Processo:    '), sg.Input(size=(25, 1), key='-NUP-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')]
+            [sg.Text('Pesquisar Processo:    '), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-')]
         ]
 
         layout = [[sg.Column(coluna_pesquisar)]]
@@ -248,5 +274,28 @@ class Aplicacao:
                     sg.popup('Por favor, digite o nome de um municipio.', title='Erro')
             elif event == 'Buscar Municipio':
                 funcoes_pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
+            
+            elif event == '-NUMEROS-':
+                entrada = values['-NUMEROS-']
+                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.processos)
+
+                if sugestoes:
+                    janela_pesquisar['-SUGESTOES2-'].update(sugestoes, visible=True)
+                else:
+                    janela_pesquisar['-SUGESTOES2-'].update(visible=False)
+            
+            elif event == '-SUGESTOES2-':
+                selecao = values['-SUGESTOES2-'][0]
+                janela_pesquisar['-NUMEROS-'].update(selecao)
+                janela_pesquisar['-SUGESTOES2-'].update(visible=False)
+
+            elif event == '-OK2-' or event == '\r':
+                num_processo = values['-NUMEROS-']
+                if num_processo:
+                    funcoes_pesquisar.pesquisar_por_num_processo(num_processo)
+                else:
+                    sg.popup('Por favor, digite o número de um processo.', title='Erro')
+            elif event == 'Buscar Processo':
+                funcoes_pesquisar.pesquisar_por_num_processo(janela_pesquisar)
 
         janela_pesquisar.close()
