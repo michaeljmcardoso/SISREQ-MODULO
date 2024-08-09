@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import funcoes_banco_de_dados
 import salvar
 import constantes
+import aplicacao
 
 def buscar_comunidade():
     conn = funcoes_banco_de_dados.conectar_banco_de_dados()
@@ -280,7 +281,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
             elif event3 == 'Extrato':
                 salvar.extrato_planilha(registros)
             elif event3 == 'Alterar':
-                def consultarRegistroEspecifico():
+                def alterarRegistroEspecifico():
                     selected_rows = window3['-TABLE-'].SelectedRows
                     if len(selected_rows) != 1:
                         sg.popup('Selecione um único registro para consultar.', title='Erro')
@@ -426,9 +427,9 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                     sg.popup('Não há registros cadastrados.', title='Registros')
                             
                             atualizarRegistros()
-                            #consultarRegistros()
+                            aplicacao.Aplicacao.consultar_registros()
                 
-                consultarRegistroEspecifico()
+                alterarRegistroEspecifico()
 
     else:
         sg.popup('Não foram encontrados registros para o nome do município informado.', title='Registros')
@@ -706,3 +707,4 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
     ]
 
     return layoutAlterarDados
+
