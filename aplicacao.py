@@ -6,8 +6,8 @@ import salvar
 import filtrar
 import pesquisar
 import constantes
-import relatorios
-import graficos
+import janela_graficos
+import janela_relatorios
 
 class Aplicacao:
     def __init__(self):
@@ -52,10 +52,9 @@ class Aplicacao:
             elif event == 'PESQUISAR':
                 self.criar_janela_pesquisar()
             elif event == 'Relatórios':
-                self.criar_janela_relatorios()
+                janela_relatorios.criar_janela()
             elif event == 'Gráficos':
-                self.criar_janela_graficos()
-            
+                janela_graficos.criar_janela()
 
             # Evento de digitação no campo de entrada comunidade
             elif event == '-NOME_COMUNIDADES-':
@@ -304,81 +303,3 @@ class Aplicacao:
                 pesquisar.pesquisar_por_num_processo(janela_pesquisar)
 
         janela_pesquisar.close()
-
-    def criar_janela_relatorios(self):
-        sg.theme(constantes.JANELA_TEMA)
-
-        coluna_relatorios = [
-            [sg.Button('Número de Famílias', button_color='green')],
-            [sg.Button('Área Total', button_color='green')],
-            [sg.Button('Territórios Identificados', button_color='green')],
-            [sg.Button('Territórios Não-Identificados', button_color='green')],
-            [sg.Button('Ações Judiciais', button_color='green')],
-            [sg.Button('TQ em PA', button_color='green')]
-        ]
-
-        layout = [[sg.Column(coluna_relatorios)]]
-
-        janela_relatorios = sg.Window('Exibir Relatórios', layout, resizable=False)
-
-        while True:
-            event, values = janela_relatorios.read()
-            if event == 'SAIR' or event == sg.WIN_CLOSED:
-                break
-            elif event == 'Número de Famílias':
-                relatorios.exibir_total_de_familias()
-            elif event == 'Área Total':
-                relatorios.exibir_area_total()
-            elif event == 'TQ em PA':
-                relatorios.exibir_territorios_quilombolas_em_assentamentos()
-            elif event == 'Territórios Identificados':
-                relatorios.territorios_identificados()
-            elif event == 'Territórios Não-Identificados':
-                relatorios.territorios_nao_identificados()
-            elif event == 'Ações Judiciais':
-                relatorios.exibir_processos_com_acao_judicial()
-            
-        return janela_relatorios
-    
-
-    def criar_janela_graficos(self):
-        sg.theme(constantes.JANELA_TEMA)
-
-        coluna_graficos = [
-            [sg.Button('Andamento de Processos', button_color='green')],
-            [sg.Button('Processos por Fase', button_color='green')],
-            [sg.Button('Ano de Abertura', button_color='green')], 
-            [sg.Button('Ação Judicial', button_color='green')],
-            [sg.Button('Sobreposições', button_color='green')],
-            [sg.Button('Relatórios Antropológicos', button_color='green')],
-            [sg.Button('Municípios', button_color='green')],
-            [sg.Button('Mapa Interativo', button_color='green')]
-        ]
-
-        layout = [[sg.Column(coluna_graficos)]]
-
-        janela_graficos = sg.Window('Exibir Gráficos', layout, resizable=False)
-
-        while True:
-            event, values = janela_graficos.read()
-            if event == 'SAIR' or event == sg.WIN_CLOSED:
-                break
-            elif event == 'Municípios':
-                graficos.exibir_processos_por_municipio()
-            elif event == 'Ano de Abertura':
-                graficos.exibir_processos_por_data_abertura()
-            elif event == 'Ação Judicial':
-                graficos.exibir_processos_com_acao_judicial()
-            elif event == 'Andamento de Processos':
-                graficos.exibir_andamento_de_processos()
-            elif event == 'Processos por Fase':
-                graficos.exibir_processos_por_fase_atual()
-            elif event == 'Sobreposições':
-                graficos.exibir_tipo_de_sopreposicao()
-            elif event == 'Relatórios Antropológicos':
-                graficos.exibir_relatorios_antropologicos_por_forma_de_elaboracao()
-            elif event == 'Mapa Interativo':
-                graficos.plotar_mapa_interativo()
-                
-        
-        return janela_graficos
