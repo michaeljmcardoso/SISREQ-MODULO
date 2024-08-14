@@ -25,7 +25,7 @@ class Aplicacao:
                 funcoes_registro.consultar_registros(self.janela)
             elif event == 'ALTERAR':
                 funcoes_registro.alterar_registro(self.janela)
-            elif event == 'Extrair Planilha':
+            elif event == 'Planilha':
                 salvar.planilha(self.janela)
             elif event == 'Inicial':
                 filtrar.fase_inicial()
@@ -184,7 +184,7 @@ class Aplicacao:
         ]
 
         coluna_botoes_relatorios_e_graficos= [
-            [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04')],
+            [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04'), sg.VerticalSeparator(), sg.Text('EXTRAIR:', font='Helvetica 10 bold'), sg.Button('Planilha', button_color='#ac4e04')],
         ]
 
         layout = [
@@ -202,7 +202,7 @@ class Aplicacao:
                     'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                     '          Outras_Informacoes'
                 ],
-                num_rows=20,
+                num_rows=24,
                 key='-TABLE-',
                 hide_vertical_scroll=False,
                 vertical_scroll_only=False,
@@ -210,7 +210,7 @@ class Aplicacao:
                 auto_size_columns=True,
             )],
 
-            [sg.Button('Extrair Planilha', button_color='green')],
+            
             [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
