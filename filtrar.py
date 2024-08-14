@@ -1,9 +1,9 @@
 import PySimpleGUI as sg
-import funcoes_banco_de_dados
+import funcoes_registro
 import salvar
 
 def fase_inicial():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
     totalFaseInicial = cursor.fetchone()[0]
@@ -54,7 +54,7 @@ def fase_inicial():
         sg.popup('Não há registros para exibir.', title='Erro')
 
 def fase_Rtid():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
     totalFaseRtid = cursor.fetchone()[0]
@@ -107,7 +107,7 @@ def fase_Rtid():
 
 
 def rtidsPublicados():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
     totalRtidPublicado = cursor.fetchone()[0]
@@ -166,7 +166,7 @@ def rtidsPublicados():
 
 
 def fase_publicacao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
     totalFasePublicacao = cursor.fetchone()[0]
@@ -217,7 +217,7 @@ def fase_publicacao():
         sg.popup('Não há registros para exibir.', title='Erro')
 
 def fase_notificacao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
     total_fase_notificacao = cursor.fetchone()[0]
@@ -268,7 +268,7 @@ def fase_notificacao():
 
 
 def fase_portaria():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
     total_fase_portaria = cursor.fetchone()[0]
@@ -319,7 +319,7 @@ def fase_portaria():
 
 
 def fase_decreto():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
     total_fase_decreto = cursor.fetchone()[0]
@@ -371,7 +371,7 @@ def fase_decreto():
 
 
 def fase_titulacao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
     total_fase_titulacao = cursor.fetchone()[0]
@@ -430,7 +430,7 @@ def fase_titulacao():
 
 
 def titulos_expedidos():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
     total_titulos_expedidos = cursor.fetchone()[0]
@@ -486,7 +486,7 @@ def titulos_expedidos():
 
 
 def fase_desintrusao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
     total_fase_desintrusao = cursor.fetchone()[0]
@@ -537,7 +537,7 @@ def fase_desintrusao():
 
 
 def fase_contestacao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE 'Contestação'")
     total_fase_contestacao = cursor.fetchone()[0]
@@ -588,7 +588,7 @@ def fase_contestacao():
 
 
 def fase_recurso():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
     total_fase_recurso = cursor.fetchone()[0]
@@ -638,7 +638,7 @@ def fase_recurso():
 
 
 def fase_desapropriacao():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
     total_fase_desapropriacao = cursor.fetchone()[0]

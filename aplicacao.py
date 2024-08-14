@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
-import funcoes_banco_de_dados
+import funcoes_registro
 import salvar
 import filtrar
-import funcoes_pesquisar
+import pesquisar
 import constantes
+import relatorios
 
 class Aplicacao:
     def __init__(self):
@@ -15,12 +16,12 @@ class Aplicacao:
             if event == 'SAIR' or event == sg.WIN_CLOSED:
                 break
             elif event == 'INSERIR':
-                funcoes_banco_de_dados.inserir_dados(values, self.janela)
-                funcoes_banco_de_dados.consultar_registros(self.janela)
+                funcoes_registro.inserir_dados(values, self.janela)
+                funcoes_registro.consultar_registros(self.janela)
             elif event == 'CONSULTAR':
-                funcoes_banco_de_dados.consultar_registros(self.janela)
+                funcoes_registro.consultar_registros(self.janela)
             elif event == 'ALTERAR':
-                funcoes_banco_de_dados.alterar_registro(self.janela)
+                funcoes_registro.alterar_registro(self.janela)
             elif event == 'Extrair Planilha':
                 salvar.planilha(self.janela)
             elif event == 'Inicial':
@@ -45,13 +46,15 @@ class Aplicacao:
                 filtrar.fase_desintrusao()
             elif event == 'Desapropriação':
                 filtrar.fase_desapropriacao()
-            elif event == 'Pesquisar':
+            elif event == 'PESQUISAR':
                 self.criar_janela_pesquisar()
+            elif event == 'Relatórios':
+                self.criar_janela_relatorios()
 
             # Evento de digitação no campo de entrada comunidade
             elif event == '-NOME_COMUNIDADES-':
                 entrada = values['-NOME_COMUNIDADES-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.comunidades)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.comunidades)
 
                 if sugestoes:
                     self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
@@ -68,16 +71,16 @@ class Aplicacao:
             if event == '-OK-' or event == '\r':
                 nome_comunidade = values['-NOME_COMUNIDADES-']
                 if nome_comunidade:
-                    funcoes_pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
+                    pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
             elif event == 'Buscar Comunidade':
-                funcoes_pesquisar.pesquisar_por_nome_comunidade(self.janela)
+                pesquisar.pesquisar_por_nome_comunidade(self.janela)
             
             # Evento de digitação no campo de entrada municipio
             elif event == '-MUNICIPIOS-':
                 entrada = values['-MUNICIPIOS-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.municipios)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.municipios)
 
                 if sugestoes:
                     self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
@@ -94,16 +97,16 @@ class Aplicacao:
             if event == '-OK-' or event == '\r':
                 nome_municipio = values['-MUNICIPIOS-']
                 if nome_municipio:
-                    funcoes_pesquisar.pesquisar_por_nome_municipio(nome_municipio)
+                    pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
                     sg.popup('Por favor, digite o nome de um município.', title='Erro')
             elif event == 'Buscar Municipio':
-                funcoes_pesquisar.pesquisar_por_nome_municipio(self.janela)
+                pesquisar.pesquisar_por_nome_municipio(self.janela)
 
              # Evento de digitação no campo de entrada processo
             elif event == '-NUMEROS-':
                 entrada = values['-NUMEROS-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.processos)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.processos)
 
                 if sugestoes:
                     self.janela['-SUGESTOES-'].update(sugestoes, visible=True)
@@ -120,11 +123,11 @@ class Aplicacao:
             if event == '-OK2-' or event == '\r':
                 num_processo = values['-NUMEROS-']
                 if num_processo:
-                    funcoes_pesquisar.pesquisar_por_num_processo(num_processo)
+                    pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
                     sg.popup('Por favor, digite o número de um processo.', title='Erro')
             elif event == 'Buscar Processo':
-                funcoes_pesquisar.pesquisar_por_num_processo(self.janela)
+                pesquisar.pesquisar_por_num_processo(self.janela)
 
         self.janela.close()
 
@@ -172,21 +175,18 @@ class Aplicacao:
         ]
 
         coluna_botoes = [
-            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04')]
+            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
+        ]
+
+        coluna_botoes_relatorios_e_graficos= [
+            [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04')],
         ]
 
         layout = [
-            [sg.Column(coluna_1), sg.VerticalSeparator(),
-             sg.Column(coluna_2), sg.VerticalSeparator(),
-             sg.Column(coluna_3), sg.VerticalSeparator(),
-             sg.Column(coluna_4), sg.VerticalSeparator(),
-             sg.Column(coluna_5)
-            ],
-
-            [sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Button('Pesquisar', button_color='#3169F5')],
-
-            [sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
-
+            [sg.Text(' ', size=(75, 1)), sg.Text('CADASTRO DE PROCESSOS', font='Helvetica 10 bold')],
+            [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
+            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos)],
+            [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
                 values=[],
                 headings=[
@@ -206,7 +206,6 @@ class Aplicacao:
             )],
 
             [sg.Button('Extrair Planilha', button_color='green')],
-
             [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
@@ -215,9 +214,9 @@ class Aplicacao:
 
     def criar_janela_pesquisar(self):
         coluna_pesquisar = [
-            [sg.Text('Pesquisar Comunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-')],
-            [sg.Text('Pesquisar Município:    '), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-')],
-            [sg.Text('Pesquisar Processo:    '), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-')]
+            [sg.Text('Pesquisar Comunidade:'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Município:    '), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Processo:    '), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-', button_color='#3169F5')]
         ]
 
         layout = [[sg.Column(coluna_pesquisar)]]
@@ -230,7 +229,7 @@ class Aplicacao:
                 break
             elif event == '-NOME_COMUNIDADES-':
                 entrada = values['-NOME_COMUNIDADES-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.comunidades)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.comunidades)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES-'].update(sugestoes, visible=True)
@@ -245,16 +244,16 @@ class Aplicacao:
             elif event == '-OK-' or event == '\r':
                 nome_comunidade = values['-NOME_COMUNIDADES-']
                 if nome_comunidade:
-                    funcoes_pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
+                    pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
             elif event == 'Buscar Comunidade':
-                funcoes_pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
+                pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
 
 
             elif event == '-MUNICIPIOS-':
                 entrada = values['-MUNICIPIOS-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.municipios)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.municipios)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES1-'].update(sugestoes, visible=True)
@@ -269,15 +268,15 @@ class Aplicacao:
             elif event == '-OK1-' or event == '\r':
                 nome_municipio = values['-MUNICIPIOS-']
                 if nome_municipio:
-                    funcoes_pesquisar.pesquisar_por_nome_municipio(nome_municipio)
+                    pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
                     sg.popup('Por favor, digite o nome de um municipio.', title='Erro')
             elif event == 'Buscar Municipio':
-                funcoes_pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
+                pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
             
             elif event == '-NUMEROS-':
                 entrada = values['-NUMEROS-']
-                sugestoes = funcoes_pesquisar.atualizar_sugestoes(entrada, funcoes_pesquisar.processos)
+                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.processos)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES2-'].update(sugestoes, visible=True)
@@ -292,10 +291,39 @@ class Aplicacao:
             elif event == '-OK2-' or event == '\r':
                 num_processo = values['-NUMEROS-']
                 if num_processo:
-                    funcoes_pesquisar.pesquisar_por_num_processo(num_processo)
+                    pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
                     sg.popup('Por favor, digite o número de um processo.', title='Erro')
             elif event == 'Buscar Processo':
-                funcoes_pesquisar.pesquisar_por_num_processo(janela_pesquisar)
+                pesquisar.pesquisar_por_num_processo(janela_pesquisar)
 
         janela_pesquisar.close()
+
+    def criar_janela_relatorios(self):
+        sg.theme(constantes.JANELA_TEMA)
+
+        coluna_relatorios = [
+            [sg.Button('Ações Judiciais')],
+            [sg.Button('TQ em PA')]
+        ]
+
+        coluna_popups = [
+            [sg.Button('Número de Famílias')],
+            [sg.Button('Área Total')]
+        ]
+
+        layout = [[sg.Column(coluna_popups), sg.VerticalSeparator(), sg.Column(coluna_relatorios)]]
+
+        janela_relatorios = sg.Window('Exibir Relatórios', layout, resizable=False)
+
+        while True:
+            event, values = janela_relatorios.read()
+            if event == 'SAIR' or event == sg.WIN_CLOSED:
+                break
+            elif event == 'Número de Famílias':
+                relatorios.somar_e_exibir_total_de_familias()
+            elif event == 'Área Total':
+                relatorios.somar_e_exibir_area_total()
+
+        
+        return janela_relatorios

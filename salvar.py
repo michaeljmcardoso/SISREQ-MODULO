@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
-import funcoes_banco_de_dados
+import funcoes_registro
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
 def planilha(registros):
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()
 

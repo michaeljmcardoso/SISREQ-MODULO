@@ -1,11 +1,10 @@
 import PySimpleGUI as sg
-import funcoes_banco_de_dados
+import funcoes_registro
 import salvar
 import constantes
-import aplicacao
 
 def buscar_comunidade():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT Comunidade FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
@@ -18,7 +17,7 @@ def atualizar_sugestoes(entrada, lista_comunidades):
     return []
 
 def pesquisar_por_nome_comunidade(nome_comunidade):
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
     registros = cursor.fetchall()
@@ -63,7 +62,6 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
             elif event2 == 'Extrato':
                 salvar.extrato_planilha(registros)
             elif event2 == 'Alterar':
-                    # Função para alterar um registro do banco de dados
                     def alterarRegistroEspecifico():
                         selected_rows = window2['-TABLE-'].SelectedRows
                         if len(selected_rows) != 1:
@@ -199,8 +197,6 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 sg.popup('Registro alterado com sucesso!', title='Sucesso')
                                 janelaAlterarDados.close()
                                 
-
-                                # Função para consultar todos os registros do banco de dados
                                 def atualizarRegistros():
                                     cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
                                     registros = cursor.fetchall()
@@ -211,7 +207,6 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                         sg.popup('Não há registros cadastrados.', title='Registros')
                                 
                                 atualizarRegistros()
-                                
                                 #funcoes_banco_de_dados.consultar_registros(janela)
 
                     alterarRegistroEspecifico()
@@ -222,7 +217,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
 
 def buscar_municipios():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT Municipio FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
@@ -235,7 +230,7 @@ def atualizar_sugestoes(entrada, lista_municipios):
     return []
 
 def pesquisar_por_nome_municipio(nome_municipio):
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
     registros = cursor.fetchall()
@@ -416,7 +411,6 @@ def pesquisar_por_nome_municipio(nome_municipio):
                             sg.popup('Registro alterado com sucesso!', title='Sucesso')
                             janelaconsultarDados.close()
                             
-                            # Função para consultar todos os registros do banco de dados
                             def atualizarRegistros():
                                 cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
                                 registros = cursor.fetchall()
@@ -427,7 +421,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                     sg.popup('Não há registros cadastrados.', title='Registros')
                             
                             atualizarRegistros()
-                            aplicacao.Aplicacao.consultar_registros()
+                            #aplicacao.Aplicacao.consultar_registros()
                 
                 alterarRegistroEspecifico()
 
@@ -436,7 +430,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
         return
 
 def buscar_processo():
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT Numero FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
@@ -449,7 +443,7 @@ def atualizar_sugestoes(entrada, lista_processos):
     return []
 
 def pesquisar_por_num_processo(num_processo):
-    conn = funcoes_banco_de_dados.conectar_banco_de_dados()
+    conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
     registros = cursor.fetchall()
@@ -494,7 +488,6 @@ def pesquisar_por_num_processo(num_processo):
             elif event4 == 'Extrato':
                 salvar.extrato_planilha(registros)
             elif event4 == 'Alterar':
-                    # Função para alterar um registro do banco de dados
                     def alterarRegistroEspecifico():
                         selected_rows = window4['-TABLE-'].SelectedRows
                         if len(selected_rows) != 1:
@@ -630,8 +623,6 @@ def pesquisar_por_num_processo(num_processo):
                                 sg.popup('Registro alterado com sucesso!', title='Sucesso')
                                 janelaAlterarDados.close()
                                 
-
-                                # Função para consultar todos os registros do banco de dados
                                 def atualizarRegistros():
                                     cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
                                     registros = cursor.fetchall()
@@ -642,7 +633,6 @@ def pesquisar_por_num_processo(num_processo):
                                         sg.popup('Não há registros cadastrados.', title='Registros')
                                 
                                 atualizarRegistros()
-                                
                                 #funcoes_banco_de_dados.consultar_registros(janela)
 
                     alterarRegistroEspecifico()
@@ -707,4 +697,3 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
     ]
 
     return layoutAlterarDados
-
