@@ -144,7 +144,9 @@ def exibir_total_de_familias():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em processos de regularização.', title='Total de Famílias')
+        total_familias_formatado = "{:.0f}".format(total_familias)
+
+        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias')
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -166,7 +168,9 @@ def exibir_total_de_familias_em_territorios_identificados():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Número de Famílias: {total_familias} Famílias em Territórios Identificados.', title='Total de Famílias')
+        total_familias_formatado = "{:.0f}".format(total_familias)
+
+        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias')
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
