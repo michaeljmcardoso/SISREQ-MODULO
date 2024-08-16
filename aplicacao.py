@@ -29,13 +29,13 @@ class Aplicacao:
             elif event == 'INSERIR':
                 funcoes_registro.inserir_dados(values, self.janela)
                 totalProcesso += 1
-                self.janela['total_processo'].update(f'Total: {totalProcesso} Processos')
+                self.janela['total_processo'].update(f'{totalProcesso} Processos')
                 
                 funcoes_registro.consultar_registros(self.janela)
 
             elif event == 'CONSULTAR':
                 funcoes_registro.consultar_registros(self.janela)
-                self.janela['total_processo'].update(f'Total: {totalProcesso} Processos')
+                self.janela['total_processo'].update(f'{totalProcesso} Processos')
 
             elif event == 'ALTERAR':
                 funcoes_registro.alterar_registro(self.janela)
@@ -169,11 +169,9 @@ class Aplicacao:
         self.janela.close()
 
     def criar_janela(self):
-
         conn = funcoes_registro.conectar_banco_de_dados()
         cursor = conn.cursor()
 
-        # Consulta para contar o numero de processos e armazenar o total em totalProcesso
         cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
         totalProcesso = cursor.fetchone()[0]
 
@@ -227,10 +225,14 @@ class Aplicacao:
             [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04'), sg.VerticalSeparator(), sg.Text('EXTRAIR:', font='Helvetica 10 bold'), sg.Button('Planilha', button_color='#ac4e04')],
         ]
 
+        coluna_total_processos = [
+            [sg.Text(f"{totalProcesso} Processos", key='total_processo', font='Any 10 bold', text_color='black', background_color='#c8cf9d')]
+        ]
+
         layout = [
             [sg.Text(' ', size=(75, 1)), sg.Text('CADASTRO DE PROCESSOS', font='Helvetica 10 bold')],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
-            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.Text(f"Total: {totalProcesso} Processos", key='total_processo', font='Any 9 bold', text_color='black', background_color='#c8cf9d')],
+            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font='Helvetica 10 bold'), sg.Column(coluna_total_processos)],
             [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
                 values=[],

@@ -377,4 +377,4 @@ def alterar_registro(janela):
             consultar_registros(janela)
             cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
-            janela['total_processo'].update(f'Total: {totalProcesso} Processos')
+            janela['total_processo'].update(f'{totalProcesso} Processos')
