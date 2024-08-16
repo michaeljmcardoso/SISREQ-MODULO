@@ -2,10 +2,12 @@ import PySimpleGUI as sg
 import funcoes_registro
 import salvar
 
-# Função para pesquisar processos com Relatório Antropológico
+"""Funções para gerar e exibir relatórios"""
+
 def territorios_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
@@ -71,10 +73,13 @@ def territorios_identificados():
 
             if event_relatorio == sg.WINDOW_CLOSED or event_relatorio == 'Fechar':
                 break
+
             elif event_relatorio == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event_relatorio == 'Número de Famílias':
                 exibir_total_de_familias_em_territorios_identificados()
+
             elif event_relatorio == 'Área Identificada':
                 exibir_area_total_em_territorios_identificados()
 
@@ -87,6 +92,7 @@ def territorios_identificados():
 def territorios_nao_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT * FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
     registros = cursor.fetchall()
 
@@ -127,6 +133,7 @@ def territorios_nao_identificados():
 
             if event_sem_relatorio == sg.WINDOW_CLOSED or event_sem_relatorio == 'Fechar':
                 break
+
             elif event_sem_relatorio == 'Extrato':
                 salvar.extrato_planilha(registros)
 
@@ -139,14 +146,14 @@ def territorios_nao_identificados():
 def exibir_total_de_familias():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ")
-
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-
         sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias')
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -154,6 +161,7 @@ def exibir_total_de_familias():
 def exibir_total_de_familias_em_territorios_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
@@ -169,8 +177,8 @@ def exibir_total_de_familias_em_territorios_identificados():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-
         sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias')
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -178,14 +186,14 @@ def exibir_total_de_familias_em_territorios_identificados():
 def exibir_area_total():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ")
-
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-
         sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área')
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -193,6 +201,7 @@ def exibir_area_total():
 def exibir_area_total_em_territorios_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
@@ -210,6 +219,7 @@ def exibir_area_total_em_territorios_identificados():
     if totalArea is not None:
         totalAreaFormatado = "{:.2f}".format(totalArea)
         sg.popup(f'Área Total: {totalAreaFormatado} hectares em Territórios Identificados.', title='Total de Área')
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -217,6 +227,7 @@ def exibir_area_total_em_territorios_identificados():
 def exibir_territorios_quilombolas_em_assentamentos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
     total_territorio_quilombola_em_assentamento = cursor.fetchone()[0]
 
@@ -253,16 +264,20 @@ def exibir_territorios_quilombolas_em_assentamentos():
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
             elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
         janela.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
+
 
 def exibir_processos_com_acao_judicial():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
         "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
@@ -318,6 +333,7 @@ def exibir_processos_com_acao_judicial():
 
             if event_acp == sg.WINDOW_CLOSED or event_acp == 'Fechar':
                 break
+
             elif event_acp == 'Extrato':
                 salvar.extrato_planilha(registros)
 
@@ -325,3 +341,89 @@ def exibir_processos_com_acao_judicial():
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_total_de_familias_em_rtids_publicados():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Edital_DOU")
+    total_familias = cursor.fetchone()[0]
+
+    if total_familias is not None:
+        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias')
+    
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_area_total_em_rtids_publicados():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Edital_DOU")
+    totalAreaRtidPublicado = cursor.fetchone()[0]
+
+    if totalAreaRtidPublicado is not None:
+        totalAreaFormatado = "{:.2f}".format(totalAreaRtidPublicado)
+        sg.popup(f'Área em Relatórios Publicados: {totalAreaFormatado}', title='Total de Área')
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_area_total_em_fase_titulacao():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
+    total_area = cursor.fetchone()[0]
+
+    if total_area is not None:
+        total_area_formatado = "{:.2f}".format(total_area)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área')
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_total_de_familias_em_fase_titulacao():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
+    total_familias = cursor.fetchone()[0]
+
+    if total_familias is not None:
+        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias')
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_total_de_familias_em_areas_tituladas():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Titulo")
+    total_familias = cursor.fetchone()[0]
+
+    if total_familias is not None:
+        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias')
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
+def exibir_area_total_em_areas_tituladas():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT SUM(Titulo) FROM SISREQ WHERE Titulo")
+    total_area = cursor.fetchone()[0]
+
+    if total_area is not None:
+        total_area_formatado = "{:.2f}".format(total_area)
+        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área')
+
+    else:
+        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro')

@@ -1,10 +1,12 @@
 import PySimpleGUI as sg
 import funcoes_registro
 import salvar
+import relatorios
 
 def fase_inicial():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
     totalFaseInicial = cursor.fetchone()[0]
 
@@ -46,16 +48,19 @@ def fase_inicial():
 
             if event_inicial == sg.WINDOW_CLOSED or event_inicial == 'Fechar':
                 break
+
             elif event_inicial == 'Extrato':
                 salvar.extrato_planilha(registros)
 
         janelaInicial.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
 def fase_Rtid():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
     totalFaseRtid = cursor.fetchone()[0]
 
@@ -97,11 +102,15 @@ def fase_Rtid():
 
             if event_rtid == sg.WINDOW_CLOSED or event_rtid == 'Fechar':
                 break
+
             elif event_rtid == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event_rtid == 'RTID´s Publicados':
                 rtidsPublicados()
+
         janelaRtid.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -109,6 +118,7 @@ def fase_Rtid():
 def rtidsPublicados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
     totalRtidPublicado = cursor.fetchone()[0]
 
@@ -152,15 +162,18 @@ def rtidsPublicados():
 
             if event_publicado == sg.WINDOW_CLOSED or event_publicado == 'Fechar':
                 break
+
             elif event_publicado == 'Extrato':
                 salvar.extrato_planilha(registros)
-            elif event_publicado == 'Número de Famílias':
-                contarNumeroDeFamiliasEmRelatoriosPublicados()
-            elif event_publicado == 'Área Identificada':
-                contarAreaRtidPublicado()
 
+            elif event_publicado == 'Número de Famílias':
+                relatorios.exibir_total_de_familias_em_rtids_publicados()
+
+            elif event_publicado == 'Área Identificada':
+                relatorios.exibir_area_total_em_rtids_publicados()
 
         janelaRtidPublicado.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -168,6 +181,7 @@ def rtidsPublicados():
 def fase_publicacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
     totalFasePublicacao = cursor.fetchone()[0]
 
@@ -210,15 +224,19 @@ def fase_publicacao():
 
             if event_publicacao == sg.WINDOW_CLOSED or event_publicacao == 'Fechar':
                 break
+            
             elif event_publicacao == 'Extrato':
                 salvar.extrato_planilha(registros)
+
         janelaPublicacao.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
 def fase_notificacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
     total_fase_notificacao = cursor.fetchone()[0]
 
@@ -260,9 +278,12 @@ def fase_notificacao():
 
             if event_notificacao == sg.WINDOW_CLOSED or event_notificacao == 'Fechar':
                 break
+
             elif event_notificacao == 'Extrato':
                 salvar.extrato_planilha(registros)
+
         janelaNotificacao.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -270,6 +291,7 @@ def fase_notificacao():
 def fase_portaria():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
     total_fase_portaria = cursor.fetchone()[0]
 
@@ -310,8 +332,10 @@ def fase_portaria():
 
             if event_portaria == sg.WINDOW_CLOSED or event_portaria == 'Fechar':
                 break
+
             elif event_portaria == 'Extrato':
                 salvar.extrato_planilha(registros)
+
         window_portaria.close()
 
     else:
@@ -321,6 +345,7 @@ def fase_portaria():
 def fase_decreto():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
     total_fase_decreto = cursor.fetchone()[0]
 
@@ -361,6 +386,7 @@ def fase_decreto():
 
             if event_decreto == sg.WINDOW_CLOSED or event_decreto == 'Fechar':
                 break
+
             elif event_decreto == 'Extrato':
                 salvar.extrato_planilha(registros)
 
@@ -373,6 +399,7 @@ def fase_decreto():
 def fase_titulacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
     total_fase_titulacao = cursor.fetchone()[0]
 
@@ -415,16 +442,21 @@ def fase_titulacao():
 
             if event_titulacao == sg.WINDOW_CLOSED or event_titulacao == 'Fechar':
                 break
+
             elif event_titulacao == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event_titulacao == 'Área Total':
-                contar_e_apresentar_area_fase_titulacao()
+                relatorios.exibir_area_total_em_fase_titulacao()
+
             elif event_titulacao == 'Número de Famílias':
-                contarFamiliasEmFaseTitulacao()
+                relatorios.exibir_total_de_familias_em_fase_titulacao()
+
             elif event_titulacao == 'Titulos Expedidos':
                 titulos_expedidos()
 
         window_titulacao.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -432,6 +464,7 @@ def fase_titulacao():
 def titulos_expedidos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
     total_titulos_expedidos = cursor.fetchone()[0]
 
@@ -473,14 +506,18 @@ def titulos_expedidos():
 
             if event_titulado == sg.WINDOW_CLOSED or event_titulado == 'Fechar':
                 break
+
             elif event_titulado == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event_titulado == 'Área Total':
-                contar_e_apresentar_area_titulada()
+                relatorios.exibir_area_total_em_areas_tituladas()
+
             elif event_titulado == 'Número de Famílias':
-                contar_e_apresentar_familias_tituladas()
+                relatorios.exibir_total_de_familias_em_areas_tituladas()
 
         window_titulado.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -488,6 +525,7 @@ def titulos_expedidos():
 def fase_desintrusao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
     total_fase_desintrusao = cursor.fetchone()[0]
 
@@ -528,8 +566,10 @@ def fase_desintrusao():
 
             if event_desintrusao == sg.WINDOW_CLOSED or event_desintrusao == 'Fechar':
                 break
+
             elif event_desintrusao == 'Extrato':
                 salvar.extrato_planilha(registros)
+
         window_desintrusao.close()
 
     else:
@@ -539,6 +579,7 @@ def fase_desintrusao():
 def fase_contestacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE 'Contestação'")
     total_fase_contestacao = cursor.fetchone()[0]
     
@@ -579,10 +620,12 @@ def fase_contestacao():
 
             if event_contestacao == sg.WINDOW_CLOSED or event_contestacao == 'Fechar':
                 break
+
             elif event_contestacao == 'Extrato':
                 salvar.extrato_planilha(registros)
 
         window_contestacao.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -590,6 +633,7 @@ def fase_contestacao():
 def fase_recurso():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
     total_fase_recurso = cursor.fetchone()[0]
     
@@ -629,10 +673,12 @@ def fase_recurso():
 
             if event_recurso == sg.WINDOW_CLOSED or event_recurso == 'Fechar':
                 break
+
             elif event_recurso == 'Extrato':
                 salvar.extrato_planilha(registros)
 
         window_recurso.close()
+
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
 
@@ -640,6 +686,7 @@ def fase_recurso():
 def fase_desapropriacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
     total_fase_desapropriacao = cursor.fetchone()[0]
 
@@ -680,9 +727,11 @@ def fase_desapropriacao():
 
             if event_desapropriacao == sg.WINDOW_CLOSED or event_desapropriacao == 'Fechar':
                 break
+
             elif event_desapropriacao == 'Extrato':
                 salvar.extrato_planilha(registros)
 
         window_desapropriacao.close()
+        
     else:
         sg.popup('Não há registros para exibir.', title='Erro')

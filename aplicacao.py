@@ -16,43 +16,72 @@ class Aplicacao:
     def iniciar(self):
         while True:
             event, values = self.janela.read()
+
+            conn = funcoes_registro.conectar_banco_de_dados()
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
+            totalProcesso = cursor.fetchone()[0]
+            
             if event == 'SAIR' or event == sg.WIN_CLOSED:
                 break
+
             elif event == 'INSERIR':
                 funcoes_registro.inserir_dados(values, self.janela)
+                totalProcesso += 1
+                self.janela['total_processo'].update(f'Total: {totalProcesso} Processos')
+                
                 funcoes_registro.consultar_registros(self.janela)
+
             elif event == 'CONSULTAR':
                 funcoes_registro.consultar_registros(self.janela)
+                self.janela['total_processo'].update(f'Total: {totalProcesso} Processos')
+
             elif event == 'ALTERAR':
                 funcoes_registro.alterar_registro(self.janela)
+
             elif event == 'Planilha':
                 salvar.planilha(self.janela)
+
             elif event == 'Inicial':
                 filtrar.fase_inicial()
+
             elif event == 'RTID':
                 filtrar.fase_Rtid()
+
             elif event == 'Publicação':
                 filtrar.fase_publicacao()
+
             elif event == 'Notificação':
                 filtrar.fase_notificacao()
+
             elif event == 'Contestação':
                 filtrar.fase_contestacao()
+
             elif event == 'Recurso':
                 filtrar.fase_recurso()
+
             elif event == 'Portaria':
                 filtrar.fase_portaria()
+
             elif event == 'Decreto':
                 filtrar.fase_decreto()
+
             elif event == 'Titulação':
                 filtrar.fase_titulacao()
+
             elif event == 'Desintrusão':
                 filtrar.fase_desintrusao()
+
             elif event == 'Desapropriação':
                 filtrar.fase_desapropriacao()
+
             elif event == 'PESQUISAR':
                 self.criar_janela_pesquisar()
+
             elif event == 'Relatórios':
                 janela_relatorios.criar_janela()
+
             elif event == 'Gráficos':
                 janela_graficos.criar_janela()
 
@@ -79,6 +108,7 @@ class Aplicacao:
                     pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
+
             elif event == 'Buscar Comunidade':
                 pesquisar.pesquisar_por_nome_comunidade(self.janela)
             
@@ -105,6 +135,7 @@ class Aplicacao:
                     pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
                     sg.popup('Por favor, digite o nome de um município.', title='Erro')
+
             elif event == 'Buscar Municipio':
                 pesquisar.pesquisar_por_nome_municipio(self.janela)
 
@@ -131,12 +162,21 @@ class Aplicacao:
                     pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
                     sg.popup('Por favor, digite o número de um processo.', title='Erro')
+
             elif event == 'Buscar Processo':
                 pesquisar.pesquisar_por_num_processo(self.janela)
 
         self.janela.close()
 
     def criar_janela(self):
+
+        conn = funcoes_registro.conectar_banco_de_dados()
+        cursor = conn.cursor()
+
+        # Consulta para contar o numero de processos e armazenar o total em totalProcesso
+        cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
+        totalProcesso = cursor.fetchone()[0]
+
         sg.theme(constantes.JANELA_TEMA)
 
         coluna_1 = [
@@ -190,7 +230,7 @@ class Aplicacao:
         layout = [
             [sg.Text(' ', size=(75, 1)), sg.Text('CADASTRO DE PROCESSOS', font='Helvetica 10 bold')],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
-            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos)],
+            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.Text(f"Total: {totalProcesso} Processos", key='total_processo', font='Any 9 bold', text_color='black', background_color='#c8cf9d')],
             [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
                 values=[],

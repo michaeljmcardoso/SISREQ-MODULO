@@ -91,8 +91,8 @@ def inserir_dados(values, janela):
                         'Edital_DOE',
                         'Portaria_DOU',
                         'Decreto_DOU',
-                        'Area_ha_Titulada',
-                        'Porcentagem_Titulada',
+                        'Titulo',
+                        'PNRA',
                         'Relatorio_Antropologico',
                         'Latitude',
                         'Longitude',
@@ -375,3 +375,6 @@ def alterar_registro(janela):
             sg.popup('Registro alterado com sucesso!', title='Sucesso')
             janelaAlterarDados.close()
             consultar_registros(janela)
+            cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
+            totalProcesso = cursor.fetchone()[0]
+            janela['total_processo'].update(f'Total: {totalProcesso} Processos')
