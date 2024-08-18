@@ -274,6 +274,7 @@ class Aplicacao:
             event, values = janela_pesquisar.read()
             if event == 'SAIR' or event == sg.WIN_CLOSED:
                 break
+
             elif event == '-NOME_COMUNIDADES-':
                 entrada = values['-NOME_COMUNIDADES-']
                 sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.comunidades)
@@ -294,6 +295,7 @@ class Aplicacao:
                     pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro')
+
             elif event == 'Buscar Comunidade':
                 pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
 
@@ -318,6 +320,7 @@ class Aplicacao:
                     pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
                     sg.popup('Por favor, digite o nome de um municipio.', title='Erro')
+
             elif event == 'Buscar Municipio':
                 pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
             
@@ -341,6 +344,7 @@ class Aplicacao:
                     pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
                     sg.popup('Por favor, digite o número de um processo.', title='Erro')
+                    
             elif event == 'Buscar Processo':
                 pesquisar.pesquisar_por_num_processo(janela_pesquisar)
 
