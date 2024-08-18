@@ -46,7 +46,7 @@ Em resumo, o SISREQ é um sistema versátil que permite o gerenciamento eficient
   
   O passso seguinte é a definação das variáveis constantes para os campos do formulário que terão opões de múltipla escolha ou escolha única.
 
-  Definimos o tema da janela utilizando e construímos o layout da janela principal. A janela possui campos de entrada para o cadastro de processos, botões para inserir, consultar e extrair planilha, uma tabela para exibir os registros cadastrados e um botão para alterar um registro selecionado.
+  Definimos o tema e o layout da janela principal. A janela possui campos de entrada para o cadastro de processos, botões para inserir, consultar e extrair planilha, uma tabela para exibir os registros cadastrados e um botão para alterar um registro selecionado.
  
   Criada a janela com o layout definido, damos continuidade construindo as funções para inserir dados, consultar registros, pesquisar por nome da comunidade, extrair planilha, alterar um registro dentre outras funções para consulta e exibição de gráficos. Dentro da segunda janela de consulta definimos outra função para extrair um extrato de um único registro.
 
