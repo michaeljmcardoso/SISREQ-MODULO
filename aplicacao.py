@@ -1,4 +1,4 @@
-#  REGISTROS - Sistema de Regularização Quilombola
+#  SISREQ - Sistema de Regularização Quilombola
 
 import PySimpleGUI as sg
 import funcoes_registro
@@ -20,7 +20,7 @@ class Aplicacao:
             conn = funcoes_registro.conectar_banco_de_dados()
             cursor = conn.cursor()
 
-            cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Numero")
+            cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
             
             if event == 'SAIR' or event == sg.WIN_CLOSED:
@@ -172,7 +172,7 @@ class Aplicacao:
         conn = funcoes_registro.conectar_banco_de_dados()
         cursor = conn.cursor()
 
-        cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Numero")
+        cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
         totalProcesso = cursor.fetchone()[0]
 
         sg.theme(constantes.JANELA_TEMA)
@@ -232,7 +232,7 @@ class Aplicacao:
         layout = [
             [sg.Text(' ', size=(75, 1)), sg.Text('CADASTRO DE PROCESSOS', font='Helvetica 10 bold')],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
-            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font='Helvetica 10 bold'), sg.Column(coluna_total_processos)],
+            [sg.Text('SISREQ:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font='Helvetica 10 bold'), sg.Column(coluna_total_processos)],
             [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
                 values=[],
@@ -256,7 +256,7 @@ class Aplicacao:
             [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("REGISTROS - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
+        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
 
     def criar_janela_pesquisar(self):
@@ -268,7 +268,7 @@ class Aplicacao:
 
         layout = [[sg.Column(coluna_pesquisar)]]
 
-        janela_pesquisar = sg.Window('Pesquisar Registros', layout, resizable=False)
+        janela_pesquisar = sg.Window('Pesquisar SISREQ', layout, resizable=False)
 
         while True:
             event, values = janela_pesquisar.read()

@@ -4,7 +4,7 @@ import constantes
 
 def conectar_banco_de_dados():
     try:
-        conn = sqlite3.connect('registros.db')
+        conn = sqlite3.connect('sisreq.db')
         return conn
     except sqlite3.Error as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
@@ -14,7 +14,7 @@ def criar_tabela_se_nao_existir(conn):
     cursor = conn.cursor()
     cursor.execute(
         '''
-        CREATE TABLE IF NOT EXISTS REGISTROS (
+        CREATE TABLE IF NOT EXISTS SISREQ (
             ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             Numero TEXT,
             Data_Abertura DATE,
@@ -171,7 +171,7 @@ def consultar_registros(janela):
     conn = conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM REGISTROS")
+        cursor.execute("SELECT * FROM SISREQ")
         registros = cursor.fetchall()
         
         if registros:
@@ -311,7 +311,7 @@ def alterar_registro(janela):
 
             cursor.execute(
                 """ 
-                UPDATE REGISTROS SET 
+                UPDATE SISREQ SET 
                 Numero=?, 
                 Data_Abertura=?, 
                 Comunidade=?, 
@@ -375,6 +375,6 @@ def alterar_registro(janela):
             sg.popup('Registro alterado com sucesso!', title='Sucesso')
             janelaAlterarDados.close()
             consultar_registros(janela)
-            cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Numero")
+            cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
             janela['total_processo'].update(f'{totalProcesso} Processos')

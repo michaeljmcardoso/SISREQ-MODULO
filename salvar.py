@@ -9,7 +9,7 @@ def planilha(registros):
     if conn is not None:
         cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM REGISTROS")
+    cursor.execute("SELECT * FROM SISREQ")
     registros = cursor.fetchall()
     if registros:
         df = pd.DataFrame(

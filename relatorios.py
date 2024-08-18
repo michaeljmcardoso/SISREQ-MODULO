@@ -9,7 +9,7 @@ def territorios_identificados():
     cursor = conn.cursor()
     
     cursor.execute(
-        "SELECT COUNT(*) FROM REGISTROS WHERE "
+        "SELECT COUNT(*) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
@@ -24,7 +24,7 @@ def territorios_identificados():
     total_de_territorios_identificados = cursor.fetchone()[0]
 
     cursor.execute(
-        "SELECT * FROM REGISTROS WHERE "
+        "SELECT * FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
@@ -93,7 +93,7 @@ def territorios_nao_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT * FROM REGISTROS WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
+    cursor.execute("SELECT * FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
     registros = cursor.fetchall()
 
     cursor.execute("SELECT COUNT(*) FROM REGISTROS WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
@@ -147,7 +147,7 @@ def exibir_total_de_familias():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM REGISTROS")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -162,7 +162,7 @@ def exibir_total_de_familias_em_territorios_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_familias) FROM REGISTROS WHERE "
+    cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
@@ -187,7 +187,7 @@ def exibir_area_total():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Area_ha) FROM REGISTROS")
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ")
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
@@ -202,7 +202,7 @@ def exibir_area_total_em_territorios_identificados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Area_ha) FROM REGISTROS WHERE "
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
         "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
@@ -228,10 +228,10 @@ def exibir_territorios_quilombolas_em_assentamentos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) FROM REGISTROS WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
+    cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
     total_territorio_quilombola_em_assentamento = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM REGISTROS WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
+    cursor.execute("SELECT * FROM SISREQ WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -279,7 +279,7 @@ def exibir_processos_com_acao_judicial():
     cursor = conn.cursor()
     
     cursor.execute(
-        "SELECT COUNT(*) FROM REGISTROS WHERE "
+        "SELECT COUNT(*) FROM SISREQ WHERE "
         "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
         "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
         "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
@@ -290,7 +290,7 @@ def exibir_processos_com_acao_judicial():
     total_acao_civil = cursor.fetchone()[0]
 
     cursor.execute(
-        "SELECT * FROM REGISTROS WHERE "
+        "SELECT * FROM SISREQ WHERE "
         "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
         "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
         "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
@@ -347,7 +347,7 @@ def exibir_total_de_familias_em_rtids_publicados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM REGISTROS WHERE Edital_DOU")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Edital_DOU")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -361,7 +361,7 @@ def exibir_area_total_em_rtids_publicados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Area_ha) FROM REGISTROS WHERE Edital_DOU")
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Edital_DOU")
     totalAreaRtidPublicado = cursor.fetchone()[0]
 
     if totalAreaRtidPublicado is not None:
@@ -376,7 +376,7 @@ def exibir_area_total_em_fase_titulacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Area_ha) FROM REGISTROS WHERE Fase_Processo LIKE '%Titulação%'")
+    cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
@@ -391,7 +391,7 @@ def exibir_total_de_familias_em_fase_titulacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM REGISTROS WHERE Fase_Processo LIKE '%Titulação%'")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -404,7 +404,7 @@ def exibir_total_de_familias_em_areas_tituladas():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM REGISTROS WHERE Titulo")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Titulo")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -418,7 +418,7 @@ def exibir_area_total_em_areas_tituladas():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT SUM(Titulo) FROM REGISTROS WHERE Titulo")
+    cursor.execute("SELECT SUM(Titulo) FROM SISREQ WHERE Titulo")
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
