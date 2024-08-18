@@ -3,9 +3,12 @@ import funcoes_registro
 import salvar
 import constantes
 
+
+
 def buscar_comunidade():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+    funcoes_registro.criar_tabela_se_nao_existir(conn)
     cursor.execute("SELECT Comunidade FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
 
