@@ -26,6 +26,7 @@
   9. **Recursos Avançados:** No futuro, dependendo da complexidade do sistema, poderão ser implementados recursos avançados, como notificações automáticas, integração com outros sistemas, inteligência artificial, entre outros.
 
   Em resumo, o SISREQ é um sistema versátil que permite o gerenciamento eficiente de processos, facilitando o acesso às informações, a geração de relatórios, possibilitando tomada de decisões com base em dados atualizados e organizados. A lógica do programa é focada em fornecer uma solução completa para o controle e acompanhamento de processos de forma eficaz e simplificada.
+  [Projeto](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/Projeto.md)
   </p>
 
 ## Step by step do desenvolvimento do programa
@@ -53,11 +54,10 @@
   No Loop principal para capturar eventos da janela, quando um evento ocorre (por exemplo, clique em um botão), a função correspondente é chamada.
   Finalmente, fechamos a conexão com o banco de dados e encerramos o programa.
 
-  [Projeto](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/Projeto.md)
 </p>
 
 # SISREQ-MODULO
-  <p>
+<p>
   Versão modulada do programa.
   
   [SISREQ](https://github.com/michaeljmcardoso/SISREQ-MODULO/tree/desenvolvimento)
@@ -88,4 +88,4 @@
   Escalabilidade aprimorada: Os programas modulares são mais escaláveis, pois novos módulos podem ser adicionados para lidar com cargas de trabalho crescentes ou novos recursos.
 
   Em resumo, os programas modulares são essenciais para o desenvolvimento de software de alta qualidade, pois oferecem maior reutilização de código, manutenção aprimorada, flexibilidade, colaboração aprimorada, teste aprimorado, desenvolvimento mais rápido, melhor legibilidade e escalabilidade aprimorada.
-  </p>
+</p>
