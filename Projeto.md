@@ -13,5 +13,5 @@ Os processos de regularização quilombola geram uma enorme quantidade de inform
 Dada a complexidade e o volume de dados envolvidos, a implementação de um sistema de gerenciamento de dados é fundamental. Um sistema como o SISREQ (Sistema de Regularização Quilombola) poderia centralizar todas as informações em uma única plataforma, facilitando o acesso e a análise dos dados por parte das diferentes instituições e profissionais envolvidos no processo. Além disso, o SISREQ representaria uma oportunidade única para melhorar a eficiência e a transparência dos processos de regularização, especialmente em estados como o Maranhão, onde a demanda é alta e os desafios são consideráveis.
 
 A ausência de um sistema centralizado até o momento torna essa iniciativa ainda mais relevante, pois permitiria uma gestão mais integrada e estratégica das informações, contribuindo para a celeridade e eficácia dos processos de regularização quilombola.
-
+[SISREQ](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/README.md)
 @michaeljmcardoso 2024
