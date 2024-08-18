@@ -1,4 +1,4 @@
-#  SISREQ - Sistema de Regularização Quilombola
+#  REGISTROS - Sistema de Regularização Quilombola
 
 import PySimpleGUI as sg
 import funcoes_registro
@@ -20,7 +20,7 @@ class Aplicacao:
             conn = funcoes_registro.conectar_banco_de_dados()
             cursor = conn.cursor()
 
-            cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
+            cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
             
             if event == 'SAIR' or event == sg.WIN_CLOSED:
@@ -172,7 +172,7 @@ class Aplicacao:
         conn = funcoes_registro.conectar_banco_de_dados()
         cursor = conn.cursor()
 
-        cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
+        cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Numero")
         totalProcesso = cursor.fetchone()[0]
 
         sg.theme(constantes.JANELA_TEMA)
@@ -256,7 +256,7 @@ class Aplicacao:
             [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
+        janela = sg.Window("REGISTROS - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
 
     def criar_janela_pesquisar(self):

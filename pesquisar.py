@@ -9,7 +9,7 @@ def buscar_comunidade():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     funcoes_registro.criar_tabela_se_nao_existir(conn)
-    cursor.execute("SELECT Comunidade FROM SISREQ")
+    cursor.execute("SELECT Comunidade FROMREGISTROS")
     return [row[0] for row in cursor.fetchall()]
 
 comunidades = buscar_comunidade()
@@ -22,10 +22,10 @@ def atualizar_sugestoes(entrada, lista_comunidades):
 def pesquisar_por_nome_comunidade(nome_comunidade):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
+    cursor.execute("SELECT * FROM REGISTROS WHERE Comunidade = ?", (nome_comunidade,))
     registros = cursor.fetchall()
 
-    cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
+    cursor.execute("SELECT COUNT(*) FROM  REGISTROS WHERE Comunidade = ?", (nome_comunidade,))
     total_comunidade = cursor.fetchone()[0]
 
     if registros:
@@ -136,7 +136,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
                                 cursor.execute(
                                     """ 
-                                    UPDATE SISREQ SET 
+                                    UPDATEREGISTROS SET 
                                     Numero=?, 
                                     Data_Abertura=?, 
                                     Comunidade=?, 
@@ -201,7 +201,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
-                                    cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
+                                    cursor.execute("SELECT * FROM REGISTROS WHERE Comunidade = ?", (nome_comunidade,))
                                     registros = cursor.fetchall()
                                     if registros:
 
@@ -222,7 +222,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 def buscar_municipios():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Municipio FROM SISREQ")
+    cursor.execute("SELECT Municipio FROM REGISTROS")
     return [row[0] for row in cursor.fetchall()]
 
 municipios = buscar_municipios()
@@ -235,10 +235,10 @@ def atualizar_sugestoes(entrada, lista_municipios):
 def pesquisar_por_nome_municipio(nome_municipio):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
+    cursor.execute("SELECT * FROM REGISTROS WHERE Municipio = ?", (nome_municipio,))
     registros = cursor.fetchall()
 
-    cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
+    cursor.execute("SELECT COUNT(*) FROM  REGISTROS WHERE Municipio = ?", (nome_municipio,))
     total_municipio = cursor.fetchone()[0]
     
     if registros:
@@ -350,7 +350,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 
                             cursor.execute(
                                 """ 
-                                UPDATE SISREQ SET 
+                                UPDATEREGISTROS SET 
                                 Numero=?, 
                                 Data_Abertura=?, 
                                 Comunidade=?, 
@@ -415,7 +415,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                             janelaconsultarDados.close()
                             
                             def atualizarRegistros():
-                                cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
+                                cursor.execute("SELECT * FROM REGISTROS WHERE Municipio = ?", (nome_municipio,))
                                 registros = cursor.fetchall()
 
                                 if registros:
@@ -435,7 +435,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 def buscar_processo():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Numero FROM SISREQ")
+    cursor.execute("SELECT Numero FROM REGISTROS")
     return [row[0] for row in cursor.fetchall()]
 
 processos = buscar_processo()
@@ -448,10 +448,10 @@ def atualizar_sugestoes(entrada, lista_processos):
 def pesquisar_por_num_processo(num_processo):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
+    cursor.execute("SELECT * FROM REGISTROS WHERE Numero = ?", (num_processo,))
     registros = cursor.fetchall()
 
-    cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Numero = ?", (num_processo,))
+    cursor.execute("SELECT COUNT(*) FROM REGISTROS WHERE Numero = ?", (num_processo,))
     total_processo = cursor.fetchone()[0]
 
     if registros:
@@ -562,7 +562,7 @@ def pesquisar_por_num_processo(num_processo):
 
                                 cursor.execute(
                                     """ 
-                                    UPDATE SISREQ SET 
+                                    UPDATEREGISTROS SET 
                                     Numero=?, 
                                     Data_Abertura=?, 
                                     Comunidade=?, 
@@ -627,7 +627,7 @@ def pesquisar_por_num_processo(num_processo):
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
-                                    cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
+                                    cursor.execute("SELECT * FROM REGISTROS WHERE Numero = ?", (num_processo,))
                                     registros = cursor.fetchall()
                                     if registros:
 

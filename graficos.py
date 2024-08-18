@@ -4,7 +4,6 @@ import funcoes_registro
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-import datetime
 import webbrowser
 
 # Backend específico para exibir gráficos em uma interface gráfica
@@ -14,7 +13,7 @@ plt.switch_backend('TkAgg')
 def exibir_processos_por_municipio():
     conn = funcoes_registro.conectar_banco_de_dados ()
     cursor = conn.cursor()
-    cursor.execute("SELECT Municipio, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Municipio")
+    cursor.execute("SELECT Municipio, COUNT(*) AS Num_Processos FROM REGISTROS GROUP BY Municipio")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -58,7 +57,7 @@ def exibir_processos_por_municipio():
 def exibir_processos_por_data_abertura():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Data_Abertura, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Data_Abertura")
+    cursor.execute("SELECT Data_Abertura, COUNT(*) AS Num_Processos FROM REGISTROS GROUP BY Data_Abertura")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -108,7 +107,7 @@ def exibir_processos_por_data_abertura():
 def exibir_processos_com_acao_judicial():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM SISREQ WHERE Acao_Civil_Publica != 'Sem_ACP' GROUP BY Acao_Civil_Publica")
+    cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM REGISTROS WHERE Acao_Civil_Publica != 'Sem_ACP' GROUP BY Acao_Civil_Publica")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -146,7 +145,7 @@ def exibir_processos_com_acao_judicial():
 def exibir_processos_por_fase_atual():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Fase_Processo, COUNT(*) as Total FROM SISREQ WHERE Fase_Processo != 'Inicial' GROUP BY Fase_Processo")
+    cursor.execute("SELECT Fase_Processo, COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo != 'Inicial' GROUP BY Fase_Processo")
     registros = cursor.fetchall()
 
     if registros:
@@ -182,7 +181,7 @@ def exibir_processos_por_fase_atual():
 def exibir_andamento_de_processos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT CASE WHEN Fase_Processo = 'Inicial' THEN 'Inicial' ELSE 'Andamento' END AS Fase, COUNT(*) as Total FROM SISREQ GROUP BY Fase")
+    cursor.execute("SELECT CASE WHEN Fase_Processo = 'Inicial' THEN 'Inicial' ELSE 'Andamento' END AS Fase, COUNT(*) as Total FROM REGISTROS GROUP BY Fase")
     registros = cursor.fetchall()
 
     if registros:
@@ -217,7 +216,7 @@ def exibir_andamento_de_processos():
 def exibir_tipo_de_sopreposicao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Sobreposicao, COUNT(*) AS Tipo_Sobreposicao FROM SISREQ GROUP BY Sobreposicao")
+    cursor.execute("SELECT Sobreposicao, COUNT(*) AS Tipo_Sobreposicao FROM REGISTROS GROUP BY Sobreposicao")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -260,7 +259,7 @@ def exibir_tipo_de_sopreposicao():
 def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Relatorio_Antropologico, COUNT(*) AS Rel_Antropologico FROM SISREQ WHERE Relatorio_Antropologico != 'Sem_Relatório' GROUP BY Relatorio_Antropologico")
+    cursor.execute("SELECT Relatorio_Antropologico, COUNT(*) AS Rel_Antropologico FROM REGISTROS WHERE Relatorio_Antropologico != 'Sem_Relatório' GROUP BY Relatorio_Antropologico")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -317,7 +316,7 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
 def plotar_mapa_interativo():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
-    cursor.execute("SELECT Municipio, Comunidade, Latitude, Longitude, Num_Familias FROM SISREQ")
+    cursor.execute("SELECT Municipio, Comunidade, Latitude, Longitude, Num_Familias FROM REGISTROS")
     resultados = cursor.fetchall()
 
     if resultados:

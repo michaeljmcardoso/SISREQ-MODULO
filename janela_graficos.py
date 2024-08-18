@@ -41,5 +41,4 @@ def criar_janela():
             elif event == 'Mapa Interativo':
                 graficos.plotar_mapa_interativo()
                 
-        
         return janela_graficos

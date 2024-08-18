@@ -7,10 +7,10 @@ def fase_inicial():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Inicial%'")
     totalFaseInicial = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Inicial%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -61,10 +61,10 @@ def fase_Rtid():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%RTID%'")
     totalFaseRtid = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%RTID%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -119,10 +119,10 @@ def rtidsPublicados():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Edital_DOU")
     totalRtidPublicado = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE  Edital_DOU")
+    cursor.execute("SELECT * FROM REGISTROS WHERE  Edital_DOU")
     registros = cursor.fetchall()
 
     if registros:
@@ -182,10 +182,10 @@ def fase_publicacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Publicação%'")
     totalFasePublicacao = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Publicação%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -237,10 +237,10 @@ def fase_notificacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Notificação%'")
     total_fase_notificacao = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Notificação%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -292,10 +292,10 @@ def fase_portaria():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Portaria%'")
     total_fase_portaria = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Portaria%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -346,10 +346,10 @@ def fase_decreto():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Decreto%'")
     total_fase_decreto = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Decreto%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -400,10 +400,10 @@ def fase_titulacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Titulação%'")
     total_fase_titulacao = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Titulação%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -465,10 +465,10 @@ def titulos_expedidos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Titulo")
     total_titulos_expedidos = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Titulo")
     registros = cursor.fetchall()
 
     if registros:
@@ -526,10 +526,10 @@ def fase_desintrusao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Desintrusão%'")
     total_fase_desintrusao = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Desintrusão%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -580,10 +580,10 @@ def fase_contestacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE 'Contestação'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE 'Contestação'")
     total_fase_contestacao = cursor.fetchone()[0]
     
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Contestação%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Contestação%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -634,10 +634,10 @@ def fase_recurso():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Recurso%'")
     total_fase_recurso = cursor.fetchone()[0]
     
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Recurso%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -687,10 +687,10 @@ def fase_desapropriacao():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM REGISTROS WHERE Fase_Processo LIKE '%Desapropriação%'")
     total_fase_desapropriacao = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
+    cursor.execute("SELECT * FROM REGISTROS WHERE Fase_Processo LIKE '%Desapropriação%'")
     registros = cursor.fetchall()
 
     if registros:
