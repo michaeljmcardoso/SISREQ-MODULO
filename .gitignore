@@ -163,4 +163,4 @@ cython_debug/
 
 # Arquivos de banco de dados
 sisreq.db
-banco_dados.db
+banco_de_dados.db
