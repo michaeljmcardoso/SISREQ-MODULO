@@ -6,21 +6,22 @@ def criar_janela():
         sg.theme(constantes.JANELA_TEMA)
 
         coluna_graficos = [
-            [sg.Button('Andamento de Processos', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Processos por Fase', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Ação Judicial', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Sobreposições', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Relatórios Antropológicos', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Ano de Abertura', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Distrubuição por Municípios', button_color='blue')],
-            [sg.HorizontalSeparator()],
-            [sg.Button('Geolocalização', button_color='blue')]
+            [sg.Button('Andamento de Processos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Processos por Fase', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Ação Judicial', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Sobreposições', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Relatórios Antropológicos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Ano de Abertura', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Distrubuição por Municípios', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Geolocalização', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')]
         ]
 
         layout = [[sg.Column(coluna_graficos)]]

@@ -7,7 +7,7 @@ def conectar_banco_de_dados():
         conn = sqlite3.connect('sisreq.db')
         return conn
     except sqlite3.Error as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
+        print(f"Erro ao conectar ao banco de dados: {e}", font=constantes.FONTE)
         return None
 
 def criar_tabela_se_nao_existir(conn):
@@ -136,7 +136,7 @@ def inserir_dados(values, janela):
         )
 
         conn.commit()
-        sg.popup('Dados inseridos com sucesso!', title='Sucesso')
+        sg.popup('Dados inseridos com sucesso!', title='Sucesso', font=constantes.FONTE)
 
         janela['-NUMERO-'].update('')
         janela['-DATA_ABERTURA-'].update('')
@@ -177,7 +177,7 @@ def consultar_registros(janela):
         if registros:
             janela['-TABLE-'].update(registros)
         else:
-            sg.popup('Não há registros cadastrados.', title='Registros')
+            sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
 
         cursor.close()
         conn.close()
@@ -189,7 +189,7 @@ def alterar_registro(janela):
 
     selected_rows = janela['-TABLE-'].SelectedRows
     if len(selected_rows) != 1:
-        sg.popup('Selecione um único registro para alterar.', title='Erro')
+        sg.popup('Selecione um único registro para alterar.', title='Erro', font=constantes.FONTE)
         return
 
     selected_row_values = janela['-TABLE-'].get()[selected_rows[0]]
@@ -372,7 +372,7 @@ def alterar_registro(janela):
             
             conn.commit()
 
-            sg.popup('Registro alterado com sucesso!', title='Sucesso')
+            sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
             janelaAlterarDados.close()
             consultar_registros(janela)
             cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")

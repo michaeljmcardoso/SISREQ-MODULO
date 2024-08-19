@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import funcoes_registro
 import salvar
+import constantes
 
 """Funções para exibir relatórios em tabelas"""
 
@@ -64,7 +65,7 @@ def rtids_publicados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def titulos_expedidos():
@@ -127,7 +128,7 @@ def titulos_expedidos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def territorios_identificados():
@@ -213,7 +214,7 @@ def territorios_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def territorios_nao_identificados():
@@ -267,7 +268,7 @@ def territorios_nao_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_territorios_quilombolas_em_assentamentos():
@@ -317,7 +318,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_processos_com_acao_judicial():
@@ -388,7 +389,7 @@ def exibir_processos_com_acao_judicial():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 """Funções para exibir relatorios em janelas popups"""
@@ -401,10 +402,10 @@ def exibir_total_de_familias_em_rtids_publicados():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias')
+        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias', font=constantes.FONTE)
     
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_area_total_em_rtids_publicados():
@@ -416,10 +417,10 @@ def exibir_area_total_em_rtids_publicados():
 
     if total_area_rtid_publicado is not None:
         total_area_formatado = "{:.2f}".format(total_area_rtid_publicado)
-        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área')
+        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_area_total_em_fase_titulacao():
@@ -431,10 +432,10 @@ def exibir_area_total_em_fase_titulacao():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área')
+        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_total_de_familias_em_fase_titulacao():
@@ -445,9 +446,9 @@ def exibir_total_de_familias_em_fase_titulacao():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias')
+        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias', font=constantes.FONTE)
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_total_de_familias_em_areas_tituladas():
@@ -458,10 +459,10 @@ def exibir_total_de_familias_em_areas_tituladas():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias')
+        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_area_total_em_areas_tituladas():
@@ -473,10 +474,10 @@ def exibir_area_total_em_areas_tituladas():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área')
+        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro')
+        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro', font=constantes.FONTE)
         
 
 def exibir_total_de_familias():
@@ -488,10 +489,10 @@ def exibir_total_de_familias():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias')
+        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_total_de_familias_em_territorios_identificados():
@@ -513,10 +514,10 @@ def exibir_total_de_familias_em_territorios_identificados():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias')
+        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_area_total():
@@ -528,10 +529,10 @@ def exibir_area_total():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área')
+        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def exibir_area_total_em_territorios_identificados():
@@ -554,7 +555,7 @@ def exibir_area_total_em_territorios_identificados():
 
     if totalArea is not None:
         total_area_formatado = "{:.2f}".format(totalArea)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área')
+        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área', font=constantes.FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)

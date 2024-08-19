@@ -6,14 +6,22 @@ def criar_janela():
         sg.theme(constantes.JANELA_TEMA)
 
         coluna_relatorios = [
-            [sg.Button('RTID´s Publicados', button_color='blue')],
-            [sg.Button('Titulos Expedidos', button_color='blue')],
-            [sg.Button('Territórios Identificados', button_color='blue')],
-            [sg.Button('Territórios Não-Identificados', button_color='blue')],
-            [sg.Button('Quilombolas em Assentamentos', button_color='blue')],
-            [sg.Button('Total de Famílias', button_color='blue')],
-            [sg.Button('Área Total', button_color='blue')],
-            [sg.Button('Ações Judiciais', button_color='blue')],
+            [sg.Button('RTID´s Publicados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Titulos Expedidos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Territórios Identificados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Territórios Não-Identificados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Quilombos em Assentamentos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Total de Famílias', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Área Total', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Ações Judiciais', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')]
             
         ]
 
@@ -23,7 +31,7 @@ def criar_janela():
 
         while True:
             event, values = janela_relatorios.read()
-            if event == 'SAIR' or event == sg.WIN_CLOSED:
+            if event == sg.WIN_CLOSED:
                 break
 
             elif event == 'RTID´s Publicados':
@@ -38,7 +46,7 @@ def criar_janela():
             elif event == 'Área Total':
                 relatorios.exibir_area_total()
 
-            elif event == 'Quilombolas em Assentamentos':
+            elif event == 'Quilombos em Assentamentos':
                 relatorios.exibir_territorios_quilombolas_em_assentamentos()
 
             elif event == 'Territórios Identificados':

@@ -72,7 +72,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                     def alterarRegistroEspecifico():
                         selected_rows = window2['-TABLE-'].SelectedRows
                         if len(selected_rows) != 1:
-                            sg.popup('Selecione um único registro para alterar.', title='Erro')
+                            sg.popup('Selecione um único registro para alterar.', title='Erro', font=constantes.FONTE)
                             return
 
                         selected_row_values = window2['-TABLE-'].get()[selected_rows[0]]
@@ -202,7 +202,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 
                                 conn.commit()
 
-                                sg.popup('Registro alterado com sucesso!', title='Sucesso')
+                                sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
@@ -212,7 +212,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
                                         window2['-TABLE-'].update(registros)
                                     else:
-                                        sg.popup('Não há registros cadastrados.', title='Registros')
+                                        sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                                 
                                 atualizarRegistros()
                                 #funcoes_banco_de_dados.consultar_registros(janela)
@@ -220,7 +220,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                     alterarRegistroEspecifico()
                     
     else:
-        sg.popup('Não foram encontrados registros para o nome da comunidade informado.', title='Registros')
+        sg.popup('Não foram encontrados registros para o nome da comunidade informado.', title='Registros', font=constantes.FONTE)
         return
 
 
@@ -289,7 +289,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                 def alterarRegistroEspecifico():
                     selected_rows = window3['-TABLE-'].SelectedRows
                     if len(selected_rows) != 1:
-                        sg.popup('Selecione um único registro para consultar.', title='Erro')
+                        sg.popup('Selecione um único registro para consultar.', title='Erro', font=constantes.FONTE)
                         return
 
                     selected_row_values = window3['-TABLE-'].get()[selected_rows[0]]
@@ -419,7 +419,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                             
                             conn.commit()
 
-                            sg.popup('Registro alterado com sucesso!', title='Sucesso')
+                            sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
                             janelaconsultarDados.close()
                             
                             def atualizarRegistros():
@@ -429,7 +429,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                 if registros:
                                     window3['-TABLE-'].update(registros)
                                 else:
-                                    sg.popup('Não há registros cadastrados.', title='Registros')
+                                    sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                             
                             atualizarRegistros()
                             #aplicacao.Aplicacao.consultar_registros()
@@ -437,7 +437,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                 alterarRegistroEspecifico()
 
     else:
-        sg.popup('Não foram encontrados registros para o nome do município informado.', title='Registros')
+        sg.popup('Não foram encontrados registros para o nome do município informado.', title='Registros', font=constantes.FONTE)
         return
 
 def buscar_processo():
@@ -505,7 +505,7 @@ def pesquisar_por_num_processo(num_processo):
                     def alterarRegistroEspecifico():
                         selected_rows = window4['-TABLE-'].SelectedRows
                         if len(selected_rows) != 1:
-                            sg.popup('Selecione um único registro para alterar.', title='Erro')
+                            sg.popup('Selecione um único registro para alterar.', title='Erro', font=constantes.FONTE)
                             return
 
                         selected_row_values = window4['-TABLE-'].get()[selected_rows[0]]
@@ -635,7 +635,7 @@ def pesquisar_por_num_processo(num_processo):
                                 
                                 conn.commit()
 
-                                sg.popup('Registro alterado com sucesso!', title='Sucesso')
+                                sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
@@ -645,7 +645,7 @@ def pesquisar_por_num_processo(num_processo):
 
                                         window4['-TABLE-'].update(registros)
                                     else:
-                                        sg.popup('Não há registros cadastrados.', title='Registros')
+                                        sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                                 
                                 atualizarRegistros()
                                 #funcoes_banco_de_dados.consultar_registros(janela)
@@ -653,7 +653,7 @@ def pesquisar_por_num_processo(num_processo):
                     alterarRegistroEspecifico()
                     
     else:
-        sg.popup('Não foram encontrados registros para o número do processo informado.', title='Registros')
+        sg.popup('Não foram encontrados registros para o número do processo informado.', title='Registros', font=constantes.FONTE)
         return
 
 

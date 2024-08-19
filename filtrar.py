@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import funcoes_registro
 import salvar
 import relatorios
+import constantes
 
 """Funções para a filtrar registros por fases do processo"""
 
@@ -58,7 +59,7 @@ def fase_inicial():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_Rtid():
@@ -113,7 +114,7 @@ def fase_Rtid():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_publicacao():
@@ -154,8 +155,7 @@ def fase_publicacao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 1200),
-                                      resizable=True)
+        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 1200), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -169,7 +169,7 @@ def fase_publicacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
         
 
 def fase_notificacao():
@@ -224,7 +224,7 @@ def fase_notificacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_portaria():
@@ -279,7 +279,7 @@ def fase_portaria():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_decreto():
@@ -334,7 +334,7 @@ def fase_decreto():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_titulacao():
@@ -397,7 +397,7 @@ def fase_titulacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_desintrusao():
@@ -452,7 +452,7 @@ def fase_desintrusao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_contestacao():
@@ -507,7 +507,7 @@ def fase_contestacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_recurso():
@@ -561,7 +561,7 @@ def fase_recurso():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
 def fase_desapropriacao():
@@ -616,4 +616,4 @@ def fase_desapropriacao():
         janela.close()
         
     else:
-        sg.popup('Não há registros para exibir.', title='Erro')
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)

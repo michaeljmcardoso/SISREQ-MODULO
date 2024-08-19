@@ -1,11 +1,14 @@
 import PySimpleGUI as sg
 import datetime
+import PySimpleGUI as sg
 
 ANO_ATUAL = datetime.datetime.now().year
 
 JANELA_TEMA = sg.theme('Kayak')
 
-JANELA_RODAPE = sg.Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
+JANELA_RODAPE = sg.Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 10 bold')
+
+FONTE = font='Helvetica 10 bold'
 
 TIPO_SOBREPOSICAO = [
     'PA_INCRA', 

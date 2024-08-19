@@ -3,6 +3,7 @@ import funcoes_registro
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
+import constantes
 
 def planilha(registros):
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -52,11 +53,11 @@ def planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso')
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso')
+            sg.popup('Nenhum arquivo selecionado. A planilha não foi salva.', title='Aviso', font=constantes.FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro')
+        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
 
 # Salvar um extrato conforme a consulta sql realizada
 def extrato_planilha(registros):
@@ -101,8 +102,8 @@ def extrato_planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso')
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso')
+            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso', font=constantes.FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro')
+        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
