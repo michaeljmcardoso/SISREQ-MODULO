@@ -1,0 +1,61 @@
+import PySimpleGUI as sg
+import constantes
+import relatorios
+
+def criar_janela():
+        sg.theme(constantes.JANELA_TEMA)
+
+        coluna_relatorios = [
+            [sg.Button('RTID´s Publicados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Titulos Expedidos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Territórios Identificados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Territórios Não-Identificados', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Quilombos em Assentamentos', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Total de Famílias', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Área Total', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Ações Judiciais', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')]
+            
+        ]
+
+        layout = [[sg.Column(coluna_relatorios)]]
+
+        janela_relatorios = sg.Window('Exibir Relatórios', layout, resizable=False)
+
+        while True:
+            event, values = janela_relatorios.read()
+            if event == sg.WIN_CLOSED:
+                break
+
+            elif event == 'RTID´s Publicados':
+                relatorios.rtids_publicados()
+            
+            elif event == 'Titulos Expedidos':
+                relatorios.titulos_expedidos()
+
+            elif event == 'Total de Famílias':
+                relatorios.exibir_total_de_familias()
+
+            elif event == 'Área Total':
+                relatorios.exibir_area_total()
+
+            elif event == 'Quilombos em Assentamentos':
+                relatorios.exibir_territorios_quilombolas_em_assentamentos()
+
+            elif event == 'Territórios Identificados':
+                relatorios.territorios_identificados()
+
+            elif event == 'Territórios Não-Identificados':
+                relatorios.territorios_nao_identificados()
+
+            elif event == 'Ações Judiciais':
+                relatorios.exibir_processos_com_acao_judicial()
+            
+        return janela_relatorios
