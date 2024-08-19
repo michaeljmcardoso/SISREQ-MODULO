@@ -3,18 +3,20 @@ import funcoes_registro
 import salvar
 import relatorios
 
+"""Funções para a filtrar registros por fases do processo"""
+
 def fase_inicial():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
-    totalFaseInicial = cursor.fetchone()[0]
+    total_fase_inicial = cursor.fetchone()[0]
 
     cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
     registros = cursor.fetchall()
 
     if registros:
-        layoutFaseInicial = [
+        layout = [
             [
                 sg.Table(
                     values=registros, 
@@ -25,7 +27,7 @@ def fase_inicial():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -37,38 +39,40 @@ def fase_inicial():
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {totalFaseInicial} Aguardando Início dos Estudos de Identificação e Delimitação', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_inicial} Aguardando Início dos Estudos de Identificação e Delimitação', font='Any 10 bold')
             ]
 
         ]
-        janelaInicial = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layoutFaseInicial, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_inicial, _ = janelaInicial.read()
+            event, _ = janela.read()
 
-            if event_inicial == sg.WINDOW_CLOSED or event_inicial == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_inicial == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        janelaInicial.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
+
 
 def fase_Rtid():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
-    totalFaseRtid = cursor.fetchone()[0]
+    total_fase_rtid = cursor.fetchone()[0]
 
     cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
     registros = cursor.fetchall()
 
     if registros:
-        layoutRtid = [
+        layout = [
             [
                 sg.Table(
                     values=registros,
@@ -79,7 +83,7 @@ def fase_Rtid():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -90,89 +94,23 @@ def fase_Rtid():
             [   
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {totalFaseRtid}', font='Any 10 bold'),
-                sg.Text(" "), sg.Button('RTID´s Publicados', button_color='blue')
+                sg.Text(f'Total de processos: {total_fase_rtid}', font='Any 10 bold'),
+                
             ]
         ]
 
-        janelaRtid = sg.Window('Processos em Estudo de Identificação e Delimitação', layoutRtid, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Estudo de Identificação e Delimitação', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_rtid, _ = janelaRtid.read()
+            event, _ = janela.read()
 
-            if event_rtid == sg.WINDOW_CLOSED or event_rtid == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_rtid == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-            elif event_rtid == 'RTID´s Publicados':
-                rtidsPublicados()
-
-        janelaRtid.close()
-
-    else:
-        sg.popup('Não há registros para exibir.', title='Erro')
-
-
-def rtidsPublicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
-    totalRtidPublicado = cursor.fetchone()[0]
-
-    cursor.execute("SELECT * FROM SISREQ WHERE  Edital_DOU")
-    registros = cursor.fetchall()
-
-    if registros:
-        layoutRtidPublicado = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                         ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=40)
-            ],
-
-            [
-                sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de RTID´s Publicados: {totalRtidPublicado}', font='Any 10 bold'),
-                sg.Button('Área Identificada', button_color='#ac4e04'),
-                sg.Button('Número de Famílias', button_color='green')
-            ]
-
-            ]
-
-        janelaRtidPublicado = sg.Window('Relatórios Publicados', layoutRtidPublicado, size=(1200, 1200), resizable=True)
-
-        while True:
-            event_publicado, _ = janelaRtidPublicado.read()
-
-            if event_publicado == sg.WINDOW_CLOSED or event_publicado == 'Fechar':
-                break
-
-            elif event_publicado == 'Extrato':
-                salvar.extrato_planilha(registros)
-
-            elif event_publicado == 'Número de Famílias':
-                relatorios.exibir_total_de_familias_em_rtids_publicados()
-
-            elif event_publicado == 'Área Identificada':
-                relatorios.exibir_area_total_em_rtids_publicados()
-
-        janelaRtidPublicado.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -183,13 +121,13 @@ def fase_publicacao():
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
-    totalFasePublicacao = cursor.fetchone()[0]
+    total_fase_publicacao = cursor.fetchone()[0]
 
     cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
     registros = cursor.fetchall()
 
     if registros:
-        layout_publicacao = [
+        layout = [
             [
                 sg.Table(
                     values=registros,
@@ -200,7 +138,7 @@ def fase_publicacao():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -211,27 +149,28 @@ def fase_publicacao():
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {totalFasePublicacao}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_publicacao}', font='Any 10 bold')
             ]
 
         ]
 
-        janelaPublicacao = sg.Window('Processos em Fase de Publicação', layout_publicacao, size=(1200, 1200),
+        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 1200),
                                       resizable=True)
 
         while True:
-            event_publicacao, _ = janelaPublicacao.read()
+            event, _ = janela.read()
 
-            if event_publicacao == sg.WINDOW_CLOSED or event_publicacao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
             
-            elif event_publicacao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        janelaPublicacao.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
+        
 
 def fase_notificacao():
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -244,7 +183,7 @@ def fase_notificacao():
     registros = cursor.fetchall()
 
     if registros:
-        layout_notificacao = [
+        layout = [
             [
                 sg.Table(
                     values=registros,
@@ -255,7 +194,7 @@ def fase_notificacao():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -271,18 +210,18 @@ def fase_notificacao():
 
         ]
 
-        janelaNotificacao = sg.Window('Processos em Fase de Notificação', layout_notificacao, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Notificação', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_notificacao, _ = janelaNotificacao.read()
+            event, _ = janela.read()
 
-            if event_notificacao == sg.WINDOW_CLOSED or event_notificacao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_notificacao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        janelaNotificacao.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -299,7 +238,7 @@ def fase_portaria():
     registros = cursor.fetchall()
 
     if registros:
-        layout_portaria = [
+        layout = [
             [
                 sg.Table(
                     values=registros, 
@@ -310,7 +249,7 @@ def fase_portaria():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -325,18 +264,19 @@ def fase_portaria():
             ]
 
         ]
-        window_portaria = sg.Window('Processos em Fase de Portaria', layout_portaria, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Processos em Fase de Portaria', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_portaria, _ = window_portaria.read()
+            event, _ = janela.read()
 
-            if event_portaria == sg.WINDOW_CLOSED or event_portaria == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_portaria == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_portaria.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -353,7 +293,7 @@ def fase_decreto():
     registros = cursor.fetchall()
 
     if registros:
-        layout_decreto = [
+        layout = [
             [
                 sg.Table(
                     values=registros, 
@@ -364,7 +304,7 @@ def fase_decreto():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -379,18 +319,19 @@ def fase_decreto():
             ]
 
         ]
-        window_decreto = sg.Window('Áreas Decretadas', layout_decreto, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Áreas Decretadas', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_decreto, _ = window_decreto.read()
+            event, _ = janela.read()
 
-            if event_decreto == sg.WINDOW_CLOSED or event_decreto == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_decreto == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_decreto.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -407,7 +348,7 @@ def fase_titulacao():
     registros = cursor.fetchall()
 
     if registros:
-        layout_titulacao = [
+        layout = [
             [
                 sg.Table(
                    values=registros, 
@@ -418,7 +359,7 @@ def fase_titulacao():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -432,91 +373,28 @@ def fase_titulacao():
                 sg.Text(f'Total de processos: {total_fase_titulacao}', font='Any 10 bold'),
                 sg.Button('Área Total', button_color='#ac4e04'),
                 sg.Button('Número de Famílias', button_color='green'),
-                sg.Button('Titulos Expedidos', button_color='blue')
+                
             ]
         ]
-        window_titulacao = sg.Window('Processos em Fase de Titulação', layout_titulacao, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Processos em Fase de Titulação', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_titulacao, _ = window_titulacao.read()
+            event, _ = janela.read()
 
-            if event_titulacao == sg.WINDOW_CLOSED or event_titulacao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_titulacao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-            elif event_titulacao == 'Área Total':
+            elif event == 'Área Total':
                 relatorios.exibir_area_total_em_fase_titulacao()
 
-            elif event_titulacao == 'Número de Famílias':
+            elif event == 'Número de Famílias':
                 relatorios.exibir_total_de_familias_em_fase_titulacao()
 
-            elif event_titulacao == 'Titulos Expedidos':
-                titulos_expedidos()
-
-        window_titulacao.close()
-
-    else:
-        sg.popup('Não há registros para exibir.', title='Erro')
-
-
-def titulos_expedidos():
-    conn = funcoes_registro.conectar_banco_de_dados()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
-    total_titulos_expedidos = cursor.fetchone()[0]
-
-    cursor.execute("SELECT * FROM SISREQ WHERE Titulo")
-    registros = cursor.fetchall()
-
-    if registros:
-        layout_titulado = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                         ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=40)
-            ],
-
-            [
-                sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_titulos_expedidos}', font='Any 10 bold'),
-                sg.Button('Área Total', button_color='#ac4e04'),
-                sg.Button('Número de Famílias', button_color='green')
-            ]
-        ]
-        window_titulado = sg.Window('Títulos Expedidos', layout_titulado, size=(1200, 1200), resizable=True)
-
-        while True:
-            event_titulado, _ = window_titulado.read()
-
-            if event_titulado == sg.WINDOW_CLOSED or event_titulado == 'Fechar':
-                break
-
-            elif event_titulado == 'Extrato':
-                salvar.extrato_planilha(registros)
-
-            elif event_titulado == 'Área Total':
-                relatorios.exibir_area_total_em_areas_tituladas()
-
-            elif event_titulado == 'Número de Famílias':
-                relatorios.exibir_total_de_familias_em_areas_tituladas()
-
-        window_titulado.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -533,7 +411,7 @@ def fase_desintrusao():
     registros = cursor.fetchall()
 
     if registros:
-        layout_desintrusao = [
+        layout = [
             [
                 sg.Table(
                     values=registros,
@@ -544,7 +422,7 @@ def fase_desintrusao():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -559,18 +437,19 @@ def fase_desintrusao():
             ]
 
         ]
-        window_desintrusao = sg.Window('Processos em Fase de Desintrusão', layout_desintrusao, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Processos em Fase de Desintrusão', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_desintrusao, _ = window_desintrusao.read()
+            event, _ = janela.read()
 
-            if event_desintrusao == sg.WINDOW_CLOSED or event_desintrusao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_desintrusao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_desintrusao.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -587,7 +466,7 @@ def fase_contestacao():
     registros = cursor.fetchall()
 
     if registros:
-        layout_contestacao = [
+        layout = [
             [
                 sg.Table(
                     values=registros, 
@@ -598,7 +477,7 @@ def fase_contestacao():
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
-                         ],
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -613,18 +492,19 @@ def fase_contestacao():
             ]
             
         ]
-        window_contestacao = sg.Window('Processos em Fase de Contestação', layout_contestacao, size=(1200, 1200), resizable=True)
+
+        janela = sg.Window('Processos em Fase de Contestação', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_contestacao, _ = window_contestacao.read()
+            event, _ = janela.read()
 
-            if event_contestacao == sg.WINDOW_CLOSED or event_contestacao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_contestacao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_contestacao.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -641,17 +521,18 @@ def fase_recurso():
     registros = cursor.fetchall()
 
     if registros:
-        layout_recurso = [
+        layout = [
             [
-                sg.Table(values=registros,
-                      headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                         ],
+                sg.Table(
+                    values=registros,
+                    headings=[
+                        'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
+                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        'Outras_Informacoes'
+                    ],
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -666,18 +547,18 @@ def fase_recurso():
             ]
 
         ]
-        window_recurso = sg.Window('Processos em Fase de Recurso', layout_recurso, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Recurso', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_recurso, _ = window_recurso.read()
+            event, _ = janela.read()
 
-            if event_recurso == sg.WINDOW_CLOSED or event_recurso == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_recurso == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_recurso.close()
+        janela.close()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro')
@@ -694,23 +575,23 @@ def fase_desapropriacao():
     registros = cursor.fetchall()
 
     if registros:
-        layout_desapropriacao = [
+        layout = [
             [
                 sg.Table(
-                      values=registros,
-                      headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                        ],
-                      justification='left', 
-                      auto_size_columns=True, 
-                      hide_vertical_scroll=False,
-                      vertical_scroll_only=False, 
-                      num_rows=40)
+                    values=registros,
+                    headings=[
+                        'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
+                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        'Outras_Informacoes'
+                    ],
+                    justification='left', 
+                    auto_size_columns=True, 
+                    hide_vertical_scroll=False,
+                    vertical_scroll_only=False, 
+                    num_rows=40)
             ],
 
             [
@@ -720,18 +601,19 @@ def fase_desapropriacao():
             ]
 
         ]
-        window_desapropriacao = sg.Window('Processos em Fase de Desapropriação', layout_desapropriacao, size=(1200, 1200), resizable=True)
+        
+        janela = sg.Window('Processos em Fase de Desapropriação', layout, size=(1200, 1200), resizable=True)
 
         while True:
-            event_desapropriacao, _ = window_desapropriacao.read()
+            event, _ = janela.read()
 
-            if event_desapropriacao == sg.WINDOW_CLOSED or event_desapropriacao == 'Fechar':
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
 
-            elif event_desapropriacao == 'Extrato':
+            elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-        window_desapropriacao.close()
+        janela.close()
         
     else:
         sg.popup('Não há registros para exibir.', title='Erro')

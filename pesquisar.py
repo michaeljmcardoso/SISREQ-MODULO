@@ -8,7 +8,9 @@ import constantes
 def buscar_comunidade():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     funcoes_registro.criar_tabela_se_nao_existir(conn)
+
     cursor.execute("SELECT Comunidade FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
 
@@ -22,6 +24,7 @@ def atualizar_sugestoes(entrada, lista_comunidades):
 def pesquisar_por_nome_comunidade(nome_comunidade):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
     registros = cursor.fetchall()
 
@@ -49,7 +52,6 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
             ],
             
             [
-                sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
                 sg.Button('Alterar', button_color='#ac4e04'),
                 sg.Text(f'Total de processos: {total_comunidade} registro(s) encontrado(s) para {nome_comunidade}', font='Any 10 bold')
@@ -60,10 +62,12 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
         while True:
             event2, values2 = window2.read()
-            if event2 == sg.WINDOW_CLOSED or event2 == 'Fechar':
+            if event2 == sg.WINDOW_CLOSED:
                 break
+
             elif event2 == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event2 == 'Alterar':
                     def alterarRegistroEspecifico():
                         selected_rows = window2['-TABLE-'].SelectedRows
@@ -107,6 +111,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
                             if event_alterar == sg.WINDOW_CLOSED:
                                 break
+
                             elif event_alterar == 'Salvar Alterações':
                                 new_numero = values_alterar['-NUMERO-']
                                 new_data_abertura = values_alterar['-DATA_ABERTURA-']
@@ -201,7 +206,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
-                                    cursor.execute("SELECT * FROM REGISTROS WHERE Comunidade = ?", (nome_comunidade,))
+                                    cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
                                     registros = cursor.fetchall()
                                     if registros:
 
@@ -222,6 +227,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 def buscar_municipios():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     cursor.execute("SELECT Municipio FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
 
@@ -235,6 +241,7 @@ def atualizar_sugestoes(entrada, lista_municipios):
 def pesquisar_por_nome_municipio(nome_municipio):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
     registros = cursor.fetchall()
 
@@ -253,7 +260,6 @@ def pesquisar_por_nome_municipio(nome_municipio):
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
                          ],
-                         
                          justification='left',
                          num_rows=35,
                          key='-TABLE-',
@@ -263,7 +269,6 @@ def pesquisar_por_nome_municipio(nome_municipio):
             ],
             
             [
-                sg.Button('Fechar', button_color='#ac4e04'), 
                 sg.Button('Extrato', button_color='green'), 
                 sg.Button('Alterar', button_color='#ac4e04'),
                 sg.Text(f'Total de processos: {total_municipio} registro(s) encontrado(s) em {nome_municipio}', font='Any 10 bold')
@@ -274,10 +279,12 @@ def pesquisar_por_nome_municipio(nome_municipio):
 
         while True:
             event3, values3 = window3.read()
-            if event3 == sg.WINDOW_CLOSED or event3 == 'Fechar':
+            if event3 == sg.WINDOW_CLOSED:
                 break
+
             elif event3 == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event3 == 'Alterar':
                 def alterarRegistroEspecifico():
                     selected_rows = window3['-TABLE-'].SelectedRows
@@ -321,6 +328,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 
                         if event_consultar == sg.WINDOW_CLOSED:
                             break
+
                         elif event_consultar == 'Salvar Alterações':
                             new_numero = values_consultar['-NUMERO-']
                             new_data_abertura = values_consultar['-DATA_ABERTURA-']
@@ -350,7 +358,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 
                             cursor.execute(
                                 """ 
-                                UPDATEREGISTROS SET 
+                                UPDATE SISREQ SET 
                                 Numero=?, 
                                 Data_Abertura=?, 
                                 Comunidade=?, 
@@ -435,6 +443,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 def buscar_processo():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     cursor.execute("SELECT Numero FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
 
@@ -448,6 +457,7 @@ def atualizar_sugestoes(entrada, lista_processos):
 def pesquisar_por_num_processo(num_processo):
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
     registros = cursor.fetchall()
 
@@ -475,7 +485,6 @@ def pesquisar_por_num_processo(num_processo):
             ],
             
             [
-                sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
                 sg.Button('Alterar', button_color='#ac4e04'),
                 sg.Text(f'Total de processos: {total_processo} registro(s) encontrado(s) para {num_processo}', font='Any 10 bold')
@@ -486,10 +495,12 @@ def pesquisar_por_num_processo(num_processo):
 
         while True:
             event4, values4 = window4.read()
-            if event4 == sg.WINDOW_CLOSED or event4 == 'Fechar':
+            if event4 == sg.WINDOW_CLOSED:
                 break
+
             elif event4 == 'Extrato':
                 salvar.extrato_planilha(registros)
+
             elif event4 == 'Alterar':
                     def alterarRegistroEspecifico():
                         selected_rows = window4['-TABLE-'].SelectedRows
@@ -533,6 +544,7 @@ def pesquisar_por_num_processo(num_processo):
 
                             if event_alterar == sg.WINDOW_CLOSED:
                                 break
+
                             elif event_alterar == 'Salvar Alterações':
                                 new_numero = values_alterar['-NUMERO-']
                                 new_data_abertura = values_alterar['-DATA_ABERTURA-']
@@ -627,7 +639,7 @@ def pesquisar_por_num_processo(num_processo):
                                 janelaAlterarDados.close()
                                 
                                 def atualizarRegistros():
-                                    cursor.execute("SELECT * FROM REGISTROS WHERE Numero = ?", (num_processo,))
+                                    cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
                                     registros = cursor.fetchall()
                                     if registros:
 
