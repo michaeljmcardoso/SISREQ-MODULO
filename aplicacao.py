@@ -1,7 +1,13 @@
 #  SISREQ - Sistema de Regularização Quilombola
 
 import PySimpleGUI as sg
-import funcoes
+import funcoes_registro
+import salvar
+import filtrar
+import pesquisar
+import constantes
+import janela_graficos
+import janela_relatorios
 
 class Aplicacao:
     def __init__(self):
@@ -230,23 +236,28 @@ class Aplicacao:
             [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font='Helvetica 10 bold'), sg.Column(coluna_total_processos)],
             [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
-            values=[],
-            headings=[
-                'ID',
-                '      Nome      ',
-                '      Email      ',
-                '  Senha  '
-            ],
-            num_rows=30,
-            key='-TABLE-',
-            hide_vertical_scroll=False,
-            vertical_scroll_only=False,
-            justification='left',
-            auto_size_columns=True,
+                values=[],
+                headings=[
+                    'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+                    'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+                    'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                    'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+                    'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                    '          Outras_Informacoes'
+                ],
+                num_rows=24,
+                key='-TABLE-',
+                hide_vertical_scroll=False,
+                vertical_scroll_only=False,
+                justification='left',
+                auto_size_columns=True,
             )],
-            [sg.Button('SAIR', button_color='#ac4e04')],]
 
-        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.0.0)", layout, resizable=True)
+            
+            [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
+        ]
+
+        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
     
 
