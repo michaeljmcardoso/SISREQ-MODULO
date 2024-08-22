@@ -3,7 +3,7 @@ import funcoes_registro
 import salvar
 import constantes
 
-
+"""Funções para buscar por nome da comunidade, município e número do processo"""
 
 def buscar_comunidade():
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -16,10 +16,12 @@ def buscar_comunidade():
 
 comunidades = buscar_comunidade()
 
+
 def atualizar_sugestoes(entrada, lista_comunidades):
     if entrada:
         return [comunidade for comunidade in lista_comunidades if comunidade.lower().startswith(entrada.lower())]
     return []
+
 
 def pesquisar_por_nome_comunidade(nome_comunidade):
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -215,7 +217,6 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                         sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                                 
                                 atualizarRegistros()
-                                #funcoes_banco_de_dados.consultar_registros(janela)
 
                     alterarRegistroEspecifico()
                     
@@ -233,10 +234,12 @@ def buscar_municipios():
 
 municipios = buscar_municipios()
 
+
 def atualizar_sugestoes(entrada, lista_municipios):
     if entrada:
         return [municipio for municipio in lista_municipios if municipio.lower().startswith(entrada.lower())]
     return []
+
 
 def pesquisar_por_nome_municipio(nome_municipio):
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -432,13 +435,13 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                     sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                             
                             atualizarRegistros()
-                            #aplicacao.Aplicacao.consultar_registros()
                 
                 alterarRegistroEspecifico()
 
     else:
         sg.popup('Não foram encontrados registros para o nome do município informado.', title='Registros', font=constantes.FONTE)
         return
+    
 
 def buscar_processo():
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -449,10 +452,12 @@ def buscar_processo():
 
 processos = buscar_processo()
 
+
 def atualizar_sugestoes(entrada, lista_processos):
     if entrada:
         return [processo for processo in lista_processos if processo.lower().startswith(entrada.lower())]
     return []
+
 
 def pesquisar_por_num_processo(num_processo):
     conn = funcoes_registro.conectar_banco_de_dados()
@@ -648,7 +653,6 @@ def pesquisar_por_num_processo(num_processo):
                                         sg.popup('Não há registros cadastrados.', title='Registros', font=constantes.FONTE)
                                 
                                 atualizarRegistros()
-                                #funcoes_banco_de_dados.consultar_registros(janela)
 
                     alterarRegistroEspecifico()
                     
