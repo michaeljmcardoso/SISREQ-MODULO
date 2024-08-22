@@ -78,7 +78,7 @@ def inserir_dados(values, janela):
     if conn is not None:
         cursor = conn.cursor()
         cursor.execute("""
-                INSERT INTO REGISTROS (
+                INSERT INTO SISREQ (
                         'Numero',
                         'Data_Abertura',
                         'Comunidade',
@@ -259,8 +259,6 @@ def alterar_registro(janela):
         [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 6), key='-TEOR_DECISAO-', default_text=teor_decisao)],
         [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)]
     ]
-
-
 
     layoutAlterarDados = [
         [
