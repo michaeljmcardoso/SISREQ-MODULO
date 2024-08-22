@@ -260,8 +260,6 @@ def alterar_registro(janela):
         [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)]
     ]
 
-
-
     layoutAlterarDados = [
         [
             sg.Column(coluna_1), sg.VerticalSeparator(), 
