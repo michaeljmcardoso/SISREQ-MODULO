@@ -43,13 +43,13 @@
 <p>
   Primeiro passo é criar ou conectar-se a um banco de dados SQLite e obter um cursor para executar comandos SQL.
   
-  Em seguida criamos a tabela REGISTROS, caso ela não exista no banco de dados. A tabela possui várias colunas, que são as nossas váriaveis.
+  Em seguida criamos a tabela SISREQ, caso ela não exista no banco de dados. A tabela possui várias colunas, que são as nossas váriaveis.
   
   O passso seguinte é a definação das variáveis constantes para os campos do formulário que terão opões de múltipla escolha ou escolha única.
 
   Definimos o tema e o layout da janela principal. A janela possui campos de entrada para o cadastro de processos, botões para inserir, consultar e extrair planilha, uma tabela para exibir os registros cadastrados e um botão para alterar um registro selecionado.
  
-  Criada a janela com o layout definido, damos continuidade construindo as funções para inserir dados, consultar registros, pesquisar por nome da comunidade, extrair planilha, alterar um registro dentre outras funções para consulta e exibição de gráficos. Dentro da segunda janela de consulta definimos outra função para extrair um extrato de um único registro.
+  Criada a janela com o layout definido, damos continuidade construindo as funções para inserir dados, consultar registros, pesquisar por nome da comunidade, pesquisa por município, pesquisar por número do processo, extrair planilha, alterar um registro dentre outras funções para consulta e exibição de gráficos. Dentro da segunda janela de consulta definimos outra função para extrair um extrato de um ou mais registros.
 
   No Loop principal para capturar eventos da janela, quando um evento ocorre (por exemplo, clique em um botão), a função correspondente é chamada.
   Finalmente, fechamos a conexão com o banco de dados e encerramos o programa.
@@ -63,7 +63,7 @@
   [SISREQ](https://github.com/michaeljmcardoso/SISREQ-MODULO/tree/desenvolvimento)
 
 
-  A verssão inicial do projeto SISREQ começou com um script pequeno porém, ao longo do desenvolvimento, houve necessidade de implementar mais fucnionalidades, tornando o código cada vez mais complexo, prejudicando a legibilidade e manutenção. Ao final do projeto o script ficou com mais de 3 mil limhas de código num único arquivo. Isso também impactou na hora de distribuir a aplicação. Pois a compilação de um arquivo muito longo em um executável, elevou o tempo de abertura do programa para cerca de 10 a 12 segundos.
+  A verssão inicial do projeto SISREQ começou com um script pequeno porém, ao longo do desenvolvimento, houve necessidade de implementar mais fucnionalidades, tornando o código cada vez mais complexo, prejudicando a legibilidade e manutenção. Ao final do projeto o script ficou com mais de 3 mil limhas de código num único arquivo (um verdadeiro monólito!). Isso também impactou na hora de distribuir a aplicação. Pois a compilação de um arquivo muito longo em um executável, elevou o tempo de abertura do programa para cerca de 10 segundos (uma eternidade).
 
   Desse modo, prezando por melhores práticas de programação, resolvemos implementar alterações para modular o programa e torná-lo um código mais limpo.
 
