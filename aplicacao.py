@@ -6,8 +6,8 @@ import salvar
 import filtrar
 import pesquisar
 import constantes
-import janela_graficos
-import janela_relatorios
+import janela_consulta_graficos
+import janela_consulta_relatorios
 
 class Aplicacao:
     def __init__(self):
@@ -80,10 +80,10 @@ class Aplicacao:
                 self.criar_janela_pesquisar()
 
             elif event == 'Relatórios':
-                janela_relatorios.criar_janela()
+                janela_consulta_relatorios.criar_janela()
 
             elif event == 'Gráficos':
-                janela_graficos.criar_janela()
+                janela_consulta_graficos.criar_janela()
 
             # Evento de digitação no campo de entrada comunidade
             elif event == '-NOME_COMUNIDADES-':
