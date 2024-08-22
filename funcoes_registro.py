@@ -78,7 +78,7 @@ def inserir_dados(values, janela):
     if conn is not None:
         cursor = conn.cursor()
         cursor.execute("""
-                INSERT INTO REGISTROS (
+                INSERT INTO SISREQ (
                         'Numero',
                         'Data_Abertura',
                         'Comunidade',
