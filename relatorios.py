@@ -32,7 +32,7 @@ def rtids_publicados():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -45,7 +45,7 @@ def rtids_publicados():
 
         ]
 
-        janela = sg.Window('Relatórios Publicados', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Relatórios Publicados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -95,7 +95,7 @@ def titulos_expedidos():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -108,7 +108,7 @@ def titulos_expedidos():
 
         ]
 
-        janela = sg.Window('Títulos Expedidos', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Títulos Expedidos', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -174,7 +174,7 @@ def territorios_identificados():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -186,7 +186,7 @@ def territorios_identificados():
             ]
         ]
 
-        janela = sg.Window('Territórios Identificados', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Territórios Identificados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -236,7 +236,7 @@ def territorios_nao_identificados():
                         auto_size_columns=True, 
                         hide_vertical_scroll=False,
                         vertical_scroll_only=False, 
-                        num_rows=40
+                        num_rows=35
                     )
             ],
 
@@ -248,7 +248,7 @@ def territorios_nao_identificados():
 
         ]
 
-        janela = sg.Window('Territórios Não-Identificados', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Territórios Não-Identificados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -292,13 +292,13 @@ def exibir_territorios_quilombolas_em_assentamentos():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
             
             [sg.Button('Fechar', button_color='#ac4e04'), sg.Button('Extrato', button_color='green'), sg.Text(f'Total de processos: {total_territorio_quilombola_em_assentamento} registros encontrados de comunidades quilombolas em projetos de assentamento.', font='Any 10 bold')]
         ]
 
-        janela = sg.Window('Territórios Quilombolas em Projetos de Assentamento', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Territórios Quilombolas em Projetos de Assentamento', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -358,7 +358,7 @@ def exibir_processos_com_acao_judicial():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40
+                    num_rows=35
                     )
             ],
 
@@ -369,7 +369,7 @@ def exibir_processos_com_acao_judicial():
             ]
         ]
 
-        janela = sg.Window('Ações Judiciais em Regularização Quilombola', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Ações Judiciais em Regularização Quilombola', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -379,6 +379,90 @@ def exibir_processos_com_acao_judicial():
 
             elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
+
+        janela.close()
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+
+
+""" Função para exibir variável PNRA"""
+
+def cadastro_pnra():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%ANDAMENTO%'"
+        )
+    
+    cadastro_pnra_andamento = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%CONCLUIDO%'"
+        )
+    
+    cadastro_pnra_concluido = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%NAO-INICIADO%'"
+        )
+    
+    cadastro_pnra_nao_iniciado = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT * FROM SISREQ WHERE "
+        "PNRA LIKE '%ANDAMENTO%' OR "
+        "PNRA LIKE '%CONCLUIDO%' OR "
+        "PNRA LIKE '%NAO-INICIADO%'"
+        )
+
+    registros = cursor.fetchall()
+
+    if registros:
+        layout = [
+            [
+                sg.Table(
+                    values=registros,
+                    headings=[
+                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        '          Outras_Informacoes'
+                    ],
+                    justification='left', 
+                    auto_size_columns=True, 
+                    hide_vertical_scroll=False,
+                    vertical_scroll_only=False, 
+                    num_rows=35)
+            ],
+
+            [
+                sg.Button('Fechar', button_color='#ac4e04'), 
+                sg.Button('Extrato', button_color='green'), sg.Text(''),
+                sg.Text(f'| Cadastro(s) Concluído(s): {cadastro_pnra_concluido}\n| Cadastro(s) em Andamento: {cadastro_pnra_andamento}\n| Cadastro(s) Não Iniciado(s): {cadastro_pnra_nao_iniciado}', font='Any 10 bold'), sg.Text(''),
+                sg.Button('Número de Famílias', button_color='green'),
+            ]
+        ]
+
+        janela = sg.Window('Territórios Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, _ = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+
+            elif event == 'Extrato':
+                salvar.extrato_planilha(registros)
+
+            #elif event == 'Número de Famílias':
+            #    exibir_total_de_familias_cadastradas()
 
         janela.close()
 
