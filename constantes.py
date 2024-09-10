@@ -5,11 +5,13 @@ import datetime
 
 ANO_ATUAL = datetime.datetime.now().year
 
-JANELA_TEMA = sg.theme('Kayak')
+JANELA_TEMA = sg.theme('DarkGreen')
 
 JANELA_RODAPE = sg.Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
 
 FONTE = font='Helvetica 10 bold'
+
+FONTE_DE_AVSIO = font='Any 10 bold'
 
 """Constantes de listas"""
 
@@ -72,16 +74,14 @@ ACAO_CIVIL_PUBLICA = [
 
 RELATORIO_ANTROPOLOGICO = [
     'Execução_Direta',
-    'Contrato_3R',
-    'Contrato_Demacamp',
-    'Contrato_EcoDimensao',
-    'Contrato_Terra',
-    'Contrato_Engecem',
+    'Contrato',
     'Acordo_Coop_Técnica',
     'Doação',
     'Termo_Execução_Descentralizada',
     'Sem_Relatório'
     ]
+
+PNRA = ['ANDAMENTO','CONCLUIDO','NAO-INICIADO',]
 
 MUNICIPIOS = [
     'Açailândia',

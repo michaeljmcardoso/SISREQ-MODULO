@@ -8,6 +8,8 @@ import pesquisar
 import constantes
 import janela_consulta_graficos
 import janela_consulta_relatorios
+import sys
+import datetime
 
 class Aplicacao:
     def __init__(self):
@@ -180,7 +182,7 @@ class Aplicacao:
 
         coluna_1 = [
             [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1))],
-            [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', disabled=False)],
+            [sg.CalendarButton('Data de Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', disabled=False)],
             [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1))],
             [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-')],
             [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-')]
@@ -191,29 +193,29 @@ class Aplicacao:
             [sg.Text('Etapa\nRTID:'), sg.Listbox(constantes.ETAPA_RTID, size=(24, 3), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-ETAPA_RTID-')],
             [sg.Text('Antropológico:'), sg.Combo(constantes.RELATORIO_ANTROPOLOGICO, size=(17, 6), key='-RA-')],
             [sg.Text('Certidão FCP:'), sg.Combo(constantes.CERTIFICACAO_FCP, size=(17, 6), key='-CERTIDAO-')],
-            [sg.CalendarButton('Data Certificação', target='-DATA_CERTIFICACAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(13, 1), key='-DATA_CERTIFICACAO-', disabled=False)]
+            [sg.CalendarButton('Data de Certificação', target='-DATA_CERTIFICACAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(13, 1), key='-DATA_CERTIFICACAO-', disabled=False)]
         ]
 
         coluna_3 = [
             [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-')],
             [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-')],
-            [sg.Text('% Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-PNRA-')],
+            [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-')],
             [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-')],
             [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-')]
         ]
 
         coluna_4 = [
-            [sg.Text('Edital DOU:'), sg.Input(size=(20, 1), key='-EDITAL_DOU-')],
-            [sg.Text('Edital DOE:'), sg.Input(size=(20, 1), key='-EDITAL_DOE-')],
-            [sg.CalendarButton('Portaria DOU', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-PORTARIA_DOU-', disabled=False)],
-            [sg.CalendarButton('Decreto DOU', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DECRETO_DOU-', disabled=False)],
+            [sg.Text('Edital DOU:'), sg.Input(size=(22, 1), key='-EDITAL_DOU-')],
+            [sg.Text('Edital DOE:'), sg.Input(size=(22, 1), key='-EDITAL_DOE-')],
+            [sg.CalendarButton('Portaria DOU', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(20, 1), key='-PORTARIA_DOU-', disabled=False)],
+            [sg.CalendarButton('Decreto DOU', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(20, 1), key='-DECRETO_DOU-', disabled=False)],
             [sg.Text('Sobreposição\nTerritorial:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(22, 3), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-')]
         ]
 
         coluna_5 = [
             [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(24, 2), key='-SOBREPOSICAO-')],
             [sg.Text('Ação Civil Pública:'), sg.Combo(constantes.ACAO_CIVIL_PUBLICA, size=(20, 1), key='-ACP-')],
-            [sg.CalendarButton('Data Sentença', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(22, 1), key='-DATA_DECISAO-', disabled=False)],
+            [sg.CalendarButton('Data da Sentença', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(22, 1), key='-DATA_DECISAO-', disabled=False)],
             [sg.Text('Teor_Prazo da  \nSentença:'), sg.Multiline(size=(22, 2), key='-TEOR_DECISAO-')],
             [sg.Text('Outras Informações:'), sg.Multiline(size=(18, 2), key='-INFORMACAO-')]
         ]
@@ -223,7 +225,7 @@ class Aplicacao:
         ]
 
         coluna_botoes_relatorios_e_graficos= [
-            [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04'), sg.VerticalSeparator(), sg.Text('EXTRAIR:', font='Helvetica 10 bold'), sg.Button('Planilha', button_color='#ac4e04')],
+            [sg.Button('Relatórios', button_color='#ac4e04'), sg.Button('Gráficos', button_color='#ac4e04'), sg.VerticalSeparator(), sg.Text('EXTRAIR:', font=constantes.FONTE), sg.Button('Planilha', button_color='#ac4e04')],
         ]
 
         coluna_total_processos = [
@@ -231,21 +233,21 @@ class Aplicacao:
         ]
 
         layout = [
-            [sg.Text(' ', size=(75, 1)), sg.Text('CADASTRO DE PROCESSOS', font='Helvetica 10 bold')],
+            [sg.Text('CADASTRO DE PROCESSOS', font=constantes.FONTE)],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
-            [sg.Text('REGISTROS:', font='Helvetica 10 bold'), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font='Helvetica 10 bold'), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font='Helvetica 10 bold'), sg.Column(coluna_total_processos)],
-            [sg.Text('FILTRAR POR FASE:', font='Helvetica 10 bold'), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
+            [sg.Text('REGISTROS:', font=constantes.FONTE), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font=constantes.FONTE), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font=constantes.FONTE), sg.Column(coluna_total_processos)],
+            [sg.Text('FILTRAR POR FASE:', font=constantes.FONTE), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
             [sg.Table(
                 values=[],
                 headings=[
                     'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                     'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                    'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                    'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                     'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                     'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                     '          Outras_Informacoes'
                 ],
-                num_rows=24,
+                num_rows=22,
                 key='-TABLE-',
                 hide_vertical_scroll=False,
                 vertical_scroll_only=False,
@@ -254,20 +256,20 @@ class Aplicacao:
             )],
 
             
-            [sg.Text('', size=(75, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
+            [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
+        janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
         return janela
     
 
     def criar_janela_pesquisar(self):
         coluna_pesquisar = [
-            [sg.Text('Pesquisar Comunidade:', font='Helvetica 10 bold'), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Comunidade:', font=constantes.FONTE), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-', button_color='#3169F5')],
             [sg.Text(' ')],
-            [sg.Text('Pesquisar Município:    ', font='Helvetica 10 bold'), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Município:    ', font=constantes.FONTE), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-', button_color='#3169F5')],
             [sg.Text(' ')],
-            [sg.Text('Pesquisar Processo:    ', font='Helvetica 10 bold'), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Processo:    ', font=constantes.FONTE), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-', button_color='#3169F5')],
             [sg.Text(' ')]
         ]
 
@@ -299,7 +301,7 @@ class Aplicacao:
                 if nome_comunidade:
                     pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
-                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro', font='Helvetica 10 bold')
+                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro', font=constantes.FONTE)
 
             elif event == 'Buscar Comunidade':
                 pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
@@ -324,7 +326,7 @@ class Aplicacao:
                 if nome_municipio:
                     pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
-                    sg.popup('Por favor, digite o nome de um municipio.', title='Erro', font='Helvetica 10 bold')
+                    sg.popup('Por favor, digite o nome de um municipio.', title='Erro', font=constantes.FONTE)
 
             elif event == 'Buscar Municipio':
                 pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
@@ -348,9 +350,45 @@ class Aplicacao:
                 if num_processo:
                     pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
-                    sg.popup('Por favor, digite o número de um processo.', title='Erro', font='Helvetica 10 bold')
+                    sg.popup('Por favor, digite o número de um processo.', title='Erro', font=constantes.FONTE)
                     
             elif event == 'Buscar Processo':
                 pesquisar.pesquisar_por_num_processo(janela_pesquisar)
 
         janela_pesquisar.close()
+
+def check_license():
+    today = datetime.datetime.now().date()
+
+    expiration_date = datetime.datetime.strptime("2025-03-10", "%Y-%m-%d").date()  # prazo da licença
+
+    if today > expiration_date:
+        sg.popup_error("Licença expirada.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
+                    title="Aviso", 
+                    font=constantes.FONTE_DE_AVSIO)
+        
+        sys.exit(1)
+
+    warning_date = expiration_date - datetime.timedelta(days=3) 
+
+    if today == expiration_date:
+        sg.popup("Sua licença expira hoje.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
+                title="Aviso", 
+                font=constantes.FONTE_DE_AVSIO)
+        
+    elif today >= warning_date:
+        remaining_days = (expiration_date - today).days
+
+        if remaining_days == 1:
+            sg.popup("Sua Licenca expira amanhã.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
+                     title="Aviso", 
+                     font=constantes.FONTE_DE_AVSIO)
+            
+        else:
+            sg.popup(f"Sua licença expirará em {remaining_days} dias.", "Entre em contato para renovar:",
+                       f"Whatsapp - (98) 98895-7452", "Email - michaeljmc@outlook.com.br", 
+                       title="Aviso", 
+                       font=constantes.FONTE_DE_AVSIO)
+        
+    else:
+        None

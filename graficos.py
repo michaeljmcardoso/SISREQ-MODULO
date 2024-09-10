@@ -263,31 +263,12 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
             relatorios.append(resultado[0])
             tipo_relatorios.append(resultado[1])
 
-        # Calcular a soma das opções de contrato
-        soma_contrato = sum(tipo_relatorios[2:6])
-
-        # Mapeamento das opções que queremos mostrar no gráfico
-        opcoes_desejadas = ['Acordo_Coop_Técnica', 'Doação', 'Contrato', 'Execução_Direta', 'Termo_Execução_Descentralizada']
-
-        # Filtrar apenas as opções desejadas
-        relatorios_filtrados = []
-        tipo_relatorios_filtrados = []
-
-        for relatorio, valor in zip(relatorios, tipo_relatorios):
-            if relatorio in opcoes_desejadas:
-                relatorios_filtrados.append(relatorio)
-                tipo_relatorios_filtrados.append(valor)
-
-        # Adicionar a soma das opções de contrato aos dados filtrados
-        relatorios_filtrados.append('Contrato')
-        tipo_relatorios_filtrados.append(soma_contrato)
-
         # Criar DataFrame
-        data = pd.DataFrame({'Relatórios': relatorios_filtrados, 'Tipo de Relatórios': tipo_relatorios_filtrados})
+        data = pd.DataFrame({'Relatórios': relatorios, 'Tipo de Relatórios': tipo_relatorios})
 
-        # Plot do gráfico
+        # Plot do gráfico sem o uso de palette
         fig, ax = plt.subplots(figsize=(10, 6))
-        sns.barplot(x=tipo_relatorios_filtrados, y=relatorios_filtrados, data=data, palette='Set1')
+        sns.barplot(x=tipo_relatorios, y=relatorios, data=data, palette='Set1')
 
         # Configurações do gráfico
         ax.set(title='Relatórios Antropológicos por Forma de Execução')  # Título
@@ -296,14 +277,15 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
         plt.tick_params(bottom=False, labelbottom=False)
 
         # Adicionar rótulos (quantidades) ao lado de cada barra
-        for i, tipo_relatorios in enumerate(tipo_relatorios_filtrados):
-            ax.text(tipo_relatorios + 0.1, i, str(tipo_relatorios), ha='left', va='center', weight='bold')
+        for i, valor in enumerate(tipo_relatorios):
+            ax.text(valor + 0.1, i, str(valor), ha='left', va='center', weight='bold')
 
         plt.tight_layout()
         plt.show()
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+
 
 
 def plotar_mapa_interativo():

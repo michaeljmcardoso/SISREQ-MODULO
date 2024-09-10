@@ -23,7 +23,7 @@ def rtids_publicados():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -72,10 +72,10 @@ def titulos_expedidos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Area_ha_Titulada")
     total_titulos_expedidos = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT * FROM SISREQ WHERE Area_ha_Titulada")
     registros = cursor.fetchall()
 
     if registros:
@@ -86,7 +86,7 @@ def titulos_expedidos():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -138,11 +138,7 @@ def territorios_identificados():
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
@@ -153,11 +149,7 @@ def territorios_identificados():
     cursor.execute(
         "SELECT * FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
@@ -173,7 +165,7 @@ def territorios_identificados():
                     headings=[
                         'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                         'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         '          Outras_Informacoes'
@@ -194,7 +186,7 @@ def territorios_identificados():
             ]
         ]
 
-        janela = sg.Window('Territórios Identificados', layout, size=(1200, 800), resizable=True)
+        janela = sg.Window('Territórios Identificados', layout, size=(1200, 1200), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -225,6 +217,7 @@ def territorios_nao_identificados():
     registros = cursor.fetchall()
 
     cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
+    total_de_territorios_nao_identificados = cursor.fetchone()[0]
 
     if registros:
         layout = [
@@ -234,7 +227,7 @@ def territorios_nao_identificados():
                         headings=[
                             'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                             'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             '          Outras_Informacoes'
@@ -249,7 +242,8 @@ def territorios_nao_identificados():
 
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green')
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de Processos: {total_de_territorios_nao_identificados} Território(s) Não Identificado(s)', font='Any 10 bold'),
             ]
 
         ]
@@ -289,7 +283,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
                     headings=[
                         'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                         'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         'Outras_Informacoes'
@@ -355,7 +349,7 @@ def exibir_processos_com_acao_judicial():
                     headings=[
                         'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                         'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         '          Outras_Informacoes'
@@ -371,7 +365,7 @@ def exibir_processos_com_acao_judicial():
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.\nEm andamento: 48', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font='Any 10 bold')
             ]
         ]
 
@@ -455,7 +449,7 @@ def exibir_total_de_familias_em_areas_tituladas():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Area_ha_Titulada")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -469,7 +463,7 @@ def exibir_area_total_em_areas_tituladas():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT SUM(Titulo) FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT SUM(Area_ha_Titulada) FROM SISREQ WHERE Area_ha_Titulada")
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
@@ -501,11 +495,7 @@ def exibir_total_de_familias_em_territorios_identificados():
     
     cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%'")
@@ -541,14 +531,10 @@ def exibir_area_total_em_territorios_identificados():
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
-        "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%'"
+        "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
         )
     
     totalArea = cursor.fetchone()[0]

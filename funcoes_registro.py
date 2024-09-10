@@ -29,7 +29,7 @@ def criar_tabela_se_nao_existir(conn):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
-            Porcentagem_Titulada NUMERIC,
+            PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,
             Longitude NUMERIC,
@@ -92,7 +92,7 @@ def inserir_dados(values, janela):
                         'Portaria_DOU',
                         'Decreto_DOU',
                         'Area_ha_Titulada',
-                        'Porcentagem_Titulada',
+                        'PNRA',
                         'Relatorio_Antropologico',
                         'Latitude',
                         'Longitude',
@@ -238,7 +238,7 @@ def alterar_registro(janela):
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('% Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
+        [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 
@@ -273,7 +273,7 @@ def alterar_registro(janela):
 
     ]
 
-    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1250, 650), resizable=True)
+    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1300, 700), resizable=True)
 
     while True:
         event_alterar, values_alterar = janelaAlterarDados.read()
@@ -322,7 +322,7 @@ def alterar_registro(janela):
                 Edital_DOE=?, 
                 Portaria_DOU=?, 
                 Decreto_DOU=?, 
-                Titulo=?,
+                Area_ha_Titulada=?,
                 PNRA=?, 
                 Relatorio_Antropologico=?, 
                 Latitude=?, 

@@ -40,7 +40,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                          headings=[
                             'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -156,7 +156,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                     Edital_DOE=?, 
                                     Portaria_DOU=?, 
                                     Decreto_DOU=?, 
-                                    Titulo=?, 
+                                    Area_ha_Titulada=?,
                                     PNRA=?, 
                                     Relatorio_Antropologico=?, 
                                     Latitude=?, 
@@ -203,6 +203,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 )
                                 
                                 conn.commit()
+
 
                                 sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
                                 janelaAlterarDados.close()
@@ -258,13 +259,13 @@ def pesquisar_por_nome_municipio(nome_municipio):
                          headings=[
                             'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
                          ],
                          justification='left',
-                         num_rows=35,
+                         num_rows=30,
                          key='-TABLE-',
                          auto_size_columns=True,
                          hide_vertical_scroll=False,
@@ -374,7 +375,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                 Edital_DOE=?, 
                                 Portaria_DOU=?, 
                                 Decreto_DOU=?, 
-                                Titulo=?, 
+                                Area_ha_Titulada=?,
                                 PNRA=?, 
                                 Relatorio_Antropologico=?, 
                                 Latitude=?, 
@@ -476,7 +477,7 @@ def pesquisar_por_num_processo(num_processo):
                          headings=[
                             'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -592,7 +593,7 @@ def pesquisar_por_num_processo(num_processo):
                                     Edital_DOE=?, 
                                     Portaria_DOU=?, 
                                     Decreto_DOU=?, 
-                                    Titulo=?, 
+                                    Area_ha_Titulada=?,
                                     PNRA=?, 
                                     Relatorio_Antropologico=?, 
                                     Latitude=?, 
@@ -681,7 +682,7 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('% Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
+        [sg.Text('PNRA\nQuilombola:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 
