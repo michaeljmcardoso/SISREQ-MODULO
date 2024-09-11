@@ -29,31 +29,6 @@
   [Projeto](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/Projeto.md)
   </p>
 
-## Step by step do desenvolvimento do programa
-
-<p>
-  Para concepção do programa utilizamos as seguintes bibliotecas:
-
-   - `sqlite3` para manipulação do banco de dados SQLite.
-   - `PySimpleGUI` para criar a interface gráfica.
-   - `pandas` para manipulação de dados e exportação para planilha.
-   - `Seaborn` e `Matplotlib` para criar e plotar as visualizações gráficas.
-</p>
-  
-<p>
-  Primeiro passo é criar ou conectar-se a um banco de dados SQLite e obter um cursor para executar comandos SQL.
-  
-  Em seguida criamos a tabela SISREQ, caso ela não exista no banco de dados. A tabela possui várias colunas, que são as nossas váriaveis.
-  
-  O passso seguinte é a definação das variáveis constantes para os campos do formulário que terão opões de múltipla escolha ou escolha única.
-
-  Definimos o tema e o layout da janela principal. A janela possui campos de entrada para o cadastro de processos, botões para inserir, consultar e extrair planilha, uma tabela para exibir os registros cadastrados e um botão para consultar e outro para alterar um registro selecionado.
- 
-  Criada a janela com o layout definido, damos continuidade construindo as funções para inserir dados, consultar registros, pesquisar por nome da comunidade, pesquisa por município, pesquisar por número do processo, extrair planilha, alterar um registro dentre outras funções para consulta e exibição de gráficos. Dentro da segunda janela de consulta definimos outra função para extrair um extrato de um ou mais registros.
-
-  No Loop principal para capturar eventos da janela, quando um evento ocorre (por exemplo, clique em um botão), a função correspondente é chamada.
-  Finalmente, fechamos a conexão com o banco de dados e encerramos o programa.
-
   [SISREQ](https://github.com/michaeljmcardoso/SISREQ-MODULO/tree/desenvolvimento)
 
 </p>

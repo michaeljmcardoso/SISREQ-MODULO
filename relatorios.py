@@ -265,6 +265,59 @@ def territorios_nao_identificados():
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
+def exibir_comunidades_sem_certificacao():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT (*) FROM SISREQ WHERE Certidao_FCP LIKE '%Não-certificada%'")
+    total_nao_certificadas = cursor.fetchone()[0]
+
+    cursor.execute("SELECT * FROM SISREQ WHERE Certidao_FCP LIKE '%Não-certificada%'")
+    registros = cursor.fetchall()
+
+    if registros:
+        layout = [
+            [
+                sg.Table(
+                    values=registros,
+                    headings=[
+                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        '          Outras_Informacoes'
+                    ],
+                    justification='left', 
+                    auto_size_columns=True, 
+                    hide_vertical_scroll=False,
+                    vertical_scroll_only=False, 
+                    num_rows=35
+                    )
+            ],
+
+            [
+                sg.Button('Fechar', button_color='#ac4e04'),
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de processos: {total_nao_certificadas} registros sem Certificação da Palmares.', font='Any 10 bold')
+            ]
+        ]
+
+        janela = sg.Window('Comunidades sem Certificação da Palmares no Processo', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, _ = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+            elif event == 'Extrato':
+                salvar.extrato_planilha(registros)
+
+        janela.close()
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
 def exibir_territorios_quilombolas_em_assentamentos():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()

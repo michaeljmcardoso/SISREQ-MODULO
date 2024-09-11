@@ -22,6 +22,8 @@ def criar_janela():
             [sg.Text(' ')],
             [sg.Button('Ações Judiciais', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
+            [sg.Button('Certificação FCP', button_color='blue', font=constantes.FONTE)],
+            [sg.Text(' ')],
             [sg.Button('Cadastro PNRA', button_color='blue', font=constantes.FONTE)]
             
         ]
@@ -58,6 +60,9 @@ def criar_janela():
 
             elif event == 'Ações Judiciais':
                 relatorios.exibir_processos_com_acao_judicial()
+            
+            elif event == 'Certificação FCP':
+                relatorios.exibir_comunidades_sem_certificacao()
             
             elif event == 'Cadastro PNRA':
                 relatorios.cadastro_pnra()

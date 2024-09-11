@@ -259,7 +259,7 @@ class Aplicacao:
             [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, resizable=True)
+        janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, size=(1400, 800), resizable=True)
         return janela
     
 
@@ -360,7 +360,7 @@ class Aplicacao:
 def check_license():
     today = datetime.datetime.now().date()
 
-    expiration_date = datetime.datetime.strptime("2025-03-10", "%Y-%m-%d").date()  # prazo da licença
+    expiration_date = datetime.datetime.strptime("2025-05-11", "%Y-%m-%d").date()  # prazo da licença
 
     if today > expiration_date:
         sg.popup_error("Licença expirada.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
@@ -368,27 +368,11 @@ def check_license():
                     font=constantes.FONTE_DE_AVSIO)
         
         sys.exit(1)
-
-    warning_date = expiration_date - datetime.timedelta(days=3) 
-
+    
     if today == expiration_date:
         sg.popup("Sua licença expira hoje.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
                 title="Aviso", 
                 font=constantes.FONTE_DE_AVSIO)
-        
-    elif today >= warning_date:
-        remaining_days = (expiration_date - today).days
-
-        if remaining_days == 1:
-            sg.popup("Sua Licenca expira amanhã.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
-                     title="Aviso", 
-                     font=constantes.FONTE_DE_AVSIO)
-            
-        else:
-            sg.popup(f"Sua licença expirará em {remaining_days} dias.", "Entre em contato para renovar:",
-                       f"Whatsapp - (98) 98895-7452", "Email - michaeljmc@outlook.com.br", 
-                       title="Aviso", 
-                       font=constantes.FONTE_DE_AVSIO)
-        
+       
     else:
         None

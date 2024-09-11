@@ -253,11 +253,11 @@ def alterar_registro(janela):
     ]
 
     coluna_5 = [
-        [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(32, 6), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)],
+        [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(32, 3), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)],
         [sg.Text('Ação Civil Pública:'), sg.Combo(constantes.ACAO_CIVIL_PUBLICA, size=(19, 1), key='-ACP-', default_value=acp)],
         [sg.CalendarButton('Data Sentença', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DATA_DECISAO-', size=(15, 1), default_text=data_decisao),],
-        [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 6), key='-TEOR_DECISAO-', default_text=teor_decisao)],
-        [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)]
+        [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 3), key='-TEOR_DECISAO-', default_text=teor_decisao)],
+        [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 3), key='-INFORMACAO-', default_text=outras_informacaoes)]
     ]
 
     layoutAlterarDados = [
@@ -273,7 +273,7 @@ def alterar_registro(janela):
 
     ]
 
-    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1300, 700), resizable=True)
+    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1400, 600), resizable=True)
 
     while True:
         event_alterar, values_alterar = janelaAlterarDados.read()
