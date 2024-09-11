@@ -386,8 +386,6 @@ def exibir_processos_com_acao_judicial():
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
-""" Função para exibir variável PNRA"""
-
 def cadastro_pnra():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
@@ -450,7 +448,7 @@ def cadastro_pnra():
             ]
         ]
 
-        janela = sg.Window('Territórios Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('Comunidades Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -461,8 +459,8 @@ def cadastro_pnra():
             elif event == 'Extrato':
                 salvar.extrato_planilha(registros)
 
-            #elif event == 'Número de Famílias':
-            #    exibir_total_de_familias_cadastradas()
+            elif event == 'Número de Famílias':
+               exibir_total_de_familias_cadastradas_pnra()
 
         janela.close()
 
@@ -471,6 +469,23 @@ def cadastro_pnra():
 
 
 """Funções para exibir relatorios em janelas popups"""
+
+def exibir_total_de_familias_cadastradas_pnra():
+    conn = funcoes_registro.conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
+        "PNRA LIKE '%CONCLUIDO%'")
+
+    total_familias = cursor.fetchone()[0]
+
+    if total_familias is not None:
+        total_familias_formatado = "{:.0f}".format(total_familias)
+        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=constantes.FONTE)
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+
 
 def exibir_total_de_familias_em_rtids_publicados():
     conn = funcoes_registro.conectar_banco_de_dados()
