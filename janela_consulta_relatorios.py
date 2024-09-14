@@ -20,7 +20,7 @@ def criar_janela():
             [sg.Text(' ')],
             [sg.Button('Área Total', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ações Judiciais', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ações Civis Públicas', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
             [sg.Button('Certificação FCP', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
@@ -58,7 +58,7 @@ def criar_janela():
             elif event == 'Territórios Não-Identificados':
                 relatorios.territorios_nao_identificados()
 
-            elif event == 'Ações Judiciais':
+            elif event == 'Ações Civis Públicas':
                 relatorios.exibir_processos_com_acao_judicial()
             
             elif event == 'Certificação FCP':

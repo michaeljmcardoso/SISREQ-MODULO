@@ -6,6 +6,7 @@ def conectar_banco_de_dados():
     try:
         conn = sqlite3.connect('sisreq.db')
         return conn
+    
     except sqlite3.Error as e:
         print(f"Erro ao conectar ao banco de dados: {e}", font=constantes.FONTE)
         return None
@@ -223,7 +224,7 @@ def alterar_registro(janela):
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
         [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
         [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1), default_text=nome_comunidade)],
-        [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
+        [sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
         [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-', default_text=num_familia)]
     ]
 
@@ -249,7 +250,7 @@ def alterar_registro(janela):
         [sg.Text('Edital DOE'), sg.Input(size=(18, 1), key='-EDITAL_DOE-', default_text=edital_doe)],
         [sg.CalendarButton('Portaria DOU:', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-PORTARIA_DOU-', size=(15, 1), default_text=portaria_dou)],
         [sg.CalendarButton('Decreto DOU:', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DECRETO_DOU-', size=(15, 1), default_text=decreto_dou)],
-        [sg.Text('Sobreposição:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(27, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao)]
+        [sg.Text('Sobreposição:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(20, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao)]
     ]
 
     coluna_5 = [

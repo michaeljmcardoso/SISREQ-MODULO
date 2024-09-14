@@ -99,7 +99,7 @@ def exibir_processos_por_data_abertura():
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
-def exibir_processos_com_acao_judicial():
+def exibir_processos_com_acao_civil():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()
 

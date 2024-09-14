@@ -10,7 +10,7 @@ def criar_janela():
             [sg.Text(' ')],
             [sg.Button('Processos por Fase', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ação Judicial', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ação Civil Pública', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
             [sg.Button('Sobreposições', button_color='blue', font=constantes.FONTE)],
             [sg.Text(' ')],
@@ -39,8 +39,8 @@ def criar_janela():
             elif event == 'Ano de Abertura':
                 graficos.exibir_processos_por_data_abertura()
 
-            elif event == 'Ação Judicial':
-                graficos.exibir_processos_com_acao_judicial()
+            elif event == 'Ação Civil Pública':
+                graficos.exibir_processos_com_acao_civil()
 
             elif event == 'Andamento de Processos':
                 graficos.exibir_andamento_de_processos()

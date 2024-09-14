@@ -422,7 +422,7 @@ def exibir_processos_com_acao_judicial():
             ]
         ]
 
-        janela = sg.Window('Ações Judiciais em Regularização Quilombola', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('Ação Civil Pública em Regularização Quilombola', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()

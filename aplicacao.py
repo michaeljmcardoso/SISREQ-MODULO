@@ -8,8 +8,10 @@ import pesquisar
 import constantes
 import janela_consulta_graficos
 import janela_consulta_relatorios
-import sys
 import datetime
+import sys
+from converter_xlsx_para_db import criar_janela_import
+import pandas as pd
 
 class Aplicacao:
     def __init__(self):
@@ -27,6 +29,9 @@ class Aplicacao:
             
             if event == sg.WIN_CLOSED:
                 break
+
+            elif event == 'IMPORTAR':
+                criar_janela_import()
 
             elif event == 'INSERIR':
                 funcoes_registro.inserir_dados(values, self.janela)
@@ -168,6 +173,32 @@ class Aplicacao:
             elif event == 'Buscar Processo':
                 pesquisar.pesquisar_por_num_processo(self.janela)
 
+
+            # Atualiza a lista conforme o usuário digita
+            if event == '-MUNICIPIO-':
+                nome_parcial = values['-MUNICIPIO-']
+                if nome_parcial:
+                    resultados = pesquisar.buscar_municipios_do_brasil(nome_parcial)
+                    self.janela['-LIST-'].update(resultados)
+                    self.janela['-LIST-'].update(visible=True)
+                    self.janela['-OK3-'].update(visible=True)
+                else:
+                    self.janela['-LIST-'].update(visible=False)
+                    self.janela['-OK3-'].update(visible=False)
+            
+            # Preenche o campo de entrada com o item selecionado e oculta a lista e o botão
+            if event == '-LIST-':
+                municipio_selecionado = values['-LIST-'][0]
+                self.janela['-MUNICIPIO-'].update(municipio_selecionado)
+                self.janela['-LIST-'].update(visible=False)
+                self.janela['-OK3-'].update(visible=False)
+            
+            # Confirma a escolha do município
+            if event == '-OK3-':
+                municipio_selecionado = self.janela['-MUNICIPIO-'].get()
+                self.janela['-LIST-'].update(visible=False)
+                self.janela['-OK3-'].update(visible=False)
+
         self.janela.close()
 
 
@@ -184,7 +215,7 @@ class Aplicacao:
             [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1))],
             [sg.CalendarButton('Data de Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', disabled=False)],
             [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1))],
-            [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-')],
+            [sg.Text('Municípios:'), sg.Input(size=(20, 1), key='-MUNICIPIO-', enable_events=True), sg.Listbox(values=[], size=(20, 10), key='-LIST-', visible=False, enable_events=True), sg.Button("OK", key='-OK3-', visible=False)],
             [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-')]
         ]
 
@@ -221,7 +252,7 @@ class Aplicacao:
         ]
 
         coluna_botoes = [
-            [sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
+            [sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
         ]
 
         coluna_botoes_relatorios_e_graficos= [
