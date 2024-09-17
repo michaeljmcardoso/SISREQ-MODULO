@@ -668,7 +668,8 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
         [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
         [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1), default_text=nome_comunidade)],
-        [sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
+        [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
+        #[sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
         [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-', default_text=num_familia)]
     ]
 
@@ -683,7 +684,7 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('PNRA\nQuilombola:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
+        [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(13, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 

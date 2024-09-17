@@ -23,8 +23,11 @@
 
   8. **Backup e Segurança:** Outro aspecto pensado e ainda não efetivado, será a implementação de recursos de backup, para evitar perda de dados em caso de falhas ou problemas técnicos. Além disso, poderá haver medidas de segurança para proteger informações sensíveis, se houver.
 
-  9. **Recursos Avançados:** No futuro, dependendo da complexidade do sistema, poderão ser implementados recursos avançados, como notificações automáticas, integração com outros sistemas, inteligência artificial, entre outros.
+  9. **Recursos Avançados:** No futuro, dependendo da complexidade do sistema, poderão ser implementados recursos avançados, como notificações automáticas, integração com outros sistemas, inteligência artificial, entre outros. 
+   
+  10. **Lançamento da Versão Web 2.0** Em vez de ser instalado diretamente em seu dispositivo (como um aplicativo tradicional), ele será acessado através de um navegador de internet, como o Chrome, Firefox ou Safari. Poderá ser acessado de qualquer dispositivo com um navegador e conexão à internet.
 
+ 
   Em resumo, o SISREQ é um sistema versátil que permite o gerenciamento eficiente de processos, facilitando o acesso às informações, a geração de relatórios, possibilitando tomada de decisões com base em dados atualizados e organizados. A lógica do programa é focada em fornecer uma solução completa para o controle e acompanhamento de processos de forma eficaz e simplificada.
   [Projeto](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/Projeto.md)
   </p>

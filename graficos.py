@@ -287,7 +287,6 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
-
 def plotar_mapa_interativo():
     conn = funcoes_registro.conectar_banco_de_dados()
     cursor = conn.cursor()

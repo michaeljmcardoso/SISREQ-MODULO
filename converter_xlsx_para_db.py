@@ -11,7 +11,7 @@ def criar_janela_import():
             [sg.Text("Selecione o arquivo Excel (.xlsx):", font=constantes.FONTE), sg.InputText(), sg.FileBrowse(file_types=(("Excel Files", "*.xlsx"),), button_color='#3169F5', font=constantes.FONTE)],
             [sg.Button("Converter", button_color='green', font=constantes.FONTE), sg.Button("Fechar", button_color='#ac4e04', font=constantes.FONTE)],
             [sg.Text(' ')],
-            [sg.Text(' ', size=(20, 1)), sg.Text(f"Sistema de Regularização Quilombola - SISREQ. © {constantes.ANO_ATUAL}\n                 Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')],
+            [sg.Text(' ')],
         ]
 
         # Tema
@@ -113,7 +113,7 @@ def convert_xlsx_to_db(xlsx_file_path):
             f"Banco de dados '{sqlite_db_path}' criado com sucesso!", 
             "Seu arquivo foi salvo e já pode ser acessado pelo SISREQ.",
             "Aguarde enquanto reiniciamos o programa.",
-            "Aperte CONSULTAR na janela principal para atualizar a Tabela.", 
+            "Ao rertonar, aperte CONSULTAR  para atualizar a Tabela.", 
             title="Sucesso", display_duration_in_ms=12000, fade_in_duration=2.0
             )
         

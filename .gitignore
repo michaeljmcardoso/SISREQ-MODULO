@@ -179,3 +179,6 @@ cria_bd_municipios.py
 # planilhas
 SISREQ.xlsx
 municipios.csv
+
+# pastas
+Backup
