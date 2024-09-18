@@ -9,8 +9,7 @@ import pesquisar
 import constantes
 import janela_consulta_graficos
 import janela_consulta_relatorios
-import datetime
-import sys
+
 from converter_xlsx_para_db import criar_janela_import
 import pandas as pd
 
@@ -210,24 +209,3 @@ class Aplicacao:
 
         janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, size=(1400, 800), resizable=True)
         return janela
-
-
-def check_license():
-    today = datetime.datetime.now().date()
-
-    expiration_date = datetime.datetime.strptime("2025-05-15", "%Y-%m-%d").date()  # prazo da licença
-
-    if today > expiration_date:
-        sg.popup_error("Licença expirada.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
-                    title="Aviso", 
-                    font=constantes.FONTE_DE_AVSIO)
-        
-        sys.exit(1)
-    
-    if today == expiration_date:
-        sg.popup("Sua licença expira hoje.", "Entre em contato para renovar:", "Whatsapp => (98) 98895-7452", "Email => michaeljmc@outlook.com.br", 
-                title="Aviso", 
-                font=constantes.FONTE_DE_AVSIO)
-       
-    else:
-        None

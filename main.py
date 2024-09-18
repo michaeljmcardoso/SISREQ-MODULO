@@ -1,9 +1,10 @@
 import funcoes_registro
+import licenca
 from aplicacao import Aplicacao
-from aplicacao import check_license
+
 
 def main():
-    check_license()
+    licenca.check_license()
 
     conn = funcoes_registro.conectar_banco_de_dados()
     if conn is not None:
