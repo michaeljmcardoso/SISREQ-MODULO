@@ -1,26 +1,27 @@
 import PySimpleGUI as sg
-import constantes
 import graficos
+from constantes import FONTE, JANELA_TEMA
 
-def criar_janela():
-        sg.theme(constantes.JANELA_TEMA)
+
+def criar_janela_graficos():
+        sg.theme(JANELA_TEMA)
 
         coluna_graficos = [
-            [sg.Button('Andamento de Processos', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Andamento de Processos', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Processos por Fase', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Processos por Fase', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ação Civil Pública', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ação Civil Pública', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Sobreposições', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Sobreposições', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Relatórios Antropológicos', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Relatórios Antropológicos', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ano de Abertura', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ano de Abertura', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Distrubuição por Municípios', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Distrubuição por Municípios', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Geolocalização', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Geolocalização', button_color='blue', font=FONTE)],
             [sg.Text(' ')]
         ]
 

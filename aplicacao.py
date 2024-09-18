@@ -2,16 +2,14 @@
 
 import PySimpleGUI as sg
 import funcoes_registro
-import salvar
-import filtrar
-import janela_pesquisar
-import pesquisar
 import constantes
-import janela_consulta_graficos
-import janela_consulta_relatorios
-
+import filtrar
+from salvar import salvar_planilha
+from janela_pesquisar import criar_janela_pesquisar
+from pesquisar import buscar_municipios_do_brasil
+from janela_consulta_graficos import criar_janela_graficos
+from janela_consulta_relatorios import criar_janela_relatorios
 from converter_xlsx_para_db import criar_janela_import
-import pandas as pd
 
 class Aplicacao:
     def __init__(self):
@@ -48,7 +46,7 @@ class Aplicacao:
                 funcoes_registro.alterar_registro(self.janela)
 
             elif event == 'Planilha':
-                salvar.planilha(self.janela)
+                salvar_planilha(self.janela)
 
             elif event == 'Inicial':
                 filtrar.fase_inicial()
@@ -84,19 +82,19 @@ class Aplicacao:
                 filtrar.fase_desapropriacao()
 
             elif event == 'PESQUISAR':
-                janela_pesquisar.criar_janela_pesquisar(self.janela)
+                criar_janela_pesquisar(self.janela)
 
             elif event == 'Relatórios':
-                janela_consulta_relatorios.criar_janela()
+                criar_janela_relatorios()
 
             elif event == 'Gráficos':
-                janela_consulta_graficos.criar_janela()
+                criar_janela_graficos()
 
             # Atualiza a lista conforme o usuário digita
             if event == '-MUNICIPIO-':
                 nome_parcial = values['-MUNICIPIO-']
                 if nome_parcial:
-                    resultados = pesquisar.buscar_municipios_do_brasil(nome_parcial)
+                    resultados = buscar_municipios_do_brasil(nome_parcial)
                     self.janela['-LIST-'].update(resultados)
                     self.janela['-LIST-'].update(visible=True)
                     self.janela['-OK3-'].update(visible=True)

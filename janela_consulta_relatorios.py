@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import constantes
 import relatorios
 
-def criar_janela():
+def criar_janela_relatorios():
         sg.theme(constantes.JANELA_TEMA)
 
         coluna_relatorios = [

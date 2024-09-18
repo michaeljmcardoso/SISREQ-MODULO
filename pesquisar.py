@@ -1,16 +1,16 @@
 import PySimpleGUI as sg
-import funcoes_registro
-import salvar
 import constantes
 import sqlite3
+from salvar import salvar_extrato_planilha 
+from funcoes_registro import conectar_banco_de_dados, criar_tabela_se_nao_existir
 
 """Funções para buscar por nome da comunidade, município e número do processo"""
 
 def buscar_comunidade():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
-    funcoes_registro.criar_tabela_se_nao_existir(conn)
+    criar_tabela_se_nao_existir(conn)
 
     cursor.execute("SELECT Comunidade FROM SISREQ")
     return [row[0] for row in cursor.fetchall()]
@@ -25,7 +25,7 @@ def atualizar_sugestoes(entrada, lista_comunidades):
 
 
 def pesquisar_por_nome_comunidade(nome_comunidade):
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM SISREQ WHERE Comunidade = ?", (nome_comunidade,))
@@ -69,7 +69,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                 break
 
             elif event2 == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event2 == 'Alterar':
                     def alterarRegistroEspecifico():
@@ -228,7 +228,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
 
 def buscar_municipios():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Municipio FROM SISREQ")
@@ -244,7 +244,7 @@ def atualizar_sugestoes(entrada, lista_municipios):
 
 
 def pesquisar_por_nome_municipio(nome_municipio):
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM SISREQ WHERE Municipio = ?", (nome_municipio,))
@@ -288,7 +288,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                 break
 
             elif event3 == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event3 == 'Alterar':
                 def alterarRegistroEspecifico():
@@ -446,7 +446,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
     
 
 def buscar_processo():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Numero FROM SISREQ")
@@ -462,7 +462,7 @@ def atualizar_sugestoes(entrada, lista_processos):
 
 
 def pesquisar_por_num_processo(num_processo):
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM SISREQ WHERE Numero = ?", (num_processo,))
@@ -506,7 +506,7 @@ def pesquisar_por_num_processo(num_processo):
                 break
 
             elif event4 == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event4 == 'Alterar':
                     def alterarRegistroEspecifico():
@@ -668,8 +668,8 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
         [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
         [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1), default_text=nome_comunidade)],
-        [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
-        #[sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
+        #[sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
+        [sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
         [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-', default_text=num_familia)]
     ]
 

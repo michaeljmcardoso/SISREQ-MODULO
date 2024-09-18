@@ -1,14 +1,14 @@
 import PySimpleGUI as sg
 import pesquisar
-import constantes
+from constantes import FONTE
 
 def criar_janela_pesquisar(janela_pesquisar):
         coluna_pesquisar = [
-            [sg.Text('Pesquisar Comunidade:', font=constantes.FONTE), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Comunidade:', font=FONTE), sg.Input(size=(25, 1), key='-NOME_COMUNIDADES-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES-', enable_events=True, visible=False), sg.Button('OK', key='-OK-', button_color='#3169F5')],
             [sg.Text(' ')],
-            [sg.Text('Pesquisar Município:    ', font=constantes.FONTE), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Município:    ', font=FONTE), sg.Input(size=(25, 1), key='-MUNICIPIOS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES1-', enable_events=True, visible=False), sg.Button('OK', key='-OK1-', button_color='#3169F5')],
             [sg.Text(' ')],
-            [sg.Text('Pesquisar Processo:    ', font=constantes.FONTE), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-', button_color='#3169F5')],
+            [sg.Text('Pesquisar Processo:    ', font=FONTE), sg.Input(size=(25, 1), key='-NUMEROS-', enable_events=True), sg.Listbox(values=[], size=(25, 4), key='-SUGESTOES2-', enable_events=True, visible=False), sg.Button('OK', key='-OK2-', button_color='#3169F5')],
             [sg.Text(' ')]
         ]
 
@@ -40,7 +40,7 @@ def criar_janela_pesquisar(janela_pesquisar):
                 if nome_comunidade:
                     pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
-                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro', font=constantes.FONTE)
+                    sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro', font=FONTE)
 
             elif event == 'Buscar Comunidade':
                 pesquisar.pesquisar_por_nome_comunidade(janela_pesquisar)
@@ -65,7 +65,7 @@ def criar_janela_pesquisar(janela_pesquisar):
                 if nome_municipio:
                     pesquisar.pesquisar_por_nome_municipio(nome_municipio)
                 else:
-                    sg.popup('Por favor, digite o nome de um municipio.', title='Erro', font=constantes.FONTE)
+                    sg.popup('Por favor, digite o nome de um municipio.', title='Erro', font=FONTE)
 
             elif event == 'Buscar Municipio':
                 pesquisar.pesquisar_por_nome_municipio(janela_pesquisar)
@@ -89,7 +89,7 @@ def criar_janela_pesquisar(janela_pesquisar):
                 if num_processo:
                     pesquisar.pesquisar_por_num_processo(num_processo)
                 else:
-                    sg.popup('Por favor, digite o número de um processo.', title='Erro', font=constantes.FONTE)
+                    sg.popup('Por favor, digite o número de um processo.', title='Erro', font=FONTE)
                     
             elif event == 'Buscar Processo':
                 pesquisar.pesquisar_por_num_processo(janela_pesquisar)

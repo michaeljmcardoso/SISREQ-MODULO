@@ -1,18 +1,18 @@
 import PySimpleGUI as sg
 import pandas as pd
-import funcoes_registro
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import webbrowser
-import constantes
+from constantes import FONTE
+from funcoes_registro import conectar_banco_de_dados
 
 plt.switch_backend('TkAgg') # Backend específico para exibir gráficos
 
 """Funções para criar visualizações gráficas"""
 
 def exibir_processos_por_municipio():
-    conn = funcoes_registro.conectar_banco_de_dados ()
+    conn = conectar_banco_de_dados ()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Municipio, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Municipio")
@@ -48,11 +48,11 @@ def exibir_processos_por_municipio():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_por_data_abertura():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Data_Abertura, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Data_Abertura")
@@ -96,11 +96,11 @@ def exibir_processos_por_data_abertura():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_com_acao_civil():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM SISREQ WHERE Acao_Civil_Publica != 'Sem_ACP' GROUP BY Acao_Civil_Publica")
@@ -135,11 +135,11 @@ def exibir_processos_com_acao_civil():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_por_fase_atual():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Fase_Processo, COUNT(*) as Total FROM SISREQ WHERE Fase_Processo != 'Inicial' GROUP BY Fase_Processo")
@@ -169,11 +169,11 @@ def exibir_processos_por_fase_atual():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_andamento_de_processos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT CASE WHEN Fase_Processo = 'Inicial' THEN 'Inicial' ELSE 'Andamento' END AS Fase, COUNT(*) as Total FROM SISREQ GROUP BY Fase")
@@ -205,11 +205,11 @@ def exibir_andamento_de_processos():
         plt.show()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_tipo_de_sopreposicao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Sobreposicao, COUNT(*) AS Tipo_Sobreposicao FROM SISREQ GROUP BY Sobreposicao")
@@ -245,11 +245,11 @@ def exibir_tipo_de_sopreposicao():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Relatorio_Antropologico, COUNT(*) AS Rel_Antropologico FROM SISREQ WHERE Relatorio_Antropologico != 'Sem_Relatório' GROUP BY Relatorio_Antropologico")
@@ -284,11 +284,11 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
         plt.show()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def plotar_mapa_interativo():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Municipio, Comunidade, Latitude, Longitude, Num_Familias FROM SISREQ")
@@ -343,6 +343,6 @@ def plotar_mapa_interativo():
             webbrowser.open('mapa_interativo.html')
 
         else:
-            sg.popup('Não há registros válidos para exibir.', title='Erro', font=constantes.FONTE)
+            sg.popup('Não há registros válidos para exibir.', title='Erro', font=FONTE)
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)

@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import funcoes_registro
+from funcoes_registro import conectar_banco_de_dados
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
@@ -7,8 +7,8 @@ import constantes
 
 """Funções para salvar planilhas"""
 
-def planilha(registros):
-    conn = funcoes_registro.conectar_banco_de_dados()
+def salvar_planilha(registros):
+    conn = conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()
 
@@ -62,7 +62,7 @@ def planilha(registros):
         sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
 
 
-def extrato_planilha(registros):
+def salvar_extrato_planilha(registros):
     if registros:
         df = pd.DataFrame(
             registros,     

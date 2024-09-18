@@ -1,13 +1,13 @@
 import PySimpleGUI as sg
-import funcoes_registro
-import salvar
 import relatorios
-import constantes
+from funcoes_registro import conectar_banco_de_dados
+from salvar import salvar_extrato_planilha
+from constantes import FONTE
 
 """Funções para a filtrar registros por fases do processo"""
 
 def fase_inicial():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
@@ -54,16 +54,16 @@ def fase_inicial():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_Rtid():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
@@ -109,16 +109,16 @@ def fase_Rtid():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_publicacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
@@ -164,16 +164,16 @@ def fase_publicacao():
                 break
             
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
         
 
 def fase_notificacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
@@ -219,16 +219,16 @@ def fase_notificacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_portaria():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
@@ -274,16 +274,16 @@ def fase_portaria():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_decreto():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
@@ -329,16 +329,16 @@ def fase_decreto():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -386,7 +386,7 @@ def fase_titulacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Área Total':
                 relatorios.exibir_area_total_em_fase_titulacao()
@@ -397,11 +397,11 @@ def fase_titulacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_desintrusao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
@@ -447,16 +447,16 @@ def fase_desintrusao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_contestacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE 'Contestação'")
@@ -502,16 +502,16 @@ def fase_contestacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_recurso():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
@@ -556,16 +556,16 @@ def fase_recurso():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_desapropriacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
@@ -611,9 +611,9 @@ def fase_desapropriacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
         
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)

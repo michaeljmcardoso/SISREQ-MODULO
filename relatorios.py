@@ -1,12 +1,12 @@
 import PySimpleGUI as sg
-import funcoes_registro
-import salvar
 import constantes
+from funcoes_registro import conectar_banco_de_dados
+from salvar import salvar_extrato_planilha
 
 """Funções para exibir relatórios em tabelas"""
 
 def rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
@@ -54,7 +54,7 @@ def rtids_publicados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Número de Famílias':
                 exibir_total_de_familias_em_rtids_publicados()
@@ -69,7 +69,7 @@ def rtids_publicados():
 
 
 def titulos_expedidos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Area_ha_Titulada")
@@ -117,7 +117,7 @@ def titulos_expedidos():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Área Total':
                 exibir_area_total_em_areas_tituladas()
@@ -132,7 +132,7 @@ def titulos_expedidos():
 
 
 def territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute(
@@ -195,7 +195,7 @@ def territorios_identificados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Número de Famílias':
                 exibir_total_de_familias_em_territorios_identificados()
@@ -210,7 +210,7 @@ def territorios_identificados():
 
 
 def territorios_nao_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT * FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
@@ -257,7 +257,7 @@ def territorios_nao_identificados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
@@ -266,7 +266,7 @@ def territorios_nao_identificados():
 
 
 def exibir_comunidades_sem_certificacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT COUNT (*) FROM SISREQ WHERE Certidao_FCP LIKE '%Não-certificada%'")
@@ -311,7 +311,7 @@ def exibir_comunidades_sem_certificacao():
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
     else:
@@ -319,7 +319,7 @@ def exibir_comunidades_sem_certificacao():
 
 
 def exibir_territorios_quilombolas_em_assentamentos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
@@ -360,7 +360,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
@@ -369,7 +369,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
 
 
 def exibir_processos_com_acao_judicial():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute(
@@ -431,7 +431,7 @@ def exibir_processos_com_acao_judicial():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
@@ -440,7 +440,7 @@ def exibir_processos_com_acao_judicial():
 
 
 def cadastro_pnra():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute(
@@ -510,7 +510,7 @@ def cadastro_pnra():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Número de Famílias':
                exibir_total_de_familias_cadastradas_pnra()
@@ -524,7 +524,7 @@ def cadastro_pnra():
 """Funções para exibir relatorios em janelas popups"""
 
 def exibir_total_de_familias_cadastradas_pnra():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
@@ -541,7 +541,7 @@ def exibir_total_de_familias_cadastradas_pnra():
 
 
 def exibir_total_de_familias_em_rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Edital_DOU")
@@ -555,7 +555,7 @@ def exibir_total_de_familias_em_rtids_publicados():
 
 
 def exibir_area_total_em_rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Edital_DOU")
@@ -570,7 +570,7 @@ def exibir_area_total_em_rtids_publicados():
 
 
 def exibir_area_total_em_fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -585,7 +585,7 @@ def exibir_area_total_em_fase_titulacao():
 
 
 def exibir_total_de_familias_em_fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -598,7 +598,7 @@ def exibir_total_de_familias_em_fase_titulacao():
 
 
 def exibir_total_de_familias_em_areas_tituladas():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Area_ha_Titulada")
@@ -612,7 +612,7 @@ def exibir_total_de_familias_em_areas_tituladas():
 
 
 def exibir_area_total_em_areas_tituladas():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT SUM(Area_ha_Titulada) FROM SISREQ WHERE Area_ha_Titulada")
@@ -627,7 +627,7 @@ def exibir_area_total_em_areas_tituladas():
         
 
 def exibir_total_de_familias():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ")
@@ -642,7 +642,7 @@ def exibir_total_de_familias():
 
 
 def exibir_total_de_familias_em_territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
@@ -663,7 +663,7 @@ def exibir_total_de_familias_em_territorios_identificados():
 
 
 def exibir_area_total():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ")
@@ -678,7 +678,7 @@ def exibir_area_total():
 
 
 def exibir_area_total_em_territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE "
