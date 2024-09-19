@@ -22,7 +22,8 @@ def criar_janela_graficos():
             [sg.Button('Distrubuição por Municípios', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
             [sg.Button('Geolocalização', button_color='blue', font=FONTE)],
-            [sg.Text(' ')]
+            [sg.Text(' ')],
+            [sg.Button('Status de PNRA', button_color='blue', font=FONTE)],
         ]
 
         layout = [[sg.Column(coluna_graficos)]]
@@ -57,5 +58,8 @@ def criar_janela_graficos():
                 
             elif event == 'Geolocalização':
                 graficos.plotar_mapa_interativo()
+            
+            elif event == 'Status de PNRA':
+                graficos.exibir_status_pnra()
                 
         return janela_graficos

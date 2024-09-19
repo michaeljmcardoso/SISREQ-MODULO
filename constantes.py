@@ -1,8 +1,7 @@
 from PySimpleGUI import theme, Text
 import datetime
 
-
-"""Constantes de janela"""
+"""CONSTANTES DE JANELA"""
 
 ANO_ATUAL = datetime.datetime.now().year
 
@@ -10,11 +9,15 @@ JANELA_TEMA = theme('DarkGreen')
 
 JANELA_RODAPE = Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
 
+
+"""CONSTANTES DE FONTES"""
+
 FONTE = font='Helvetica 10 bold'
 
 FONTE_DE_AVSIO = font='Any 10 bold'
 
-"""Constantes de listas"""
+
+"""CONSTANTES DE LISTAS"""
 
 TIPO_SOBREPOSICAO = [
     'PA_INCRA', 

@@ -3,19 +3,19 @@ import sys
 import pandas as pd
 import sqlite3
 import PySimpleGUI as sg
-import constantes
+from constantes import FONTE, JANELA_TEMA
 
 
 def criar_janela_import():
         janela = [
-            [sg.Text("Selecione o arquivo Excel (.xlsx):", font=constantes.FONTE), sg.InputText(), sg.FileBrowse(file_types=(("Excel Files", "*.xlsx"),), button_color='#3169F5', font=constantes.FONTE)],
-            [sg.Button("Converter", button_color='green', font=constantes.FONTE), sg.Button("Fechar", button_color='#ac4e04', font=constantes.FONTE)],
+            [sg.Text("Selecione o arquivo Excel (.xlsx):", font=FONTE), sg.InputText(), sg.FileBrowse(file_types=(("Excel Files", "*.xlsx"),), button_color='#3169F5', font=FONTE)],
+            [sg.Button("Converter", button_color='green', font=FONTE), sg.Button("Fechar", button_color='#ac4e04', font=FONTE)],
             [sg.Text(' ')],
             [sg.Text(' ')],
         ]
 
         # Tema
-        sg.theme(constantes.JANELA_TEMA)
+        sg.theme(JANELA_TEMA)
 
         # Criar a janela
         janela_converter = sg.Window("Conversor de Planilha para Banco de Dados", janela)
@@ -113,20 +113,20 @@ def convert_xlsx_to_db(xlsx_file_path):
             f"Banco de dados '{sqlite_db_path}' criado com sucesso!", 
             "Aguarde enquanto reiniciamos o programa.",
             "Ao rertonar, aperte CONSULTAR  para atualizar a Tabela.", 
-            title="Sucesso", display_duration_in_ms=12000, fade_in_duration=2.0
+            title="Sucesso", display_duration_in_ms=8000, fade_in_duration=2.0
             )
         
         restart_program()
 
     except FileNotFoundError as e:
         sg.popup_error(f"O arquivo '{xlsx_file_path}' não foi encontrado. {e}", 
-                       font=constantes.FONTE, title="Erro")
+                       font=FONTE, title="Erro")
     except pd.errors.EmptyDataError:
         sg.popup_error(f"O arquivo '{xlsx_file_path}' está vazio ou mal formatado.",
-                       font=constantes.FONTE, title="Erro")
+                       font=FONTE, title="Erro")
     except sqlite3.Error as e:
         sg.popup_error(f"Erro no banco de dados SQLite: {e}",
-                       font=constantes.FONTE, title="Erro")
+                       font=FONTE, title="Erro")
     except Exception as e:
         sg.popup_error(f"Ocorreu um erro inesperado: {e}",
-                       font=constantes.FONTE, title="Erro")
+                       font=FONTE, title="Erro")

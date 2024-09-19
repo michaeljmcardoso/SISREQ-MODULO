@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
-from funcoes_registro import conectar_banco_de_dados
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
-import constantes
+from constantes import FONTE
+from funcoes_registro import conectar_banco_de_dados
+
 
 """Funções para salvar planilhas"""
 
@@ -55,11 +56,11 @@ def salvar_planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. A planilha não foi salva.', title='Aviso', font=constantes.FONTE)
+            sg.popup('Nenhum arquivo selecionado. A planilha não foi salva.', title='Aviso', font=FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para extrair.', title='Erro', font=FONTE)
 
 
 def salvar_extrato_planilha(registros):
@@ -104,8 +105,8 @@ def salvar_extrato_planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso', font=constantes.FONTE)
+            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso', font=FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para extrair.', title='Erro', font=FONTE)

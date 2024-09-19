@@ -373,8 +373,12 @@ def alterar_registro(janela):
             conn.commit()
 
             sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
+
             janelaAlterarDados.close()
+
             consultar_registros(janela)
+
             cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
+            
             janela['total_processo'].update(f'{totalProcesso} Processos')

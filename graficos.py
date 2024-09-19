@@ -346,3 +346,47 @@ def plotar_mapa_interativo():
             sg.popup('Não há registros válidos para exibir.', title='Erro', font=FONTE)
     else:
         sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
+
+
+def exibir_status_pnra():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+
+    # Consulta ao banco de dados para contar os status de PNRA
+    cursor.execute("""
+        SELECT PNRA, COUNT(*) AS Tipo_PNRA 
+        FROM SISREQ 
+        WHERE PNRA IN ('ANDAMENTO', 'CONCLUIDO', 'NAO-INICIADO') 
+        GROUP BY PNRA
+    """)
+    resultados = cursor.fetchall()
+
+    if resultados:
+        pnra_status = []
+        tipo_pnra = []
+
+        for resultado in resultados:
+            pnra_status.append(resultado[0])
+            tipo_pnra.append(resultado[1])
+
+        # Criar DataFrame com os dados de PNRA
+        data = pd.DataFrame({'Status PNRA': pnra_status, 'Quantidade': tipo_pnra})
+
+        # Plot do gráfico de barras
+        fig, ax = plt.subplots(figsize=(10, 6))
+        sns.barplot(x=tipo_pnra, y=pnra_status, data=data, palette="Set1", ax=ax)
+
+        # Configurações do gráfico
+        ax.set(title='Status do PNRA em Regularização Quilombola')  # Título
+        sns.set_style("white")
+        sns.despine(right=True, top=True, bottom=True, left=True)
+        plt.tick_params(bottom=False, labelbottom=False)
+
+        # Adicionar rótulos (quantidades) ao lado de cada barra
+        for i, quantidade in enumerate(tipo_pnra):
+            ax.text(quantidade + 0.0, i, str(quantidade), ha='left', va='center', weight='bold')
+
+        plt.tight_layout()
+        plt.show()
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
