@@ -1,12 +1,12 @@
 import PySimpleGUI as sg
-import funcoes_registro
-import salvar
 import constantes
+from funcoes_registro import conectar_banco_de_dados
+from salvar import salvar_extrato_planilha
 
 """Funções para exibir relatórios em tabelas"""
 
 def rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Edital_DOU")
@@ -23,7 +23,7 @@ def rtids_publicados():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -32,7 +32,7 @@ def rtids_publicados():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -45,7 +45,7 @@ def rtids_publicados():
 
         ]
 
-        janela = sg.Window('Relatórios Publicados', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Relatórios Publicados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -54,7 +54,7 @@ def rtids_publicados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Número de Famílias':
                 exibir_total_de_familias_em_rtids_publicados()
@@ -69,13 +69,13 @@ def rtids_publicados():
 
 
 def titulos_expedidos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Area_ha_Titulada")
     total_titulos_expedidos = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT * FROM SISREQ WHERE Area_ha_Titulada")
     registros = cursor.fetchall()
 
     if registros:
@@ -86,7 +86,7 @@ def titulos_expedidos():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -95,7 +95,7 @@ def titulos_expedidos():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -108,7 +108,7 @@ def titulos_expedidos():
 
         ]
 
-        janela = sg.Window('Títulos Expedidos', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Títulos Expedidos', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -117,7 +117,7 @@ def titulos_expedidos():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Área Total':
                 exibir_area_total_em_areas_tituladas()
@@ -132,17 +132,13 @@ def titulos_expedidos():
 
 
 def territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
@@ -153,11 +149,7 @@ def territorios_identificados():
     cursor.execute(
         "SELECT * FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
@@ -173,7 +165,7 @@ def territorios_identificados():
                     headings=[
                         'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                         'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         '          Outras_Informacoes'
@@ -182,7 +174,7 @@ def territorios_identificados():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -194,7 +186,7 @@ def territorios_identificados():
             ]
         ]
 
-        janela = sg.Window('Territórios Identificados', layout, size=(1200, 800), resizable=True)
+        janela = sg.Window('Territórios Identificados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -203,7 +195,7 @@ def territorios_identificados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Número de Famílias':
                 exibir_total_de_familias_em_territorios_identificados()
@@ -218,13 +210,14 @@ def territorios_identificados():
 
 
 def territorios_nao_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT * FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
     registros = cursor.fetchall()
 
     cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Relatorio_Antropologico LIKE '%Sem_Relatório%'")
+    total_de_territorios_nao_identificados = cursor.fetchone()[0]
 
     if registros:
         layout = [
@@ -234,7 +227,7 @@ def territorios_nao_identificados():
                         headings=[
                             'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                             'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             '          Outras_Informacoes'
@@ -243,18 +236,19 @@ def territorios_nao_identificados():
                         auto_size_columns=True, 
                         hide_vertical_scroll=False,
                         vertical_scroll_only=False, 
-                        num_rows=40
+                        num_rows=35
                     )
             ],
 
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green')
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de Processos: {total_de_territorios_nao_identificados} Território(s) Não Identificado(s)', font='Any 10 bold'),
             ]
 
         ]
 
-        janela = sg.Window('Territórios Não-Identificados', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Territórios Não-Identificados', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -263,7 +257,7 @@ def territorios_nao_identificados():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
@@ -271,8 +265,61 @@ def territorios_nao_identificados():
         sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
 
 
+def exibir_comunidades_sem_certificacao():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT (*) FROM SISREQ WHERE Certidao_FCP LIKE '%Não-certificada%'")
+    total_nao_certificadas = cursor.fetchone()[0]
+
+    cursor.execute("SELECT * FROM SISREQ WHERE Certidao_FCP LIKE '%Não-certificada%'")
+    registros = cursor.fetchall()
+
+    if registros:
+        layout = [
+            [
+                sg.Table(
+                    values=registros,
+                    headings=[
+                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        '          Outras_Informacoes'
+                    ],
+                    justification='left', 
+                    auto_size_columns=True, 
+                    hide_vertical_scroll=False,
+                    vertical_scroll_only=False, 
+                    num_rows=35
+                    )
+            ],
+
+            [
+                sg.Button('Fechar', button_color='#ac4e04'),
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de processos: {total_nao_certificadas} registros sem Certificação da Palmares.', font='Any 10 bold')
+            ]
+        ]
+
+        janela = sg.Window('Comunidades sem Certificação da Palmares no Processo', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, _ = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+            elif event == 'Extrato':
+                salvar_extrato_planilha(registros)
+
+        janela.close()
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
+
+
 def exibir_territorios_quilombolas_em_assentamentos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) FROM SISREQ WHERE Sobreposicao LIKE '%PA_INCRA%' OR Sobreposicao LIKE '%PA_ITERMA%'")
@@ -289,7 +336,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
                     headings=[
                         'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                         'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         'Outras_Informacoes'
@@ -298,13 +345,13 @@ def exibir_territorios_quilombolas_em_assentamentos():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
             
             [sg.Button('Fechar', button_color='#ac4e04'), sg.Button('Extrato', button_color='green'), sg.Text(f'Total de processos: {total_territorio_quilombola_em_assentamento} registros encontrados de comunidades quilombolas em projetos de assentamento.', font='Any 10 bold')]
         ]
 
-        janela = sg.Window('Territórios Quilombolas em Projetos de Assentamento', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Territórios Quilombolas em Projetos de Assentamento', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -313,7 +360,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
@@ -322,7 +369,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
 
 
 def exibir_processos_com_acao_judicial():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute(
@@ -355,7 +402,7 @@ def exibir_processos_com_acao_judicial():
                     headings=[
                         'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
                         'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', 'Porcentagem_Titulada', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         '          Outras_Informacoes'
@@ -364,18 +411,18 @@ def exibir_processos_com_acao_judicial():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40
+                    num_rows=35
                     )
             ],
 
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.\nEm andamento: 48', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font='Any 10 bold')
             ]
         ]
 
-        janela = sg.Window('Ações Judiciais em Regularização Quilombola', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Ação Civil Pública em Regularização Quilombola', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -384,7 +431,89 @@ def exibir_processos_com_acao_judicial():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
+
+        janela.close()
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+
+
+def cadastro_pnra():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%ANDAMENTO%'"
+        )
+    
+    cadastro_pnra_andamento = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%CONCLUIDO%'"
+        )
+    
+    cadastro_pnra_concluido = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "PNRA LIKE '%NAO-INICIADO%'"
+        )
+    
+    cadastro_pnra_nao_iniciado = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT * FROM SISREQ WHERE "
+        "PNRA LIKE '%ANDAMENTO%' OR "
+        "PNRA LIKE '%CONCLUIDO%' OR "
+        "PNRA LIKE '%NAO-INICIADO%'"
+        )
+
+    registros = cursor.fetchall()
+
+    if registros:
+        layout = [
+            [
+                sg.Table(
+                    values=registros,
+                    headings=[
+                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
+                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+                        '          Outras_Informacoes'
+                    ],
+                    justification='left', 
+                    auto_size_columns=True, 
+                    hide_vertical_scroll=False,
+                    vertical_scroll_only=False, 
+                    num_rows=35)
+            ],
+
+            [
+                sg.Button('Fechar', button_color='#ac4e04'), 
+                sg.Button('Extrato', button_color='green'), sg.Text(''),
+                sg.Text(f'| Cadastro(s) Concluído(s): {cadastro_pnra_concluido}\n| Cadastro(s) em Andamento: {cadastro_pnra_andamento}\n| Cadastro(s) Não Iniciado(s): {cadastro_pnra_nao_iniciado}', font='Any 10 bold'), sg.Text(''),
+                sg.Button('Número de Famílias', button_color='green'),
+            ]
+        ]
+
+        janela = sg.Window('Comunidades Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, _ = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+
+            elif event == 'Extrato':
+                salvar_extrato_planilha(registros)
+
+            elif event == 'Número de Famílias':
+               exibir_total_de_familias_cadastradas_pnra()
 
         janela.close()
 
@@ -394,8 +523,25 @@ def exibir_processos_com_acao_judicial():
 
 """Funções para exibir relatorios em janelas popups"""
 
+def exibir_total_de_familias_cadastradas_pnra():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
+        "PNRA LIKE '%CONCLUIDO%'")
+
+    total_familias = cursor.fetchone()[0]
+
+    if total_familias is not None:
+        total_familias_formatado = "{:.0f}".format(total_familias)
+        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=constantes.FONTE)
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+
+
 def exibir_total_de_familias_em_rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Edital_DOU")
@@ -409,7 +555,7 @@ def exibir_total_de_familias_em_rtids_publicados():
 
 
 def exibir_area_total_em_rtids_publicados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Edital_DOU")
@@ -424,7 +570,7 @@ def exibir_area_total_em_rtids_publicados():
 
 
 def exibir_area_total_em_fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -439,7 +585,7 @@ def exibir_area_total_em_fase_titulacao():
 
 
 def exibir_total_de_familias_em_fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -452,10 +598,10 @@ def exibir_total_de_familias_em_fase_titulacao():
 
 
 def exibir_total_de_familias_em_areas_tituladas():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ WHERE Area_ha_Titulada")
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
@@ -466,10 +612,10 @@ def exibir_total_de_familias_em_areas_tituladas():
 
 
 def exibir_area_total_em_areas_tituladas():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT SUM(Titulo) FROM SISREQ WHERE Titulo")
+    cursor.execute("SELECT SUM(Area_ha_Titulada) FROM SISREQ WHERE Area_ha_Titulada")
     total_area = cursor.fetchone()[0]
 
     if total_area is not None:
@@ -481,7 +627,7 @@ def exibir_area_total_em_areas_tituladas():
         
 
 def exibir_total_de_familias():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_Familias) FROM SISREQ")
@@ -496,16 +642,12 @@ def exibir_total_de_familias():
 
 
 def exibir_total_de_familias_em_territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Num_familias) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
         "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%'")
@@ -521,7 +663,7 @@ def exibir_total_de_familias_em_territorios_identificados():
 
 
 def exibir_area_total():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ")
@@ -536,19 +678,15 @@ def exibir_area_total():
 
 
 def exibir_area_total_em_territorios_identificados():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT SUM(Area_ha) FROM SISREQ WHERE "
         "Relatorio_Antropologico LIKE '%Execução_Direta%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_3R%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Demacamp%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_EcoDimensao%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Terra%' OR "
-        "Relatorio_Antropologico LIKE '%Contrato_Engecem%' OR "
+        "Relatorio_Antropologico LIKE '%Contrato%' OR "
         "Relatorio_Antropologico LIKE '%Doação%' OR "
         "Relatorio_Antropologico LIKE '%Acordo_Coop_Técnica%' OR "
-        "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%'"
+        "Relatorio_Antropologico LIKE '%Termo_Execução_Descentralizada%' "
         )
     
     totalArea = cursor.fetchone()[0]

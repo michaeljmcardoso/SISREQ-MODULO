@@ -23,36 +23,14 @@
 
   8. **Backup e Segurança:** Outro aspecto pensado e ainda não efetivado, será a implementação de recursos de backup, para evitar perda de dados em caso de falhas ou problemas técnicos. Além disso, poderá haver medidas de segurança para proteger informações sensíveis, se houver.
 
-  9. **Recursos Avançados:** No futuro, dependendo da complexidade do sistema, poderão ser implementados recursos avançados, como notificações automáticas, integração com outros sistemas, inteligência artificial, entre outros.
+  9. **Recursos Avançados:** No futuro, dependendo da complexidade do sistema, poderão ser implementados recursos avançados, como notificações automáticas, integração com outros sistemas, inteligência artificial, entre outros. 
+   
+  10. **Lançamento da Versão Web 2.0** Em vez de ser instalado diretamente em seu dispositivo (como um aplicativo tradicional), ele será acessado através de um navegador de internet, como o Chrome, Firefox ou Safari. Poderá ser acessado de qualquer dispositivo com um navegador e conexão à internet.
 
+ 
   Em resumo, o SISREQ é um sistema versátil que permite o gerenciamento eficiente de processos, facilitando o acesso às informações, a geração de relatórios, possibilitando tomada de decisões com base em dados atualizados e organizados. A lógica do programa é focada em fornecer uma solução completa para o controle e acompanhamento de processos de forma eficaz e simplificada.
   [Projeto](https://github.com/michaeljmcardoso/SISREQ-MODULO/blob/desenvolvimento/Projeto.md)
   </p>
-
-## Step by step do desenvolvimento do programa
-
-<p>
-  Para concepção do programa utilizamos as seguintes bibliotecas:
-
-   - `sqlite3` para manipulação do banco de dados SQLite.
-   - `PySimpleGUI` para criar a interface gráfica.
-   - `pandas` para manipulação de dados e exportação para planilha.
-   - `Seaborn` e `Matplotlib` para criar e plotar as visualizações gráficas.
-</p>
-  
-<p>
-  Primeiro passo é criar ou conectar-se a um banco de dados SQLite e obter um cursor para executar comandos SQL.
-  
-  Em seguida criamos a tabela SISREQ, caso ela não exista no banco de dados. A tabela possui várias colunas, que são as nossas váriaveis.
-  
-  O passso seguinte é a definação das variáveis constantes para os campos do formulário que terão opões de múltipla escolha ou escolha única.
-
-  Definimos o tema e o layout da janela principal. A janela possui campos de entrada para o cadastro de processos, botões para inserir, consultar e extrair planilha, uma tabela para exibir os registros cadastrados e um botão para consultar e outro para alterar um registro selecionado.
- 
-  Criada a janela com o layout definido, damos continuidade construindo as funções para inserir dados, consultar registros, pesquisar por nome da comunidade, pesquisa por município, pesquisar por número do processo, extrair planilha, alterar um registro dentre outras funções para consulta e exibição de gráficos. Dentro da segunda janela de consulta definimos outra função para extrair um extrato de um ou mais registros.
-
-  No Loop principal para capturar eventos da janela, quando um evento ocorre (por exemplo, clique em um botão), a função correspondente é chamada.
-  Finalmente, fechamos a conexão com o banco de dados e encerramos o programa.
 
   [SISREQ](https://github.com/michaeljmcardoso/SISREQ-MODULO/tree/desenvolvimento)
 

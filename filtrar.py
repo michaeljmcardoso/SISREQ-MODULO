@@ -1,13 +1,13 @@
 import PySimpleGUI as sg
-import funcoes_registro
-import salvar
 import relatorios
-import constantes
+from funcoes_registro import conectar_banco_de_dados
+from salvar import salvar_extrato_planilha
+from constantes import FONTE
 
 """Funções para a filtrar registros por fases do processo"""
 
 def fase_inicial():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Inicial%'")
@@ -24,7 +24,7 @@ def fase_inicial():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -33,7 +33,7 @@ def fase_inicial():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
                     
             ],
 
@@ -45,7 +45,7 @@ def fase_inicial():
 
         ]
 
-        janela = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -54,16 +54,16 @@ def fase_inicial():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_Rtid():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
@@ -80,7 +80,7 @@ def fase_Rtid():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -89,7 +89,7 @@ def fase_Rtid():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [   
@@ -100,7 +100,7 @@ def fase_Rtid():
             ]
         ]
 
-        janela = sg.Window('Processos em Estudo de Identificação e Delimitação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Estudo de Identificação e Delimitação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -109,16 +109,16 @@ def fase_Rtid():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_publicacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Publicação%'")
@@ -135,7 +135,7 @@ def fase_publicacao():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -144,7 +144,7 @@ def fase_publicacao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -155,7 +155,7 @@ def fase_publicacao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -164,16 +164,16 @@ def fase_publicacao():
                 break
             
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
         
 
 def fase_notificacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Notificação%'")
@@ -190,7 +190,7 @@ def fase_notificacao():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -199,7 +199,7 @@ def fase_notificacao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -210,7 +210,7 @@ def fase_notificacao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Notificação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Notificação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -219,16 +219,16 @@ def fase_notificacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_portaria():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Portaria%'")
@@ -245,7 +245,7 @@ def fase_portaria():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -254,7 +254,7 @@ def fase_portaria():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -265,7 +265,7 @@ def fase_portaria():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Portaria', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Portaria', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -274,16 +274,16 @@ def fase_portaria():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_decreto():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Decreto%'")
@@ -300,7 +300,7 @@ def fase_decreto():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -309,7 +309,7 @@ def fase_decreto():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -320,7 +320,7 @@ def fase_decreto():
 
         ]
 
-        janela = sg.Window('Áreas Decretadas', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Áreas Decretadas', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -329,16 +329,16 @@ def fase_decreto():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_titulacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Titulação%'")
@@ -355,7 +355,7 @@ def fase_titulacao():
                    headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -364,7 +364,7 @@ def fase_titulacao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -377,7 +377,7 @@ def fase_titulacao():
             ]
         ]
 
-        janela = sg.Window('Processos em Fase de Titulação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Titulação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -386,7 +386,7 @@ def fase_titulacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
             elif event == 'Área Total':
                 relatorios.exibir_area_total_em_fase_titulacao()
@@ -397,11 +397,11 @@ def fase_titulacao():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_desintrusao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
@@ -418,7 +418,7 @@ def fase_desintrusao():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -427,7 +427,7 @@ def fase_desintrusao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -438,7 +438,7 @@ def fase_desintrusao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Desintrusão', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Desintrusão', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -447,16 +447,16 @@ def fase_desintrusao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_contestacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE 'Contestação'")
@@ -473,7 +473,7 @@ def fase_contestacao():
                     headings=[
                             'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                             'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                             'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                             'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                             'Outras_Informacoes'
@@ -482,7 +482,7 @@ def fase_contestacao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
                     
             [
@@ -493,7 +493,7 @@ def fase_contestacao():
             
         ]
 
-        janela = sg.Window('Processos em Fase de Contestação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Contestação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -502,16 +502,16 @@ def fase_contestacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_recurso():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Recurso%'")
@@ -528,7 +528,7 @@ def fase_recurso():
                     headings=[
                         'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                         'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         'Outras_Informacoes'
@@ -537,7 +537,7 @@ def fase_recurso():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -547,7 +547,7 @@ def fase_recurso():
             ]
 
         ]
-        janela = sg.Window('Processos em Fase de Recurso', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Recurso', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -556,16 +556,16 @@ def fase_recurso():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def fase_desapropriacao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
     cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desapropriação%'")
@@ -582,7 +582,7 @@ def fase_desapropriacao():
                     headings=[
                         'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
                         'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '% Área_Titulada_ha', 'Relatorio_Antropologico',
+                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
                         'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
                         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
                         'Outras_Informacoes'
@@ -591,7 +591,7 @@ def fase_desapropriacao():
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
                     vertical_scroll_only=False, 
-                    num_rows=40)
+                    num_rows=35)
             ],
 
             [
@@ -602,7 +602,7 @@ def fase_desapropriacao():
 
         ]
         
-        janela = sg.Window('Processos em Fase de Desapropriação', layout, size=(1200, 1200), resizable=True)
+        janela = sg.Window('Processos em Fase de Desapropriação', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -611,9 +611,9 @@ def fase_desapropriacao():
                 break
 
             elif event == 'Extrato':
-                salvar.extrato_planilha(registros)
+                salvar_extrato_planilha(registros)
 
         janela.close()
         
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)

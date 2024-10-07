@@ -6,6 +6,7 @@ def conectar_banco_de_dados():
     try:
         conn = sqlite3.connect('sisreq.db')
         return conn
+    
     except sqlite3.Error as e:
         print(f"Erro ao conectar ao banco de dados: {e}", font=constantes.FONTE)
         return None
@@ -29,7 +30,7 @@ def criar_tabela_se_nao_existir(conn):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
-            Porcentagem_Titulada NUMERIC,
+            PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,
             Longitude NUMERIC,
@@ -92,7 +93,7 @@ def inserir_dados(values, janela):
                         'Portaria_DOU',
                         'Decreto_DOU',
                         'Area_ha_Titulada',
-                        'Porcentagem_Titulada',
+                        'PNRA',
                         'Relatorio_Antropologico',
                         'Latitude',
                         'Longitude',
@@ -136,7 +137,7 @@ def inserir_dados(values, janela):
         )
 
         conn.commit()
-        sg.popup('Dados inseridos com sucesso!', title='Sucesso', font=constantes.FONTE)
+        sg.popup_auto_close('Dados inseridos com sucesso!', title='Sucesso', font=constantes.FONTE)
 
         janela['-NUMERO-'].update('')
         janela['-DATA_ABERTURA-'].update('')
@@ -189,7 +190,7 @@ def alterar_registro(janela):
 
     selected_rows = janela['-TABLE-'].SelectedRows
     if len(selected_rows) != 1:
-        sg.popup('Selecione um único registro para alterar.', title='Erro', font=constantes.FONTE)
+        sg.popup_notify('Selecione um único registro para alterar.', title='Erro')
         return
 
     selected_row_values = janela['-TABLE-'].get()[selected_rows[0]]
@@ -224,6 +225,7 @@ def alterar_registro(janela):
         [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
         [sg.Text('Comunidade:'), sg.Input(key='-NOME_COMUNIDADE-', size=(19, 1), default_text=nome_comunidade)],
         [sg.Text('Município:'), sg.Combo(constantes.MUNICIPIOS, size=(19, 30), key='-MUNICIPIO-', default_value=municipio)],
+        #[sg.Text('Município:'), sg.Input(size=(19, 30), key='-MUNICIPIO-', default_text=municipio)],
         [sg.Text('Número de\nFamílias:'), sg.Input(size=(21, 1), key='-NUM_FAMILIA-', default_text=num_familia)]
     ]
 
@@ -238,7 +240,7 @@ def alterar_registro(janela):
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('% Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-PNRA-', default_text=pnra)],
+        [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 
@@ -249,15 +251,15 @@ def alterar_registro(janela):
         [sg.Text('Edital DOE'), sg.Input(size=(18, 1), key='-EDITAL_DOE-', default_text=edital_doe)],
         [sg.CalendarButton('Portaria DOU:', target='-PORTARIA_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-PORTARIA_DOU-', size=(15, 1), default_text=portaria_dou)],
         [sg.CalendarButton('Decreto DOU:', target='-DECRETO_DOU-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DECRETO_DOU-', size=(15, 1), default_text=decreto_dou)],
-        [sg.Text('Sobreposição:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(27, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao)]
+        [sg.Text('Sobreposição:'), sg.Listbox(constantes.TIPO_SOBREPOSICAO, size=(20, 6), select_mode=sg.LISTBOX_SELECT_MODE_MULTIPLE, key='-TIPO_SOBREPOSICAO-', default_values=tipo_sobreposicao)]
     ]
 
     coluna_5 = [
-        [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(32, 6), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)],
+        [sg.Text('Detalhes de\nSobreposição:'), sg.Multiline(size=(32, 3), key='-SOBREPOSICAO-', default_text=analise_sobreposicao)],
         [sg.Text('Ação Civil Pública:'), sg.Combo(constantes.ACAO_CIVIL_PUBLICA, size=(19, 1), key='-ACP-', default_value=acp)],
         [sg.CalendarButton('Data Sentença', target='-DATA_DECISAO-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(key='-DATA_DECISAO-', size=(15, 1), default_text=data_decisao),],
-        [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 6), key='-TEOR_DECISAO-', default_text=teor_decisao)],
-        [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 6), key='-INFORMACAO-', default_text=outras_informacaoes)]
+        [sg.Text('Teor e Prazo \nda Sentença:'), sg.Multiline(size=(32, 3), key='-TEOR_DECISAO-', default_text=teor_decisao)],
+        [sg.Text('Outras \ninformações: '), sg.Multiline(size=(32, 3), key='-INFORMACAO-', default_text=outras_informacaoes)]
     ]
 
     layoutAlterarDados = [
@@ -273,7 +275,7 @@ def alterar_registro(janela):
 
     ]
 
-    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1250, 650), resizable=True)
+    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1400, 600), resizable=True)
 
     while True:
         event_alterar, values_alterar = janelaAlterarDados.read()
@@ -322,7 +324,7 @@ def alterar_registro(janela):
                 Edital_DOE=?, 
                 Portaria_DOU=?, 
                 Decreto_DOU=?, 
-                Titulo=?,
+                Area_ha_Titulada=?,
                 PNRA=?, 
                 Relatorio_Antropologico=?, 
                 Latitude=?, 
@@ -371,8 +373,12 @@ def alterar_registro(janela):
             conn.commit()
 
             sg.popup('Registro alterado com sucesso!', title='Sucesso', font=constantes.FONTE)
+
             janelaAlterarDados.close()
+
             consultar_registros(janela)
+
             cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Numero")
             totalProcesso = cursor.fetchone()[0]
+            
             janela['total_processo'].update(f'{totalProcesso} Processos')

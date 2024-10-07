@@ -1,14 +1,15 @@
 import PySimpleGUI as sg
-import funcoes_registro
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
-import constantes
+from constantes import FONTE
+from funcoes_registro import conectar_banco_de_dados
+
 
 """Funções para salvar planilhas"""
 
-def planilha(registros):
-    conn = funcoes_registro.conectar_banco_de_dados()
+def salvar_planilha(registros):
+    conn = conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()
 
@@ -31,7 +32,7 @@ def planilha(registros):
                 'Edital_DOE',
                 'Portaria_DOU',
                 'Decreto_DOU',
-                'Titulo',
+                'Area_ha_Titulada',
                 'PNRA',
                 'Relatorio_Antropologico',
                 'Latitude',
@@ -55,14 +56,14 @@ def planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. A planilha não foi salva.', title='Aviso', font=constantes.FONTE)
+            sg.popup('Nenhum arquivo selecionado. A planilha não foi salva.', title='Aviso', font=FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para extrair.', title='Erro', font=FONTE)
 
 
-def extrato_planilha(registros):
+def salvar_extrato_planilha(registros):
     if registros:
         df = pd.DataFrame(
             registros,     
@@ -80,7 +81,7 @@ def extrato_planilha(registros):
                 'Edital_DOE',
                 'Portaria_DOU',
                 'Decreto_DOU',
-                'Titulo',
+                'Area_ha_Titulada',
                 'PNRA',
                 'Relatorio_Antropologico',
                 'Latitude',
@@ -104,8 +105,8 @@ def extrato_planilha(registros):
 
         if file_path:
             df.to_excel(file_path, index=False)
-            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=constantes.FONTE)
+            sg.popup('Planilha extraída com sucesso!', title='Sucesso', font=FONTE)
         else:
-            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso', font=constantes.FONTE)
+            sg.popup('Nenhum arquivo selecionado. O extrato não foi salvo.', title='Aviso', font=FONTE)
     else:
-        sg.popup('Não há registros para extrair.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para extrair.', title='Erro', font=FONTE)

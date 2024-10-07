@@ -1,21 +1,27 @@
-import PySimpleGUI as sg
+from PySimpleGUI import theme, Text
 import datetime
 
-"""Constantes de janela"""
+"""CONSTANTES DE JANELA"""
 
 ANO_ATUAL = datetime.datetime.now().year
 
-JANELA_TEMA = sg.theme('Kayak')
+JANELA_TEMA = theme('DarkGreen')
 
-JANELA_RODAPE = sg.Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
+JANELA_RODAPE = Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
+
+
+"""CONSTANTES DE FONTES"""
 
 FONTE = font='Helvetica 10 bold'
 
-"""Constantes de listas"""
+FONTE_DE_AVSIO = font='Any 10 bold'
+
+
+"""CONSTANTES DE LISTAS"""
 
 TIPO_SOBREPOSICAO = [
     'PA_INCRA', 
-    'PA_ITERMA', 
+    'PA_ESTADUAL', 
     'AREA_PARTICULAR', 
     'OUTRO_TQ', 
     'TERRAS_DE_MARINHA', 
@@ -72,16 +78,14 @@ ACAO_CIVIL_PUBLICA = [
 
 RELATORIO_ANTROPOLOGICO = [
     'Execução_Direta',
-    'Contrato_3R',
-    'Contrato_Demacamp',
-    'Contrato_EcoDimensao',
-    'Contrato_Terra',
-    'Contrato_Engecem',
+    'Contrato',
     'Acordo_Coop_Técnica',
     'Doação',
     'Termo_Execução_Descentralizada',
     'Sem_Relatório'
     ]
+
+PNRA = ['ANDAMENTO','CONCLUIDO','NAO-INICIADO']
 
 MUNICIPIOS = [
     'Açailândia',
@@ -95,7 +99,7 @@ MUNICIPIOS = [
     'Alto Parnaíba',
     'Amapá do Maranhão',
     'Amarante do Maranhão',
-    'Anajatuba',
+    'Anajatuba', 
     'Anapurus',
     'Apicum-Açu',
     'Araguanã',

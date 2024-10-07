@@ -1,27 +1,29 @@
 import PySimpleGUI as sg
-import constantes
 import graficos
+from constantes import FONTE, JANELA_TEMA
 
-def criar_janela():
-        sg.theme(constantes.JANELA_TEMA)
+
+def criar_janela_graficos():
+        sg.theme(JANELA_TEMA)
 
         coluna_graficos = [
-            [sg.Button('Andamento de Processos', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Andamento de Processos', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Processos por Fase', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Processos por Fase', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ação Judicial', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ação Civil Pública', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Sobreposições', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Sobreposições', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Relatórios Antropológicos', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Relatórios Antropológicos', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ano de Abertura', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Ano de Abertura', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Distrubuição por Municípios', button_color='blue', font=constantes.FONTE)],
+            [sg.Button('Distrubuição por Municípios', button_color='blue', font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Geolocalização', button_color='blue', font=constantes.FONTE)],
-            [sg.Text(' ')]
+            [sg.Button('Geolocalização', button_color='blue', font=FONTE)],
+            [sg.Text(' ')],
+            [sg.Button('Status de PNRA', button_color='blue', font=FONTE)],
         ]
 
         layout = [[sg.Column(coluna_graficos)]]
@@ -39,8 +41,8 @@ def criar_janela():
             elif event == 'Ano de Abertura':
                 graficos.exibir_processos_por_data_abertura()
 
-            elif event == 'Ação Judicial':
-                graficos.exibir_processos_com_acao_judicial()
+            elif event == 'Ação Civil Pública':
+                graficos.exibir_processos_com_acao_civil()
 
             elif event == 'Andamento de Processos':
                 graficos.exibir_andamento_de_processos()
@@ -56,5 +58,8 @@ def criar_janela():
                 
             elif event == 'Geolocalização':
                 graficos.plotar_mapa_interativo()
+            
+            elif event == 'Status de PNRA':
+                graficos.exibir_status_pnra()
                 
         return janela_graficos

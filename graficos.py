@@ -1,18 +1,18 @@
 import PySimpleGUI as sg
 import pandas as pd
-import funcoes_registro
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import webbrowser
-import constantes
+from constantes import FONTE
+from funcoes_registro import conectar_banco_de_dados
 
 plt.switch_backend('TkAgg') # Backend específico para exibir gráficos
 
 """Funções para criar visualizações gráficas"""
 
 def exibir_processos_por_municipio():
-    conn = funcoes_registro.conectar_banco_de_dados ()
+    conn = conectar_banco_de_dados ()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Municipio, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Municipio")
@@ -48,11 +48,11 @@ def exibir_processos_por_municipio():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_por_data_abertura():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Data_Abertura, COUNT(*) AS Num_Processos FROM SISREQ GROUP BY Data_Abertura")
@@ -96,11 +96,11 @@ def exibir_processos_por_data_abertura():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
-def exibir_processos_com_acao_judicial():
-    conn = funcoes_registro.conectar_banco_de_dados()
+def exibir_processos_com_acao_civil():
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM SISREQ WHERE Acao_Civil_Publica != 'Sem_ACP' GROUP BY Acao_Civil_Publica")
@@ -135,11 +135,11 @@ def exibir_processos_com_acao_judicial():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_por_fase_atual():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Fase_Processo, COUNT(*) as Total FROM SISREQ WHERE Fase_Processo != 'Inicial' GROUP BY Fase_Processo")
@@ -169,11 +169,11 @@ def exibir_processos_por_fase_atual():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_andamento_de_processos():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT CASE WHEN Fase_Processo = 'Inicial' THEN 'Inicial' ELSE 'Andamento' END AS Fase, COUNT(*) as Total FROM SISREQ GROUP BY Fase")
@@ -205,11 +205,11 @@ def exibir_andamento_de_processos():
         plt.show()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_tipo_de_sopreposicao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Sobreposicao, COUNT(*) AS Tipo_Sobreposicao FROM SISREQ GROUP BY Sobreposicao")
@@ -245,11 +245,11 @@ def exibir_tipo_de_sopreposicao():
         plt.tight_layout()
         plt.show()
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Relatorio_Antropologico, COUNT(*) AS Rel_Antropologico FROM SISREQ WHERE Relatorio_Antropologico != 'Sem_Relatório' GROUP BY Relatorio_Antropologico")
@@ -263,31 +263,12 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
             relatorios.append(resultado[0])
             tipo_relatorios.append(resultado[1])
 
-        # Calcular a soma das opções de contrato
-        soma_contrato = sum(tipo_relatorios[2:6])
-
-        # Mapeamento das opções que queremos mostrar no gráfico
-        opcoes_desejadas = ['Acordo_Coop_Técnica', 'Doação', 'Contrato', 'Execução_Direta', 'Termo_Execução_Descentralizada']
-
-        # Filtrar apenas as opções desejadas
-        relatorios_filtrados = []
-        tipo_relatorios_filtrados = []
-
-        for relatorio, valor in zip(relatorios, tipo_relatorios):
-            if relatorio in opcoes_desejadas:
-                relatorios_filtrados.append(relatorio)
-                tipo_relatorios_filtrados.append(valor)
-
-        # Adicionar a soma das opções de contrato aos dados filtrados
-        relatorios_filtrados.append('Contrato')
-        tipo_relatorios_filtrados.append(soma_contrato)
-
         # Criar DataFrame
-        data = pd.DataFrame({'Relatórios': relatorios_filtrados, 'Tipo de Relatórios': tipo_relatorios_filtrados})
+        data = pd.DataFrame({'Relatórios': relatorios, 'Tipo de Relatórios': tipo_relatorios})
 
-        # Plot do gráfico
+        # Plot do gráfico sem o uso de palette
         fig, ax = plt.subplots(figsize=(10, 6))
-        sns.barplot(x=tipo_relatorios_filtrados, y=relatorios_filtrados, data=data, palette='Set1')
+        sns.barplot(x=tipo_relatorios, y=relatorios, data=data, palette='Set1')
 
         # Configurações do gráfico
         ax.set(title='Relatórios Antropológicos por Forma de Execução')  # Título
@@ -296,18 +277,18 @@ def exibir_relatorios_antropologicos_por_forma_de_elaboracao():
         plt.tick_params(bottom=False, labelbottom=False)
 
         # Adicionar rótulos (quantidades) ao lado de cada barra
-        for i, tipo_relatorios in enumerate(tipo_relatorios_filtrados):
-            ax.text(tipo_relatorios + 0.1, i, str(tipo_relatorios), ha='left', va='center', weight='bold')
+        for i, valor in enumerate(tipo_relatorios):
+            ax.text(valor + 0.1, i, str(valor), ha='left', va='center', weight='bold')
 
         plt.tight_layout()
         plt.show()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def plotar_mapa_interativo():
-    conn = funcoes_registro.conectar_banco_de_dados()
+    conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
     cursor.execute("SELECT Municipio, Comunidade, Latitude, Longitude, Num_Familias FROM SISREQ")
@@ -362,6 +343,50 @@ def plotar_mapa_interativo():
             webbrowser.open('mapa_interativo.html')
 
         else:
-            sg.popup('Não há registros válidos para exibir.', title='Erro', font=constantes.FONTE)
+            sg.popup('Não há registros válidos para exibir.', title='Erro', font=FONTE)
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
+
+
+def exibir_status_pnra():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+
+    # Consulta ao banco de dados para contar os status de PNRA
+    cursor.execute("""
+        SELECT PNRA, COUNT(*) AS Tipo_PNRA 
+        FROM SISREQ 
+        WHERE PNRA IN ('ANDAMENTO', 'CONCLUIDO', 'NAO-INICIADO') 
+        GROUP BY PNRA
+    """)
+    resultados = cursor.fetchall()
+
+    if resultados:
+        pnra_status = []
+        tipo_pnra = []
+
+        for resultado in resultados:
+            pnra_status.append(resultado[0])
+            tipo_pnra.append(resultado[1])
+
+        # Criar DataFrame com os dados de PNRA
+        data = pd.DataFrame({'Status PNRA': pnra_status, 'Quantidade': tipo_pnra})
+
+        # Plot do gráfico de barras
+        fig, ax = plt.subplots(figsize=(10, 6))
+        sns.barplot(x=tipo_pnra, y=pnra_status, data=data, palette="Set1", ax=ax)
+
+        # Configurações do gráfico
+        ax.set(title='Status do PNRA em Regularização Quilombola')  # Título
+        sns.set_style("white")
+        sns.despine(right=True, top=True, bottom=True, left=True)
+        plt.tick_params(bottom=False, labelbottom=False)
+
+        # Adicionar rótulos (quantidades) ao lado de cada barra
+        for i, quantidade in enumerate(tipo_pnra):
+            ax.text(quantidade + 0.0, i, str(quantidade), ha='left', va='center', weight='bold')
+
+        plt.tight_layout()
+        plt.show()
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
