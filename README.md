@@ -1,5 +1,10 @@
 # SISREQ - Sistema de Regularização Quilombola
 
+<p align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*aciaOzrqLNtnqmM-MzuJnw.png">
+</p>
+
+
 ## Descrição
 
 <p>
