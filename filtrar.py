@@ -3,6 +3,7 @@ import relatorios
 from funcoes_registro import conectar_banco_de_dados
 from salvar import salvar_extrato_planilha
 from constantes import FONTE
+from constantes import headings
 
 """Funções para a filtrar registros por fases do processo"""
 
@@ -21,14 +22,7 @@ def fase_inicial():
             [
                 sg.Table(
                     values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -77,14 +71,7 @@ def fase_Rtid():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -132,14 +119,7 @@ def fase_publicacao():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -187,14 +167,7 @@ def fase_notificacao():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -242,14 +215,7 @@ def fase_portaria():
             [
                 sg.Table(
                     values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -297,14 +263,7 @@ def fase_decreto():
             [
                 sg.Table(
                     values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -352,14 +311,7 @@ def fase_titulacao():
             [
                 sg.Table(
                    values=registros, 
-                   headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                   headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -415,14 +367,7 @@ def fase_desintrusao():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -470,14 +415,7 @@ def fase_contestacao():
             [
                 sg.Table(
                     values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,

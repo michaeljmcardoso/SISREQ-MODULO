@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import constantes
+from constantes import FONTE, headings
 from funcoes_registro import conectar_banco_de_dados
 from salvar import salvar_extrato_planilha
 
@@ -20,14 +20,7 @@ def rtids_publicados():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -65,7 +58,7 @@ def rtids_publicados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def titulos_expedidos():
@@ -83,14 +76,7 @@ def titulos_expedidos():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -128,7 +114,7 @@ def titulos_expedidos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def territorios_identificados():
@@ -162,14 +148,7 @@ def territorios_identificados():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -206,7 +185,7 @@ def territorios_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def territorios_nao_identificados():
@@ -224,14 +203,7 @@ def territorios_nao_identificados():
             [
                 sg.Table(
                         values=registros, 
-                        headings=[
-                            'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                            'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            '          Outras_Informacoes'
-                        ],
+                        headings=headings,
                         justification='left', 
                         auto_size_columns=True, 
                         hide_vertical_scroll=False,
@@ -262,7 +234,7 @@ def territorios_nao_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_comunidades_sem_certificacao():
@@ -280,14 +252,7 @@ def exibir_comunidades_sem_certificacao():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -333,14 +298,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
             [
                 sg.Table(
                     values=registros, 
-                    headings=[
-                        'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        'Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -365,7 +323,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_com_acao_judicial():
@@ -399,14 +357,7 @@ def exibir_processos_com_acao_judicial():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -436,7 +387,7 @@ def exibir_processos_com_acao_judicial():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def cadastro_pnra():
@@ -478,14 +429,7 @@ def cadastro_pnra():
             [
                 sg.Table(
                     values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
+                    headings=headings,
                     justification='left', 
                     auto_size_columns=True, 
                     hide_vertical_scroll=False,
@@ -518,7 +462,7 @@ def cadastro_pnra():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 """Funções para exibir relatorios em janelas popups"""
@@ -534,10 +478,10 @@ def exibir_total_de_familias_cadastradas_pnra():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_rtids_publicados():
@@ -548,10 +492,10 @@ def exibir_total_de_familias_em_rtids_publicados():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias', font=FONTE)
     
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_rtids_publicados():
@@ -563,10 +507,10 @@ def exibir_area_total_em_rtids_publicados():
 
     if total_area_rtid_publicado is not None:
         total_area_formatado = "{:.2f}".format(total_area_rtid_publicado)
-        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_fase_titulacao():
@@ -578,10 +522,10 @@ def exibir_area_total_em_fase_titulacao():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_fase_titulacao():
@@ -592,9 +536,9 @@ def exibir_total_de_familias_em_fase_titulacao():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias', font=FONTE)
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_areas_tituladas():
@@ -605,10 +549,10 @@ def exibir_total_de_familias_em_areas_tituladas():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_areas_tituladas():
@@ -620,10 +564,10 @@ def exibir_area_total_em_areas_tituladas():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro', font=FONTE)
         
 
 def exibir_total_de_familias():
@@ -635,10 +579,10 @@ def exibir_total_de_familias():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_territorios_identificados():
@@ -656,10 +600,10 @@ def exibir_total_de_familias_em_territorios_identificados():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total():
@@ -671,10 +615,10 @@ def exibir_area_total():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_territorios_identificados():
@@ -693,7 +637,7 @@ def exibir_area_total_em_territorios_identificados():
 
     if totalArea is not None:
         total_area_formatado = "{:.2f}".format(totalArea)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
