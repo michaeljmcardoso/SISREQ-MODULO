@@ -48,7 +48,7 @@ def criar_tabela_se_nao_existir(conn):
     conn.commit()
 
 
-def consultar_registros(janela):
+def visao_geral(janela):
     conn = conectar_banco_de_dados()
     if conn is not None:
         cursor = conn.cursor()

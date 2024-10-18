@@ -33,7 +33,7 @@ class Aplicacao:
                 criar_janela_import()
 
             elif event == 'VISÃO GERAL':
-                funcoes.consultar_registros(self.janela)
+                funcoes.visao_geral(self.janela)
                 self.janela['total_processo'].update(f'{totalProcesso} Processos')
 
             elif event == 'CONSULTAR':
@@ -122,7 +122,7 @@ class Aplicacao:
         sg.theme(constantes.JANELA_TEMA)
         
         coluna_botoes = [
-            [sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('VISÃO GERAL', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
+            [sg.Button('VISÃO GERAL', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'), sg.Button('IMPORTAR', button_color='#ac4e04')]
         ]
 
         coluna_botoes_relatorios_e_graficos= [
@@ -150,5 +150,5 @@ class Aplicacao:
             [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                                    SISREQ - Sistema de Regularização Quilombola (v.1.1.0) - Módulo de Consulta", layout, size=(1400, 800), resizable=True)
+        janela = sg.Window("                                                                                                                                                    SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.1.0) - MÓDULO DE CONSULTA", layout, size=(1400, 800), resizable=True)
         return janela
