@@ -14,7 +14,7 @@ def criar_janela_pesquisar(janela_pesquisar):
 
         layout = [[sg.Column(coluna_pesquisar)]]
 
-        janela_pesquisar = sg.Window('Buscar Registros', layout, resizable=False)
+        janela_pesquisar = sg.Window('BUSCAR REGISTROS', layout, resizable=False)
 
         while True:
             event, values = janela_pesquisar.read()

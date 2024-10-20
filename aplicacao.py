@@ -193,10 +193,12 @@ class Aplicacao:
                 vertical_scroll_only=False,
                 justification='left',
                 auto_size_columns=True,
+                header_background_color='blue',
+                header_text_color='white'
             )],
             
             [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, size=(1400, 800), resizable=True)
+        janela = sg.Window("                                                                                                                                                                         SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.2.0)", layout, size=(1400, 800), resizable=True)
         return janela

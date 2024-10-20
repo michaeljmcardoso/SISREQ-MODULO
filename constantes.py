@@ -9,6 +9,7 @@ JANELA_TEMA = theme('DarkGreen')
 
 JANELA_RODAPE = Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
 
+BOTOES = button_color='#ac4e04'
 
 """CONSTANTES DE FONTES"""
 

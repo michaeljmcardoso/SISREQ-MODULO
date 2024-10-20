@@ -1,30 +1,30 @@
 import PySimpleGUI as sg
 import relatorios
-from constantes import FONTE, JANELA_TEMA
+from constantes import FONTE, JANELA_TEMA, BOTOES
 
 def criar_janela_relatorios():
         sg.theme(JANELA_TEMA)
 
         coluna_relatorios = [
-            [sg.Button('RTID´s Publicados', button_color='blue', font=FONTE)],
+            [sg.Button('RTID´s Publicados', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Titulos Expedidos', button_color='blue', font=FONTE)],
+            [sg.Button('Titulos Expedidos', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Territórios Identificados', button_color='blue', font=FONTE)],
+            [sg.Button('Territórios Identificados', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Territórios Não-Identificados', button_color='blue', font=FONTE)],
+            [sg.Button('Territórios Não-Identificados', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Quilombos em Assentamentos', button_color='blue', font=FONTE)],
+            [sg.Button('Quilombos em Assentamentos', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Total de Famílias', button_color='blue', font=FONTE)],
+            [sg.Button('Total de Famílias', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Área Total', button_color='blue', font=FONTE)],
+            [sg.Button('Área Total', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Ações Civis Públicas', button_color='blue', font=FONTE)],
+            [sg.Button('Ações Civis Públicas', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Certificação FCP', button_color='blue', font=FONTE)],
+            [sg.Button('Certificação FCP', button_color=BOTOES, font=FONTE)],
             [sg.Text(' ')],
-            [sg.Button('Cadastro PNRA', button_color='blue', font=FONTE)]
+            [sg.Button('Cadastro PNRA', button_color=BOTOES, font=FONTE)]
             
         ]
 

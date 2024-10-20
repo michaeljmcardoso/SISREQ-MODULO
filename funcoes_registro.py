@@ -275,7 +275,7 @@ def alterar_registro(janela):
 
     ]
 
-    janelaAlterarDados = sg.Window('Alterar Registro', layoutAlterarDados, size=(1400, 600), resizable=True)
+    janelaAlterarDados = sg.Window('ALTERAR REGISTRO', layoutAlterarDados, size=(1400, 600), resizable=True)
 
     while True:
         event_alterar, values_alterar = janelaAlterarDados.read()

@@ -36,17 +36,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
     if registros:
         layout_resultado = [
-            [
-                sg.Table(registros, 
-                         headings=constantes.headings, 
-                         justification='left',
-                         num_rows=20,
-                         key='-TABLE-',
-                         auto_size_columns=True,
-                         hide_vertical_scroll=False,
-                         vertical_scroll_only=False)
-            ],
-            
+            [constantes.criar_tabela(registros)],
             [
                 sg.Button('Extrato', button_color='green'),
                 sg.Button('Alterar', button_color='#ac4e04'),
@@ -54,7 +44,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
             ]
         ]
 
-        window2 = sg.Window('REGISTROS POR NOME DE COMUNIDADE', layout_resultado, size=(1200, 600), resizable=True)
+        window2 = sg.Window('REGISTROS POR NOME DE COMUNIDADE', layout_resultado, size=(1200, 700), resizable=True)
 
         while True:
             event2, values2 = window2.read()
@@ -248,17 +238,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
     
     if registros:
         layout_resultado = [
-            [
-                sg.Table(registros, 
-                         headings=constantes.headings,
-                         justification='left',
-                         num_rows=30,
-                         key='-TABLE-',
-                         auto_size_columns=True,
-                         hide_vertical_scroll=False,
-                         vertical_scroll_only=False)
-            ],
-            
+            [constantes.criar_tabela(registros)],
             [
                 sg.Button('Extrato', button_color='green'), 
                 sg.Button('Alterar', button_color='#ac4e04'),
@@ -266,7 +246,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
             ]
 
                     ],
-        window3 = sg.Window('REGISTROS POR NOME DO MUNICÍPIO', layout_resultado, size=(1200, 600), resizable=True)                                      
+        window3 = sg.Window('REGISTROS POR NOME DO MUNICÍPIO', layout_resultado, size=(1200, 700), resizable=True)                                      
 
         while True:
             event3, values3 = window3.read()
@@ -459,17 +439,7 @@ def pesquisar_por_num_processo(num_processo):
 
     if registros:
         layout_resultado = [
-            [
-                sg.Table(registros, 
-                         headings=constantes.headings, 
-                         justification='left',
-                         num_rows=20,
-                         key='-TABLE-',
-                         auto_size_columns=True,
-                         hide_vertical_scroll=False,
-                         vertical_scroll_only=False)
-            ],
-            
+            [constantes.criar_tabela(registros)],
             [
                 sg.Button('Extrato', button_color='green'),
                 sg.Button('Alterar', button_color='#ac4e04'),
@@ -477,7 +447,7 @@ def pesquisar_por_num_processo(num_processo):
             ]
         ]
 
-        window4 = sg.Window('REGISTROS POR NÚMERO DO PROCESSO', layout_resultado, size=(1200, 600), resizable=True)
+        window4 = sg.Window('REGISTROS POR NÚMERO DO PROCESSO', layout_resultado, size=(1200, 700), resizable=True)
 
         while True:
             event4, values4 = window4.read()
