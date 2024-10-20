@@ -30,7 +30,7 @@ def criar_janela_relatorios():
 
         layout = [[sg.Column(coluna_relatorios)]]
 
-        janela_relatorios = sg.Window('Exibir Relatórios', layout, resizable=False)
+        janela_relatorios = sg.Window('EXIBIR RELATÓRIOS', layout, resizable=False, finalize=True)
 
         while True:
             event, values = janela_relatorios.read()

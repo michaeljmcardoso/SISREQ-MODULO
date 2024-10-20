@@ -54,7 +54,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
             ]
         ]
 
-        window2 = sg.Window('Registros por Nome de Comunidade', layout_resultado, size=(1200, 600), resizable=True)
+        window2 = sg.Window('REGISTROS POR NOME DE COMUNIDADE', layout_resultado, size=(1200, 600), resizable=True)
 
         while True:
             event2, values2 = window2.read()
@@ -100,7 +100,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
 
                         layoutConsultarDados = criar_layout_consultar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
                         
-                        janelaConsultarDados = sg.Window('Consultar Registro', layoutConsultarDados, size=(1400, 650), resizable=True)
+                        janelaConsultarDados = sg.Window('CONSULTAR REGISTRO', layoutConsultarDados, size=(1400, 650), resizable=True)
 
                         while True:
                             event_consultar, values_consultar = janelaConsultarDados.read()
@@ -163,7 +163,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
             ]
 
                     ],
-        window3 = sg.Window('Registros por Nome do Município', layout_resultado, size=(1200, 600), resizable=True)                                      
+        window3 = sg.Window('REGISTROS POR NOME DO MUNICÍPIO', layout_resultado, size=(1200, 600), resizable=True)                                      
 
         while True:
             event3, values3 = window3.read()
@@ -209,7 +209,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
 
                     layoutConsultarDados = criar_layout_consultar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
 
-                    janelaConsultarDados = sg.Window('Consultar Registro', layoutConsultarDados, size=(1400, 650), resizable=True)
+                    janelaConsultarDados = sg.Window('CONSULTAR REGISTRO', layoutConsultarDados, size=(1400, 650), resizable=True)
 
                     while True:
                         event_consultar, values_consultar = janelaConsultarDados.read()
@@ -272,7 +272,7 @@ def pesquisar_por_num_processo(num_processo):
             ]
         ]
 
-        window4 = sg.Window('Registros por Número do Processo', layout_resultado, size=(1200, 600), resizable=True)
+        window4 = sg.Window('REGISTROS POR NÚMERO DO PROCESSO', layout_resultado, size=(1200, 600), resizable=True)
 
         while True:
             event4, values4 = window4.read()
@@ -318,7 +318,7 @@ def pesquisar_por_num_processo(num_processo):
 
                         layoutConsultarDados = criar_layout_consultar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
                         
-                        janelaConsultarDados = sg.Window('Consultar Registro', layoutConsultarDados, size=(1400, 650), resizable=True)
+                        janelaConsultarDados = sg.Window('CONSULTAR REGISTRO', layoutConsultarDados, size=(1400, 650), resizable=True)
 
                         while True:
                             event_consultar, values_consultar = janelaConsultarDados.read()

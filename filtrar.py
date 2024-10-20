@@ -39,7 +39,7 @@ def fase_inicial():
 
         ]
 
-        janela = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS SEM ESTUDOS DE IDENTIFICAÇÃO E DELIMITAÇÃO.', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -87,7 +87,7 @@ def fase_Rtid():
             ]
         ]
 
-        janela = sg.Window('Processos em Estudo de Identificação e Delimitação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS EM ESTUDO DE IDENTIFICAÇÃO E DELIMITAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -135,7 +135,7 @@ def fase_publicacao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE PUBLICAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -183,7 +183,7 @@ def fase_notificacao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Notificação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE NOTIFICAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -231,7 +231,7 @@ def fase_portaria():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Portaria', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE PORTARIA', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -279,7 +279,7 @@ def fase_decreto():
 
         ]
 
-        janela = sg.Window('Áreas Decretadas', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('ÁREAS DECRETADAS', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -329,7 +329,7 @@ def fase_titulacao():
             ]
         ]
 
-        janela = sg.Window('Processos em Fase de Titulação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE TITULAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -383,7 +383,7 @@ def fase_desintrusao():
 
         ]
 
-        janela = sg.Window('Processos em Fase de Desintrusão', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE DESINTRUSÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -431,7 +431,7 @@ def fase_contestacao():
             
         ]
 
-        janela = sg.Window('Processos em Fase de Contestação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE CONTESTAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -485,7 +485,7 @@ def fase_recurso():
             ]
 
         ]
-        janela = sg.Window('Processos em Fase de Recurso', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE RECURSO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -540,7 +540,7 @@ def fase_desapropriacao():
 
         ]
         
-        janela = sg.Window('Processos em Fase de Desapropriação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE DESAPROPRIAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()

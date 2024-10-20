@@ -1,4 +1,4 @@
-from PySimpleGUI import theme, Text
+from PySimpleGUI import theme, Text, Table
 import datetime
 
 """CONSTANTES DE JANELA"""
@@ -315,3 +315,20 @@ headings=[
         'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
         '          Outras_Informacoes'
     ]
+
+def criar_tabela(registros):
+    return(
+        Table(
+            values=registros,
+            headings=headings,
+            display_row_numbers=False,
+            justification='left', 
+            auto_size_columns=True, 
+            hide_vertical_scroll=False,
+            vertical_scroll_only=False, 
+            num_rows=35,
+            key="-TABLE-",
+            header_text_color='white',  # Cor do texto dos cabeçalhos
+            header_background_color='blue'  # Cor de fundo dos cabeçalhos
+        )
+    )

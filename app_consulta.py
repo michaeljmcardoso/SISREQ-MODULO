@@ -5,8 +5,9 @@ import PySimpleGUI as sg
 import funcoes
 import constantes
 import filtrar
+import threading
 from salvar import salvar_planilha
-from janela_pesquisar import criar_janela_pesquisar
+from janela_pesquisas import criar_janela_pesquisar
 from pesquisar import buscar_municipios_do_brasil
 from janela_consulta_graficos import criar_janela_graficos
 from janela_consulta_relatorios import criar_janela_relatorios
@@ -150,5 +151,5 @@ class Aplicacao:
             [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                                    SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.1.0) - MÓDULO DE CONSULTA", layout, size=(1400, 800), resizable=True)
+        janela = sg.Window("                                                                                                                                     SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.1.0) - MÓDULO DE CONSULTA", layout, size=(1400, 800), resizable=True)
         return janela

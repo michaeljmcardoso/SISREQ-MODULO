@@ -28,7 +28,7 @@ def criar_janela_graficos():
 
         layout = [[sg.Column(coluna_graficos)]]
 
-        janela_graficos = sg.Window('Exibir Gráficos', layout, resizable=False)
+        janela_graficos = sg.Window('EXIBIR GRÁFICOS', layout, resizable=False, finalize=True)
 
         while True:
             event, values = janela_graficos.read()

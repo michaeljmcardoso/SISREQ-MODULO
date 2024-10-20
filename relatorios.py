@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from constantes import FONTE, headings
+from constantes import FONTE, headings, criar_tabela
 from funcoes_registro import conectar_banco_de_dados
 from salvar import salvar_extrato_planilha
 
@@ -326,7 +326,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
         sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
-def exibir_processos_com_acao_judicial():
+"""def exibir_processos_com_acao_judicial():
     conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
@@ -388,6 +388,141 @@ def exibir_processos_com_acao_judicial():
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
+"""
+
+
+"""def exibir_processos_com_acao_judicial():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+    )
+    
+    total_acao_civil = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT * FROM SISREQ WHERE "
+        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+    )
+
+    registros = cursor.fetchall()
+
+    # Converter cada tupla em uma lista
+    registros = [list(row) for row in registros]
+
+    if registros:
+        layout = [
+            [sg.Text("Filtrar por Ação Civil Pública:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [
+                [criar_tabela(registros)],
+            ],
+            [
+                sg.Button('Fechar', button_color='#ac4e04'),
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font='Any 10 bold')
+            ]
+        ]
+
+        janela = sg.Window('AÇÃO CIVIL PÚBLICA EM REGULARIZAÇÃO QUILOMBOLA', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, values = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                # A coluna a ser filtrada deve ser ajustada conforme necessário
+                filtered_data = [row for row in registros if filter_text in row[22].lower()]
+                janela["-TABLE-"].update(filtered_data)
+
+            elif event == 'Extrato':
+                salvar_extrato_planilha(registros)
+
+        janela.close()
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')"""
+
+def exibir_processos_com_acao_judicial():
+    conn = conectar_banco_de_dados()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "SELECT COUNT(*) FROM SISREQ WHERE "
+        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+    )
+    
+    total_acao_civil = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT * FROM SISREQ WHERE "
+        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+    )
+
+    registros = cursor.fetchall()
+
+    # Converter cada tupla em uma lista
+    registros = [list(row) for row in registros]
+
+    if registros:
+        layout = [
+            [sg.Text("Filtrar por Ação Civil Pública, Data da Decisao, Teor da Decisao:", font='Any 10'), sg.Input(key="-FILTER-", enable_events=True)],
+            [
+                criar_tabela(registros),  # Supondo que criar_tabela é uma função que retorna um elemento de tabela
+            ],
+            [
+                sg.Button('Fechar', button_color='#ac4e04'),
+                sg.Button('Extrato', button_color='green'),
+                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font='Any 10 bold')
+            ]
+        ]
+
+        janela = sg.Window('AÇÃO CIVIL PÚBLICA EM REGULARIZAÇÃO QUILOMBOLA', layout, size=(1200, 700), resizable=True)
+
+        while True:
+            event, values = janela.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Fechar':
+                break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[22]).lower() or # Ação Civil Pública 
+                        filter_text in row[23].lower() or      # Data Da Decisão
+                        filter_text in row[24].lower())        # Teor da Decisão
+                ]
+                janela["-TABLE-"].update(filtered_data)
+
+            elif event == 'Extrato':
+                salvar_extrato_planilha(registros)
+
+        janela.close()
+
+    else:
+        sg.popup('Não há registros para exibir.', title='Erro')
 
 
 def cadastro_pnra():
@@ -440,12 +575,12 @@ def cadastro_pnra():
             [
                 sg.Button('Fechar', button_color='#ac4e04'), 
                 sg.Button('Extrato', button_color='green'), sg.Text(''),
-                sg.Text(f'| Cadastro(s) Concluído(s): {cadastro_pnra_concluido}\n| Cadastro(s) em Andamento: {cadastro_pnra_andamento}\n| Cadastro(s) Não Iniciado(s): {cadastro_pnra_nao_iniciado}', font='Any 10 bold'), sg.Text(''),
-                sg.Button('Número de Famílias', button_color='green'),
+                sg.Button('Número de Famílias', button_color='blue'),
+                sg.Text(f' Cadastros Concluídos: {cadastro_pnra_concluido}\n Cadastros em Andamento: {cadastro_pnra_andamento}\n Cadastros Não Iniciados: {cadastro_pnra_nao_iniciado}', font=FONTE), sg.Text(''),
             ]
         ]
 
-        janela = sg.Window('Comunidades Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('COMUNIDADES CADASTRADAS NO PNRA', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
