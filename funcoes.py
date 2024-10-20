@@ -153,7 +153,7 @@ def consultar_registro(janela):
 
     ]
 
-    janelaConsultarDados = sg.Window('Consultar Registro', layoutConsultarDados, size=(1400, 600), resizable=True)
+    janelaConsultarDados = sg.Window('CONSULTAR REGISTRO', layoutConsultarDados, size=(1400, 600), resizable=True)
 
     while True:
         event_consultar, values_consultar = janelaConsultarDados.read()
