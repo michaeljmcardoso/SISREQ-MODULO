@@ -90,6 +90,26 @@ class Aplicacao:
             elif event == 'Gráficos':
                 criar_janela_graficos()
 
+            if event == "-FILTER-":
+                conn = funcoes_registro.conectar_banco_de_dados()
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM SISREQ")
+                registros = cursor.fetchall()
+
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[1]).lower() or  # Processo
+                        filter_text in row[3].lower() or       # Comunidade
+                        filter_text in row[4].lower() or       # Município
+                        filter_text in row[7].lower() or       # Fase Processo
+                        filter_text in row[14].lower() or      # Título
+                        filter_text in row[21].lower() or      # Sobreposição
+                        filter_text in row[23].lower())        # ACP
+                ]
+                self.janela["-TABLE-"].update(filtered_data)
+
             # Atualiza a lista conforme o usuário digita
             if event == '-MUNICIPIO-':
                 nome_parcial = values['-MUNICIPIO-']
@@ -180,11 +200,14 @@ class Aplicacao:
             [sg.Text(f"{totalProcesso} Processos", key='total_processo', font='Any 10 bold', text_color='black', background_color='#c8cf9d')]
         ]
 
+        coluna_fitrar = [
+            [sg.Text("Busca Rápida:", font=constantes.FONTE), sg.Input(key="-FILTER-", enable_events=True, size=(30, 1))]
+        ]
+
         layout = [
-            [sg.Text('CADASTRO DE PROCESSOS', font=constantes.FONTE)],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
             [sg.Text('REGISTROS:', font=constantes.FONTE), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font=constantes.FONTE), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font=constantes.FONTE), sg.Column(coluna_total_processos)],
-            [sg.Text('FILTRAR POR FASE:', font=constantes.FONTE), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
+            [sg.Text('FILTRAR FASE:', font=constantes.FONTE), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.VerticalSeparator(), sg.Column(coluna_fitrar)],
             [sg.Table(
                 values=[],
                 headings=constantes.headings,

@@ -21,16 +21,16 @@ FONTE_DE_AVSIO = font='Any 10 bold'
 """CONSTANTES DE LISTAS"""
 
 TIPO_SOBREPOSICAO = [
-    'PA_INCRA', 
-    'PA_ESTADUAL', 
-    'AREA_PARTICULAR', 
-    'OUTRO_TQ', 
-    'TERRAS_DE_MARINHA', 
-    'TERRAS_DEVOLUTAS', 
-    'TERRAS_INDÍGENAS', 
-    'TERRAS_DA_UNIÃO', 
-    'SEM_SOBREPOSIÇÃO',  
-    'SEM_INFORMAÇÃO'                      
+    'PA INCRA', 
+    'PA ESTADUAL', 
+    'AREA PARTICULAR', 
+    'OUTRO TQ', 
+    'TERRAS DE MARINHA', 
+    'TERRAS DEVOLUTAS', 
+    'TERRAS INDÍGENAS', 
+    'TERRAS DAUNIÃO', 
+    'SEM SOBREPOSIÇÃO',  
+    'SEM INFORMAÇÃO'                      
     ]
 
 ETAPA_RTID = [
@@ -69,12 +69,12 @@ CERTIFICACAO_FCP = [
     ]
 
 ACAO_CIVIL_PUBLICA = [
-    'Com_Sentença', 
-    'Sem_Sentença', 
-    'Com_Decisão_Liminar', 
-    'Sentença_Cumprida', 
-    'Sem_ACP', 
-    'Corte_InterAmericana'
+    'Com Sentença', 
+    'Sem Sentença', 
+    'Decisão Liminar', 
+    'Sentença Cumprida', 
+    'Sem ACP', 
+    'Corte InterAmericana'
     ] 
 
 RELATORIO_ANTROPOLOGICO = [
@@ -86,7 +86,7 @@ RELATORIO_ANTROPOLOGICO = [
     'Sem_Relatório'
     ]
 
-FORMA_TITULO = ['CCDRU', 'TITULO DEFINITO']  
+FORMA_TITULO = ['CCDRU', 'TITULO DEFINITIVO']  
 
 PNRA = ['ANDAMENTO','CONCLUIDO','NAO-INICIADO']
 

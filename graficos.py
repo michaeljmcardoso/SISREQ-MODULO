@@ -103,7 +103,7 @@ def exibir_processos_com_acao_civil():
     conn = conectar_banco_de_dados()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM SISREQ WHERE Acao_Civil_Publica != 'Sem_ACP' GROUP BY Acao_Civil_Publica")
+    cursor.execute("SELECT Acao_Civil_Publica, COUNT(*) AS Tipo_AcaoCivilPublica FROM SISREQ WHERE Acao_Civil_Publica != 'Sem ACP' GROUP BY Acao_Civil_Publica")
     resultados = cursor.fetchall()
 
     if resultados:
@@ -220,7 +220,7 @@ def exibir_tipo_de_sopreposicao():
         tipo_de_sobreposicao = []
 
         for resultado in resultados:
-            if 'SEM_INFORMAÇÃO' not in resultado [0]: # Verifica se 'SEM_INFORMAÇÃO' não está presente na lista
+            if 'SEM INFORMAÇÃO' not in resultado [0]: # Verifica se 'SEM_INFORMAÇÃO' não está presente na lista
                 sobreposicao.append(resultado[0])
                 tipo_de_sobreposicao.append(resultado[1])
 

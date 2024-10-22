@@ -47,10 +47,10 @@ def fase_Rtid():
     conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Estudo de Identificação%'")
     total_fase_rtid = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Estudo de Identificação%'")
     registros = cursor.fetchall()
 
     if registros:
@@ -266,44 +266,6 @@ def fase_titulacao():
 
             elif event == 'Número de Famílias':
                 relatorios.exibir_total_de_familias_em_fase_titulacao()
-
-        janela.close()
-
-    else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
-
-
-def fase_desintrusao():
-    conn = conectar_banco_de_dados()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
-    total_fase_desintrusao = cursor.fetchone()[0]
-
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
-    registros = cursor.fetchall()
-
-    if registros:
-        layout = [
-            [criar_tabela(registros)],
-            [
-                sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_desintrusao}', font=FONTE_DE_AVSIO)
-            ]
-
-        ]
-
-        janela = sg.Window('PROCESSOS EM FASE DE DESINTRUSÃO', layout, size=(1200, 700), resizable=True)
-
-        while True:
-            event, _ = janela.read()
-
-            if event == sg.WINDOW_CLOSED or event == 'Fechar':
-                break
-
-            elif event == 'Extrato':
-                salvar_extrato_planilha(registros)
 
         janela.close()
 

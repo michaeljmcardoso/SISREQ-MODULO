@@ -72,7 +72,7 @@ def titulos_expedidos():
 
     if registros:
         layout = [
-            [sg.Text("Filtrar Forma do Título ou Ano de Titulação:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [sg.Text("Filtrar Forma do Título:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
             [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
@@ -86,10 +86,19 @@ def titulos_expedidos():
         janela = sg.Window('TÍTULOS EXPEDIDOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[14]).lower()) # Forma do Título
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -212,7 +221,7 @@ def territorios_nao_identificados():
                 filtered_data = [
                     row for row in registros
                     if (filter_text in str(row[2]).lower() or # Ano de Abertura 
-                        filter_text in row[22].lower())       # ACP
+                        filter_text in row[23].lower())       # ACP
                 ]
                 janela["-TABLE-"].update(filtered_data)
 
@@ -294,7 +303,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
                 filter_text = values["-FILTER-"].lower()
                 filtered_data = [
                     row for row in registros
-                    if (filter_text in str(row[20]).lower()) # Tipo de Sobreposição 
+                    if (filter_text in str(row[22]).lower()) # Tipo de Sobreposição 
                 ]
                 janela["-TABLE-"].update(filtered_data)
 
@@ -313,22 +322,22 @@ def exibir_processos_com_acao_judicial():
     
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
-        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
-        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
-        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+        "Acao_Civil_Publica LIKE '%Com Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Decisão Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença Cumprida%'"
     )
     
     total_acao_civil = cursor.fetchone()[0]
 
     cursor.execute(
         "SELECT * FROM SISREQ WHERE "
-        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
-        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
-        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+        "Acao_Civil_Publica LIKE '%Com Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Decisão Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença Cumprida%'"
     )
 
     registros = cursor.fetchall()
@@ -360,8 +369,8 @@ def exibir_processos_com_acao_judicial():
                 filter_text = values["-FILTER-"].lower()
                 filtered_data = [
                     row for row in registros
-                    if (filter_text in str(row[22]).lower() or # Tipo de Sentença 
-                        filter_text in row[23].lower())        # Data Da Decisão
+                    if (filter_text in str(row[23]).lower() or # Tipo de Sentença 
+                        filter_text in row[24].lower())        # Data Da Decisão
                 ]
                 janela["-TABLE-"].update(filtered_data)
 
@@ -433,7 +442,7 @@ def cadastro_pnra():
                 filter_text = values["-FILTER-"].lower()
                 filtered_data = [
                     row for row in registros
-                    if (filter_text in str(row[14]).lower()) # Status do Cadastro 
+                    if (filter_text in str(row[15]).lower()) # Status do Cadastro 
                 ]
                 janela["-TABLE-"].update(filtered_data)
 
@@ -584,7 +593,7 @@ def exibir_total_de_familias_em_territorios_identificados():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=FONTE)
+        sg.popup(f'{total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=FONTE)
 
     else:
         sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
