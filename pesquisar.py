@@ -75,20 +75,21 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                         portaria_dou = selected_row_values[11]
                         decreto_dou = selected_row_values[12]
                         titulo = selected_row_values[13]
-                        pnra = selected_row_values[14]
-                        relatorio_antropologico = selected_row_values[15]
-                        latitude = selected_row_values[16]
-                        longitude = selected_row_values[17]
-                        certidao_fcp = selected_row_values[18]
-                        data_certificacao = selected_row_values[19]
-                        tipo_sobreposicao = selected_row_values[20]
-                        analise_sobreposicao = selected_row_values[21]
-                        acp = selected_row_values[22]
-                        data_decisao = selected_row_values[23]
-                        teor_decisao = selected_row_values[24]
-                        outras_informacaoes = selected_row_values[25]
+                        forma_titulo = selected_row_values[14]
+                        pnra = selected_row_values[15]
+                        relatorio_antropologico = selected_row_values[16]
+                        latitude = selected_row_values[17]
+                        longitude = selected_row_values[18]
+                        certidao_fcp = selected_row_values[19]
+                        data_certificacao = selected_row_values[20]
+                        tipo_sobreposicao = selected_row_values[21]
+                        analise_sobreposicao = selected_row_values[22]
+                        acp = selected_row_values[23]
+                        data_decisao = selected_row_values[24]
+                        teor_decisao = selected_row_values[25]
+                        outras_informacaoes = selected_row_values[26]
 
-                        layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
+                        layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, forma_titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
                         
                         janelaAlterarDados = sg.Window('ALTERAR REGISTRO', layoutAlterarDados, size=(1400, 650), resizable=True)
 
@@ -112,6 +113,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                 new_portaria_dou = values_alterar['-PORTARIA_DOU-']
                                 new_decreto_dou = values_alterar['-DECRETO_DOU-']
                                 new_titulo = values_alterar['-TITULO-']
+                                new_forma_titulo = values_alterar['-FORMA_TITULO-']
                                 new_pnra = values_alterar['-PNRA-']
                                 new_relatorio_antropologico = str(values_alterar['-RA-'])
                                 new_latitude = values_alterar['-LATITUDE-']
@@ -141,6 +143,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                     Portaria_DOU=?, 
                                     Decreto_DOU=?, 
                                     Area_ha_Titulada=?,
+                                    Titulo=?,
                                     PNRA=?, 
                                     Relatorio_Antropologico=?, 
                                     Latitude=?, 
@@ -170,6 +173,7 @@ def pesquisar_por_nome_comunidade(nome_comunidade):
                                     new_portaria_dou, 
                                     new_decreto_dou,
                                     new_titulo,
+                                    new_forma_titulo,
                                     new_pnra, 
                                     new_relatorio_antropologico, 
                                     new_latitude, 
@@ -277,20 +281,21 @@ def pesquisar_por_nome_municipio(nome_municipio):
                     portaria_dou = selected_row_values[11]
                     decreto_dou = selected_row_values[12]
                     titulo = selected_row_values[13]
-                    pnra = selected_row_values[14]
-                    relatorio_antropologico = selected_row_values[15]
-                    latitude = selected_row_values[16]
-                    longitude = selected_row_values[17]
-                    certidao_fcp = selected_row_values[18]
-                    data_certificacao = selected_row_values[19]
-                    tipo_sobreposicao = selected_row_values[20]
-                    analise_sobreposicao = selected_row_values[21]
-                    acp = selected_row_values[22]
-                    data_decisao = selected_row_values[23]
-                    teor_decisao = selected_row_values[24]
-                    outras_informacaoes = selected_row_values[25]
+                    forma_titulo = selected_row_values[14]
+                    pnra = selected_row_values[15]
+                    relatorio_antropologico = selected_row_values[16]
+                    latitude = selected_row_values[17]
+                    longitude = selected_row_values[18]
+                    certidao_fcp = selected_row_values[19]
+                    data_certificacao = selected_row_values[20]
+                    tipo_sobreposicao = selected_row_values[21]
+                    analise_sobreposicao = selected_row_values[22]
+                    acp = selected_row_values[23]
+                    data_decisao = selected_row_values[24]
+                    teor_decisao = selected_row_values[25]
+                    outras_informacaoes = selected_row_values[26]
 
-                    layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
+                    layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, forma_titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
 
                     janelaAlterarDados = sg.Window('ALTERAR REGISTRO', layoutAlterarDados, size=(1400, 650), resizable=True)
 
@@ -314,6 +319,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                             new_portaria_dou = values_consultar['-PORTARIA_DOU-']
                             new_decreto_dou = values_consultar['-DECRETO_DOU-']
                             new_titulo = values_consultar['-TITULO-']
+                            new_forma_titulo = values_consultar['-FORMA_TITULO-']
                             new_pnra = values_consultar['-PNRA-']
                             new_relatorio_antropologico = str(values_consultar['-RA-'])
                             new_latitude = values_consultar['-LATITUDE-']
@@ -343,6 +349,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                 Portaria_DOU=?, 
                                 Decreto_DOU=?, 
                                 Area_ha_Titulada=?,
+                                Titulo=?,
                                 PNRA=?, 
                                 Relatorio_Antropologico=?, 
                                 Latitude=?, 
@@ -372,6 +379,7 @@ def pesquisar_por_nome_municipio(nome_municipio):
                                 new_portaria_dou, 
                                 new_decreto_dou,
                                 new_titulo,
+                                new_forma_titulo,
                                 new_pnra, 
                                 new_relatorio_antropologico, 
                                 new_latitude, 
@@ -478,20 +486,21 @@ def pesquisar_por_num_processo(num_processo):
                         portaria_dou = selected_row_values[11]
                         decreto_dou = selected_row_values[12]
                         titulo = selected_row_values[13]
-                        pnra = selected_row_values[14]
-                        relatorio_antropologico = selected_row_values[15]
-                        latitude = selected_row_values[16]
-                        longitude = selected_row_values[17]
-                        certidao_fcp = selected_row_values[18]
-                        data_certificacao = selected_row_values[19]
-                        tipo_sobreposicao = selected_row_values[20]
-                        analise_sobreposicao = selected_row_values[21]
-                        acp = selected_row_values[22]
-                        data_decisao = selected_row_values[23]
-                        teor_decisao = selected_row_values[24]
-                        outras_informacaoes = selected_row_values[25]
+                        forma_titulo = selected_row_values[14]
+                        pnra = selected_row_values[15]
+                        relatorio_antropologico = selected_row_values[16]
+                        latitude = selected_row_values[17]
+                        longitude = selected_row_values[18]
+                        certidao_fcp = selected_row_values[19]
+                        data_certificacao = selected_row_values[20]
+                        tipo_sobreposicao = selected_row_values[21]
+                        analise_sobreposicao = selected_row_values[22]
+                        acp = selected_row_values[23]
+                        data_decisao = selected_row_values[24]
+                        teor_decisao = selected_row_values[25]
+                        outras_informacaoes = selected_row_values[26]
 
-                        layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
+                        layoutAlterarDados = criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, forma_titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes)
                         
                         janelaAlterarDados = sg.Window('ALTERAR REGISTRO', layoutAlterarDados, size=(1400, 650), resizable=True)
 
@@ -515,6 +524,7 @@ def pesquisar_por_num_processo(num_processo):
                                 new_portaria_dou = values_alterar['-PORTARIA_DOU-']
                                 new_decreto_dou = values_alterar['-DECRETO_DOU-']
                                 new_titulo = values_alterar['-TITULO-']
+                                new_forma_titulo = values_alterar['-FORMA_TITULO-']
                                 new_pnra = values_alterar['-PNRA-']
                                 new_relatorio_antropologico = str(values_alterar['-RA-'])
                                 new_latitude = values_alterar['-LATITUDE-']
@@ -544,6 +554,7 @@ def pesquisar_por_num_processo(num_processo):
                                     Portaria_DOU=?, 
                                     Decreto_DOU=?, 
                                     Area_ha_Titulada=?,
+                                    Titulo=?,
                                     PNRA=?, 
                                     Relatorio_Antropologico=?, 
                                     Latitude=?, 
@@ -573,6 +584,7 @@ def pesquisar_por_num_processo(num_processo):
                                     new_portaria_dou, 
                                     new_decreto_dou,
                                     new_titulo,
+                                    new_forma_titulo,
                                     new_pnra, 
                                     new_relatorio_antropologico, 
                                     new_latitude, 
@@ -612,7 +624,7 @@ def pesquisar_por_num_processo(num_processo):
         return
 
 
-def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes):
+def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio, area_ha, num_familia, fase_processo, etapa_rtid, edital_dou, edital_doe, portaria_dou, decreto_dou, titulo, forma_titulo, pnra, relatorio_antropologico, latitude, longitude, certidao_fcp, data_certificacao, tipo_sobreposicao, analise_sobreposicao, acp, data_decisao, teor_decisao, outras_informacaoes):
     coluna_1 = [
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
         [sg.CalendarButton('Data Abertura', target='-DATA_ABERTURA-', key='-CALENDAR-', format='%d-%m-%Y'), sg.Input(size=(15, 1), key='-DATA_ABERTURA-', default_text=data_abertura, disabled=False)],
@@ -633,7 +645,8 @@ def criar_layout_alterar_dados(numero, data_abertura, nome_comunidade, municipio
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(13, 1), key='-PNRA-', default_value=pnra)],
+        [sg.Text('Título:'), sg.Combo(constantes.FORMA_TITULO, size=(16, 1), key='-FORMA_TITULO-', default_value=forma_titulo)],
+        [sg.Text('PNRA:'), sg.Combo(constantes.PNRA, size=(15, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 

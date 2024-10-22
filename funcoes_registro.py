@@ -30,6 +30,7 @@ def criar_tabela_se_nao_existir(conn):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
+            Titulo TEXT,
             PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,
@@ -61,6 +62,7 @@ def inserir_dados(values, janela):
     portaria_dou = values['-PORTARIA_DOU-']
     decreto_dou = values['-DECRETO_DOU-']
     titulo = values['-TITULO-']
+    forma_titulo = values['-FORMA_TITULO-']
     pnra = values['-PNRA-']
     relatorio_antropologico = str(values['-RA-'])
     latitude = values['-LATITUDE-']
@@ -93,6 +95,7 @@ def inserir_dados(values, janela):
                         'Portaria_DOU',
                         'Decreto_DOU',
                         'Area_ha_Titulada',
+                        'Titulo',
                         'PNRA',
                         'Relatorio_Antropologico',
                         'Latitude',
@@ -105,7 +108,7 @@ def inserir_dados(values, janela):
                         'Data_Decisao',
                         'Teor_Decisao_Prazo_Sentença',
                         'Outras_Informacoes')
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                        """,
                        (
                            numero, 
@@ -121,6 +124,7 @@ def inserir_dados(values, janela):
                            portaria_dou, 
                            decreto_dou, 
                            titulo, 
+                           forma_titulo,
                            pnra, 
                            relatorio_antropologico, 
                            latitude, 
@@ -152,6 +156,7 @@ def inserir_dados(values, janela):
         janela['-PORTARIA_DOU-'].update('')
         janela['-DECRETO_DOU-'].update('')
         janela['-TITULO-'].update('')
+        janela['-FORMA_TITULO-'].update('')
         janela['-PNRA-'].update('')
         janela['-RA-'].update('')
         janela['-LATITUDE-'].update('')
@@ -207,18 +212,19 @@ def alterar_registro(janela):
     portaria_dou = selected_row_values[11]
     decreto_dou = selected_row_values[12]
     titulo = selected_row_values[13]
-    pnra = selected_row_values[14]
-    relatorio_antropologico = selected_row_values[15]
-    latitude = selected_row_values[16]
-    longitude = selected_row_values[17]
-    certidao_fcp = selected_row_values[18]
-    data_certificacao = selected_row_values[19]
-    tipo_sobreposicao = selected_row_values[20]
-    analise_sobreposicao = selected_row_values[21]
-    acp = selected_row_values[22]
-    data_decisao = selected_row_values[23]
-    teor_decisao = selected_row_values[24]
-    outras_informacaoes = selected_row_values[25]
+    forma_titulo = selected_row_values[14]
+    pnra = selected_row_values[15]
+    relatorio_antropologico = selected_row_values[16]
+    latitude = selected_row_values[17]
+    longitude = selected_row_values[18]
+    certidao_fcp = selected_row_values[19]
+    data_certificacao = selected_row_values[20]
+    tipo_sobreposicao = selected_row_values[21]
+    analise_sobreposicao = selected_row_values[22]
+    acp = selected_row_values[23]
+    data_decisao = selected_row_values[24]
+    teor_decisao = selected_row_values[25]
+    outras_informacaoes = selected_row_values[26]
 
     coluna_1 = [
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
@@ -240,7 +246,8 @@ def alterar_registro(janela):
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
-        [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-', default_value=pnra)],
+        [sg.Text('Título:'), sg.Combo(constantes.FORMA_TITULO, size=(16, 1), key='-FORMA_TITULO-', default_value=forma_titulo)],
+        [sg.Text('PNRA:'), sg.Combo(constantes.PNRA, size=(15, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
 
@@ -296,6 +303,7 @@ def alterar_registro(janela):
             new_portaria_dou = values_alterar['-PORTARIA_DOU-']
             new_decreto_dou = values_alterar['-DECRETO_DOU-']
             new_titulo = values_alterar['-TITULO-']
+            new_forma_titulo = values_alterar['-FORMA_TITULO-']
             new_pnra = values_alterar['-PNRA-']
             new_relatorio_antropologico = str(values_alterar['-RA-'])
             new_latitude = values_alterar['-LATITUDE-']
@@ -325,6 +333,7 @@ def alterar_registro(janela):
                 Portaria_DOU=?, 
                 Decreto_DOU=?, 
                 Area_ha_Titulada=?,
+                Titulo=?,
                 PNRA=?, 
                 Relatorio_Antropologico=?, 
                 Latitude=?, 
@@ -354,6 +363,7 @@ def alterar_registro(janela):
                 new_portaria_dou, 
                 new_decreto_dou,
                 new_titulo,
+                new_forma_titulo,
                 new_pnra, 
                 new_relatorio_antropologico, 
                 new_latitude, 

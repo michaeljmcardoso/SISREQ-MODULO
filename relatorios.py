@@ -134,7 +134,7 @@ def territorios_identificados():
 
     if registros:
         layout = [
-            [sg.Text("Filtrar Fase do Processo ou Etapa do RTID:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [sg.Text("Filtrar Fase do Processo:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
             [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'), 
@@ -158,8 +158,7 @@ def territorios_identificados():
                 filter_text = values["-FILTER-"].lower()
                 filtered_data = [
                     row for row in registros
-                    if (filter_text in str(row[7]).lower() or # Fase do Processo 
-                        filter_text in row[8].lower())       # Etapa do RTID
+                    if (filter_text in str(row[7]).lower()) # Fase do Processo 
                 ]
                 janela["-TABLE-"].update(filtered_data)
 

@@ -38,7 +38,7 @@ class Aplicacao:
                 
                 funcoes_registro.consultar_registros(self.janela)
 
-            elif event == 'CONSULTAR':
+            elif event == 'VISÃO GERAL':
                 funcoes_registro.consultar_registros(self.janela)
                 self.janela['total_processo'].update(f'{totalProcesso} Processos')
 
@@ -146,7 +146,8 @@ class Aplicacao:
         coluna_3 = [
             [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-')],
             [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-')],
-            [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-')],
+            [sg.Text('Título:'), sg.Combo(constantes.FORMA_TITULO, size=(17, 1), key='-FORMA_TITULO-')],
+            [sg.Text('PNRA:'), sg.Combo(constantes.PNRA, size=(16, 1), key='-PNRA-')],
             [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-')],
             [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-')]
         ]
@@ -168,7 +169,7 @@ class Aplicacao:
         ]
 
         coluna_botoes = [
-            [sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
+            [sg.Button('VISÃO GERAL', button_color='#ac4e04'), sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
         ]
 
         coluna_botoes_relatorios_e_graficos= [

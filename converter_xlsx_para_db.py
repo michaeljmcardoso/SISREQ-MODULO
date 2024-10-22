@@ -84,6 +84,7 @@ def convert_xlsx_to_db(xlsx_file_path):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
+            Titulo TEXT,
             PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,

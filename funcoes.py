@@ -30,6 +30,7 @@ def criar_tabela_se_nao_existir(conn):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
+            Titulo TEXT,
             PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,
@@ -87,18 +88,19 @@ def consultar_registro(janela):
     portaria_dou = selected_row_values[11]
     decreto_dou = selected_row_values[12]
     titulo = selected_row_values[13]
-    pnra = selected_row_values[14]
-    relatorio_antropologico = selected_row_values[15]
-    latitude = selected_row_values[16]
-    longitude = selected_row_values[17]
-    certidao_fcp = selected_row_values[18]
-    data_certificacao = selected_row_values[19]
-    tipo_sobreposicao = selected_row_values[20]
-    analise_sobreposicao = selected_row_values[21]
-    acp = selected_row_values[22]
-    data_decisao = selected_row_values[23]
-    teor_decisao = selected_row_values[24]
-    outras_informacaoes = selected_row_values[25]
+    forma_titulo = selected_row_values[14]
+    pnra = selected_row_values[15]
+    relatorio_antropologico = selected_row_values[16]
+    latitude = selected_row_values[17]
+    longitude = selected_row_values[18]
+    certidao_fcp = selected_row_values[19]
+    data_certificacao = selected_row_values[20]
+    tipo_sobreposicao = selected_row_values[21]
+    analise_sobreposicao = selected_row_values[22]
+    acp = selected_row_values[23]
+    data_decisao = selected_row_values[24]
+    teor_decisao = selected_row_values[25]
+    outras_informacaoes = selected_row_values[26]
 
     coluna_1 = [
         [sg.Text('Número do\nProcesso:'), sg.Input(key='-NUMERO-', size=(21, 1), default_text=numero)],
@@ -120,6 +122,7 @@ def consultar_registro(janela):
     coluna_3 = [
         [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-', default_text=area_ha)],
         [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-', default_text=titulo)],
+        [sg.Text('Título:'), sg.Combo(constantes.FORMA_TITULO, size=(10, 1), key='-FORMA_TITULO-', default_value=forma_titulo)],
         [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-', default_value=pnra)],
         [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-', default_text=latitude)],
         [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-', default_text=longitude)]
