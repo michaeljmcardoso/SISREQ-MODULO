@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import constantes
+from constantes import FONTE_DE_AVSIO, FONTE, headings, criar_tabela
 from funcoes_registro import conectar_banco_de_dados
 from salvar import salvar_extrato_planilha
 
@@ -17,41 +17,33 @@ def rtids_publicados():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [sg.Text("Filtrar por Ano de Publicação:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de RTID´s Publicados: {totalRtidPublicado}', font='Any 10 bold'),
+                sg.Text(f'Total de RTID´s Publicados: {totalRtidPublicado}', font=FONTE_DE_AVSIO),
                 sg.Button('Área Identificada', button_color='#ac4e04'),
                 sg.Button('Número de Famílias', button_color='green')
             ]
-
         ]
 
-        janela = sg.Window('Relatórios Publicados', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('RELATÓRIOS PUBLICADOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[9]).lower()) # Data de Publicação 
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -65,7 +57,7 @@ def rtids_publicados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def titulos_expedidos():
@@ -80,41 +72,33 @@ def titulos_expedidos():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [sg.Text("Filtrar Forma do Título:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_titulos_expedidos}', font='Any 10 bold'),
+                sg.Text(f'Total de processos: {total_titulos_expedidos}', font=FONTE_DE_AVSIO),
                 sg.Button('Área Total', button_color='#ac4e04'),
                 sg.Button('Número de Famílias', button_color='green')
             ]
-
         ]
 
-        janela = sg.Window('Títulos Expedidos', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TÍTULOS EXPEDIDOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[14]).lower()) # Forma do Título
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -128,7 +112,7 @@ def titulos_expedidos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def territorios_identificados():
@@ -159,40 +143,33 @@ def territorios_identificados():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [sg.Text("Filtrar Fase do Processo:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'), 
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de Processos: {total_de_territorios_identificados} registros encontrados com Território Identificado', font='Any 10 bold'),
+                sg.Text(f'Total de Processos: {total_de_territorios_identificados} registros encontrados com Território Identificado', font=FONTE_DE_AVSIO),
                 sg.Button('Área Identificada', button_color='#ac4e04'),
                 sg.Button('Número de Famílias', button_color='green'),
             ]
         ]
 
-        janela = sg.Window('Territórios Identificados', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRTÓRIOS IDENTIFICADOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[7]).lower()) # Fase do Processo 
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -206,7 +183,7 @@ def territorios_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def territorios_nao_identificados():
@@ -221,40 +198,32 @@ def territorios_nao_identificados():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                        values=registros, 
-                        headings=[
-                            'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                            'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            '          Outras_Informacoes'
-                        ],
-                        justification='left', 
-                        auto_size_columns=True, 
-                        hide_vertical_scroll=False,
-                        vertical_scroll_only=False, 
-                        num_rows=35
-                    )
-            ],
-
+            [sg.Text("Filtrar Ano de Abertura do Processo ou ACP:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de Processos: {total_de_territorios_nao_identificados} Território(s) Não Identificado(s)', font='Any 10 bold'),
+                sg.Text(f'Total de Processos: {total_de_territorios_nao_identificados} Território(s) Não Identificado(s)', font=FONTE_DE_AVSIO),
             ]
-
         ]
 
-        janela = sg.Window('Territórios Não-Identificados', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS NÃO-IDENTIFICADOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[2]).lower() or # Ano de Abertura 
+                        filter_text in row[23].lower())       # ACP
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -262,7 +231,7 @@ def territorios_nao_identificados():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_comunidades_sem_certificacao():
@@ -277,33 +246,15 @@ def exibir_comunidades_sem_certificacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35
-                    )
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_nao_certificadas} registros sem Certificação da Palmares.', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_nao_certificadas} registros sem Certificação da Palmares.', font=FONTE_DE_AVSIO)
             ]
         ]
 
-        janela = sg.Window('Comunidades sem Certificação da Palmares no Processo', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('COMUNIDADES SEM CERTIFICAÇÃO DA PALMARES NO PROCESSO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -330,34 +281,31 @@ def exibir_territorios_quilombolas_em_assentamentos():
 
     if registros:
         layout = [
+            [sg.Text("Filtrar Tipo de Sobreposição:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
-                sg.Table(
-                    values=registros, 
-                    headings=[
-                        'ID', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-            
-            [sg.Button('Fechar', button_color='#ac4e04'), sg.Button('Extrato', button_color='green'), sg.Text(f'Total de processos: {total_territorio_quilombola_em_assentamento} registros encontrados de comunidades quilombolas em projetos de assentamento.', font='Any 10 bold')]
+                sg.Button('Fechar', button_color='#ac4e04'), 
+                sg.Button('Extrato', button_color='green'), 
+                sg.Text(f'Total de processos: {total_territorio_quilombola_em_assentamento} registros encontrados de comunidades quilombolas em projetos de assentamento.', font=FONTE_DE_AVSIO)
+            ]
         ]
 
-        janela = sg.Window('Territórios Quilombolas em Projetos de Assentamento', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS QUILOMBOLAS EM PROJETOS DE ASSENTAMENTOS', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[22]).lower()) # Tipo de Sobreposição 
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -365,7 +313,7 @@ def exibir_territorios_quilombolas_em_assentamentos():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_processos_com_acao_judicial():
@@ -374,61 +322,57 @@ def exibir_processos_com_acao_judicial():
     
     cursor.execute(
         "SELECT COUNT(*) FROM SISREQ WHERE "
-        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
-        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
-        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+        "Acao_Civil_Publica LIKE '%Com Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Decisão Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença Cumprida%'"
     )
     
     total_acao_civil = cursor.fetchone()[0]
 
     cursor.execute(
         "SELECT * FROM SISREQ WHERE "
-        "Acao_Civil_Publica LIKE '%Com_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Com_Decisão_Liminar%' OR "
-        "Acao_Civil_Publica LIKE '%Corte_InterAmericana%' OR "
-        "Acao_Civil_Publica LIKE '%Sem_Sentença%' OR "
-        "Acao_Civil_Publica LIKE '%Sentença_Cumprida%'"
+        "Acao_Civil_Publica LIKE '%Com Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Decisão Liminar%' OR "
+        "Acao_Civil_Publica LIKE '%Corte InterAmericana%' OR "
+        "Acao_Civil_Publica LIKE '%Sem Sentença%' OR "
+        "Acao_Civil_Publica LIKE '%Sentença Cumprida%'"
     )
 
     registros = cursor.fetchall()
 
+    # Converter cada tupla em uma lista
+    registros = [list(row) for row in registros]
+
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35
-                    )
-            ],
-
+            [sg.Text("Filtrar Tipo de Sentença ou Data da Decisao:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_acao_civil} registros encontrados com Ação Civil Pública.', font=FONTE_DE_AVSIO)
             ]
         ]
 
-        janela = sg.Window('Ação Civil Pública em Regularização Quilombola', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('AÇÃO CIVIL PÚBLICA EM REGULARIZAÇÃO QUILOMBOLA', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[23]).lower() or # Tipo de Sentença 
+                        filter_text in row[24].lower())        # Data Da Decisão
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -436,7 +380,7 @@ def exibir_processos_com_acao_judicial():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro')
 
 
 def cadastro_pnra():
@@ -475,39 +419,32 @@ def cadastro_pnra():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        '          Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [sg.Text("Filtrar Status de Cadastro:", font=FONTE), sg.Input(key="-FILTER-", enable_events=True)],
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'), 
                 sg.Button('Extrato', button_color='green'), sg.Text(''),
-                sg.Text(f'| Cadastro(s) Concluído(s): {cadastro_pnra_concluido}\n| Cadastro(s) em Andamento: {cadastro_pnra_andamento}\n| Cadastro(s) Não Iniciado(s): {cadastro_pnra_nao_iniciado}', font='Any 10 bold'), sg.Text(''),
-                sg.Button('Número de Famílias', button_color='green'),
+                sg.Button('Número de Famílias', button_color='blue'),
+                sg.Text(f' Cadastros Concluídos: {cadastro_pnra_concluido}\n Cadastros em Andamento: {cadastro_pnra_andamento}\n Cadastros Não Iniciados: {cadastro_pnra_nao_iniciado}', font=FONTE), sg.Text(''),
             ]
         ]
 
-        janela = sg.Window('Comunidades Cadastrados no PNRA', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROGRAMA NACIONAL DE REFORMA AGRÁRIA-PNRA', layout, size=(1200, 700), resizable=True)
 
         while True:
-            event, _ = janela.read()
+            event, values = janela.read()
 
             if event == sg.WINDOW_CLOSED or event == 'Fechar':
                 break
+
+            if event == "-FILTER-":
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[15]).lower()) # Status do Cadastro 
+                ]
+                janela["-TABLE-"].update(filtered_data)
 
             elif event == 'Extrato':
                 salvar_extrato_planilha(registros)
@@ -518,7 +455,7 @@ def cadastro_pnra():
         janela.close()
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 """Funções para exibir relatorios em janelas popups"""
@@ -534,10 +471,10 @@ def exibir_total_de_familias_cadastradas_pnra():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias_formatado} Famílias Cadastradas no Programa Nacional de Reforma Agrária.', title='Cadastro de Famílias - PNRA', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_rtids_publicados():
@@ -548,10 +485,10 @@ def exibir_total_de_familias_em_rtids_publicados():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Número de Famílias em Relatórios Publicados: {total_familias} famílias.', title='Total de Famílias', font=FONTE)
     
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_rtids_publicados():
@@ -563,10 +500,10 @@ def exibir_area_total_em_rtids_publicados():
 
     if total_area_rtid_publicado is not None:
         total_area_formatado = "{:.2f}".format(total_area_rtid_publicado)
-        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área em Relatórios Publicados: {total_area_formatado}', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_fase_titulacao():
@@ -578,10 +515,10 @@ def exibir_area_total_em_fase_titulacao():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em fase de Titulação.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_fase_titulacao():
@@ -592,9 +529,9 @@ def exibir_total_de_familias_em_fase_titulacao():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias} Famílias em fase de titulação.', title='Total de Famílias', font=FONTE)
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_areas_tituladas():
@@ -605,10 +542,10 @@ def exibir_total_de_familias_em_areas_tituladas():
     total_familias = cursor.fetchone()[0]
 
     if total_familias is not None:
-        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias} Famílias em áreas Tituladas.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_areas_tituladas():
@@ -620,10 +557,10 @@ def exibir_area_total_em_areas_tituladas():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total Titulada: {total_area_formatado} hectares.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros com "Títulos Expedidos" para exibir.', title='Erro', font=FONTE)
         
 
 def exibir_total_de_familias():
@@ -635,10 +572,10 @@ def exibir_total_de_familias():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'Total: {total_familias_formatado} Famílias em processos de regularização.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_total_de_familias_em_territorios_identificados():
@@ -656,10 +593,10 @@ def exibir_total_de_familias_em_territorios_identificados():
 
     if total_familias is not None:
         total_familias_formatado = "{:.0f}".format(total_familias)
-        sg.popup(f'Número de Famílias: {total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=constantes.FONTE)
+        sg.popup(f'{total_familias_formatado} Famílias em Territórios Identificados.', title='Total de Famílias', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total():
@@ -671,10 +608,10 @@ def exibir_area_total():
 
     if total_area is not None:
         total_area_formatado = "{:.2f}".format(total_area)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em processos de regularização.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
 def exibir_area_total_em_territorios_identificados():
@@ -693,7 +630,7 @@ def exibir_area_total_em_territorios_identificados():
 
     if totalArea is not None:
         total_area_formatado = "{:.2f}".format(totalArea)
-        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área', font=constantes.FONTE)
+        sg.popup(f'Área Total: {total_area_formatado} hectares em Territórios Identificados.', title='Total de Área', font=FONTE)
 
     else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=constantes.FONTE)
+        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)

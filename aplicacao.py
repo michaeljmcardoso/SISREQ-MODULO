@@ -38,7 +38,7 @@ class Aplicacao:
                 
                 funcoes_registro.consultar_registros(self.janela)
 
-            elif event == 'CONSULTAR':
+            elif event == 'VISÃO GERAL':
                 funcoes_registro.consultar_registros(self.janela)
                 self.janela['total_processo'].update(f'{totalProcesso} Processos')
 
@@ -89,6 +89,26 @@ class Aplicacao:
 
             elif event == 'Gráficos':
                 criar_janela_graficos()
+
+            if event == "-FILTER-":
+                conn = funcoes_registro.conectar_banco_de_dados()
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM SISREQ")
+                registros = cursor.fetchall()
+
+                # Filtra os dados com base na entrada do usuário
+                filter_text = values["-FILTER-"].lower()
+                filtered_data = [
+                    row for row in registros
+                    if (filter_text in str(row[1]).lower() or  # Processo
+                        filter_text in row[3].lower() or       # Comunidade
+                        filter_text in row[4].lower() or       # Município
+                        filter_text in row[7].lower() or       # Fase Processo
+                        filter_text in row[14].lower() or      # Título
+                        filter_text in row[21].lower() or      # Sobreposição
+                        filter_text in row[23].lower())        # ACP
+                ]
+                self.janela["-TABLE-"].update(filtered_data)
 
             # Atualiza a lista conforme o usuário digita
             if event == '-MUNICIPIO-':
@@ -146,7 +166,8 @@ class Aplicacao:
         coluna_3 = [
             [sg.Text('Área\nIdentificada_ha:'), sg.Input(size=(10, 1), key='-AREA-')],
             [sg.Text('Área\nTitulada_ha:'), sg.Input(size=(13, 1), key='-TITULO-')],
-            [sg.Text('PNRA\nQuilombola:'), sg.Combo(constantes.PNRA, size=(12, 1), key='-PNRA-')],
+            [sg.Text('Título:'), sg.Combo(constantes.FORMA_TITULO, size=(17, 1), key='-FORMA_TITULO-')],
+            [sg.Text('PNRA:'), sg.Combo(constantes.PNRA, size=(16, 1), key='-PNRA-')],
             [sg.Text('Latitude:  '), sg.Input(size=(15, 1), key='-LATITUDE-')],
             [sg.Text('Longitude:'), sg.Input(size=(15, 1), key='-LONGITUDE-')]
         ]
@@ -168,7 +189,7 @@ class Aplicacao:
         ]
 
         coluna_botoes = [
-            [sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('CONSULTAR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
+            [sg.Button('VISÃO GERAL', button_color='#ac4e04'), sg.Button('INSERIR', button_color='#ac4e04'), sg.Button('ALTERAR', button_color='#ac4e04'), sg.Button('IMPORTAR', button_color='#ac4e04'), sg.Button('PESQUISAR', button_color='#ac4e04'),]
         ]
 
         coluna_botoes_relatorios_e_graficos= [
@@ -179,31 +200,29 @@ class Aplicacao:
             [sg.Text(f"{totalProcesso} Processos", key='total_processo', font='Any 10 bold', text_color='black', background_color='#c8cf9d')]
         ]
 
+        coluna_fitrar = [
+            [sg.Text("Busca Rápida:", font=constantes.FONTE), sg.Input(key="-FILTER-", enable_events=True, size=(30, 1))]
+        ]
+
         layout = [
-            [sg.Text('CADASTRO DE PROCESSOS', font=constantes.FONTE)],
             [sg.Column(coluna_1), sg.VerticalSeparator(), sg.Column(coluna_2), sg.VerticalSeparator(), sg.Column(coluna_3), sg.VerticalSeparator(), sg.Column(coluna_4), sg.VerticalSeparator(), sg.Column(coluna_5)],
             [sg.Text('REGISTROS:', font=constantes.FONTE), sg.Column(coluna_botoes), sg.VerticalSeparator(), sg.Text('CONSULTAR:', font=constantes.FONTE), sg.Column(coluna_botoes_relatorios_e_graficos), sg.VerticalSeparator(), sg.Text('TOTAL:', font=constantes.FONTE), sg.Column(coluna_total_processos)],
-            [sg.Text('FILTRAR POR FASE:', font=constantes.FONTE), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.Button('Desintrusão', button_color='green')],
+            [sg.Text('FILTRAR FASE:', font=constantes.FONTE), sg.Button('Inicial', button_color='green'), sg.Button('RTID', button_color='green'), sg.Button('Publicação', button_color='green'), sg.Button('Notificação', button_color='green'), sg.Button('Contestação', button_color='green'), sg.Button('Recurso', button_color='green'), sg.Button('Portaria', button_color='green'), sg.Button('Decreto', button_color='green'), sg.Button('Desapropriação', button_color='green'), sg.Button('Titulação', button_color='green'), sg.VerticalSeparator(), sg.Column(coluna_fitrar)],
             [sg.Table(
                 values=[],
-                headings=[
-                    'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
-                    'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
-                    'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', '  PNRA   ', 'Relatorio_Antropologico',
-                    'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
-                    'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                    '          Outras_Informacoes'
-                ],
+                headings=constantes.headings,
                 num_rows=22,
                 key='-TABLE-',
                 hide_vertical_scroll=False,
                 vertical_scroll_only=False,
                 justification='left',
                 auto_size_columns=True,
+                header_background_color='blue',
+                header_text_color='white'
             )],
             
             [sg.Text('', size=(68, 1)), constantes.JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                                                         SISREQ - Sistema de Regularização Quilombola (v.1.1.0)", layout, size=(1400, 800), resizable=True)
+        janela = sg.Window("                                                                                                                                                                         SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.2.0)", layout, size=(1400, 800), resizable=True)
         return janela

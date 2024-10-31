@@ -33,6 +33,7 @@ def salvar_planilha(registros):
                 'Portaria_DOU',
                 'Decreto_DOU',
                 'Area_ha_Titulada',
+                'Titulo',
                 'PNRA',
                 'Relatorio_Antropologico',
                 'Latitude',
@@ -48,6 +49,12 @@ def salvar_planilha(registros):
                 ]
             )
         
+        event = sg.popup_ok_cancel('Deseja baixar a Planilha completa?', title='Extrair Planilha', font=FONTE)
+        
+        if event == 'Cancel' or event is None:
+            sg.popup('A ação foi cancelada.')
+            return
+
         # Abre uma janela para selecionar o local e o nome do arquivo
         root = tk.Tk()
         root.withdraw()
@@ -82,6 +89,7 @@ def salvar_extrato_planilha(registros):
                 'Portaria_DOU',
                 'Decreto_DOU',
                 'Area_ha_Titulada',
+                'Titulo',
                 'PNRA',
                 'Relatorio_Antropologico',
                 'Latitude',
@@ -97,6 +105,12 @@ def salvar_extrato_planilha(registros):
                 ]
             )
         
+        event = sg.popup_ok_cancel('Deseja baixar o Extrado da Planilha?', title='Extrair Planilha', font=FONTE)
+        
+        if event == 'Cancel' or event is None:
+            sg.popup('A ação foi cancelada.')
+            return
+
         # Abre uma janela para selecionar o local e o nome do arquivo
         root = tk.Tk()
         root.withdraw()

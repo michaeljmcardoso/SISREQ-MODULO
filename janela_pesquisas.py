@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import pesquisar
+import pesquisas
 from constantes import FONTE
 
 def criar_janela_pesquisar(janela_pesquisar):
@@ -23,7 +23,7 @@ def criar_janela_pesquisar(janela_pesquisar):
 
             elif event == '-NOME_COMUNIDADES-':
                 entrada = values['-NOME_COMUNIDADES-']
-                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.comunidades)
+                sugestoes = pesquisas.atualizar_sugestoes(entrada, pesquisas.comunidades)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES-'].update(sugestoes, visible=True)
@@ -38,13 +38,13 @@ def criar_janela_pesquisar(janela_pesquisar):
             elif event == '-OK-':
                 nome_comunidade = values['-NOME_COMUNIDADES-']
                 if nome_comunidade:
-                    pesquisar.pesquisar_por_nome_comunidade(nome_comunidade)
+                    pesquisas.pesquisar_por_nome_comunidade(nome_comunidade)
                 else:
                     sg.popup('Por favor, digite o nome de uma comunidade.', title='Erro', font=FONTE)
             
             elif event == '-MUNICIPIOS-':
                 entrada = values['-MUNICIPIOS-']
-                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.municipios)
+                sugestoes = pesquisas.atualizar_sugestoes(entrada, pesquisas.municipios)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES1-'].update(sugestoes, visible=True)
@@ -59,13 +59,13 @@ def criar_janela_pesquisar(janela_pesquisar):
             elif event == '-OK1-':
                 nome_municipio = values['-MUNICIPIOS-']
                 if nome_municipio:
-                    pesquisar.pesquisar_por_nome_municipio(nome_municipio)
+                    pesquisas.pesquisar_por_nome_municipio(nome_municipio)
                 else:
                     sg.popup('Por favor, digite o nome de um municipio.', title='Erro', font=FONTE)
           
             elif event == '-NUMEROS-':
                 entrada = values['-NUMEROS-']
-                sugestoes = pesquisar.atualizar_sugestoes(entrada, pesquisar.processos)
+                sugestoes = pesquisas.atualizar_sugestoes(entrada, pesquisas.processos)
 
                 if sugestoes:
                     janela_pesquisar['-SUGESTOES2-'].update(sugestoes, visible=True)
@@ -80,7 +80,7 @@ def criar_janela_pesquisar(janela_pesquisar):
             elif event == '-OK2-':
                 num_processo = values['-NUMEROS-']
                 if num_processo:
-                    pesquisar.pesquisar_por_num_processo(num_processo)
+                    pesquisas.pesquisar_por_num_processo(num_processo)
                 else:
                     sg.popup('Por favor, digite o número de um processo.', title='Erro', font=FONTE)
             

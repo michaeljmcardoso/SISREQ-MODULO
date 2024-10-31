@@ -84,6 +84,7 @@ def convert_xlsx_to_db(xlsx_file_path):
             Portaria_DOU DATE,
             Decreto_DOU DATE,
             Area_ha_Titulada NUMERIC,
+            Titulo TEXT,
             PNRA TEXT,
             Relatorio_Antropologico TEXT,
             Latitude NUMERIC,
@@ -112,8 +113,8 @@ def convert_xlsx_to_db(xlsx_file_path):
         sg.popup_notify(
             f"Banco de dados '{sqlite_db_path}' criado com sucesso!", 
             "Aguarde enquanto reiniciamos o programa.",
-            "Ao rertonar, aperte CONSULTAR  para atualizar a Tabela.", 
-            title="Sucesso", display_duration_in_ms=8000, fade_in_duration=2.0
+            "Ao rertonar, aperte VISÃO GERAL  para atualizar a Tabela.", 
+            title="Sucesso", display_duration_in_ms=5000, fade_in_duration=2.0
             )
         
         restart_program()

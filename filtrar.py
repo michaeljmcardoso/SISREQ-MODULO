@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import relatorios
 from funcoes_registro import conectar_banco_de_dados
 from salvar import salvar_extrato_planilha
-from constantes import FONTE
+from constantes import FONTE, FONTE_DE_AVSIO, criar_tabela
 
 """Funções para a filtrar registros por fases do processo"""
 
@@ -18,34 +18,15 @@ def fase_inicial():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-                    
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_inicial} Aguardando Início dos Estudos de Identificação e Delimitação', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_inicial} Aguardando Início dos Estudos de Identificação e Delimitação', font=FONTE_DE_AVSIO)
             ]
-
         ]
 
-        janela = sg.Window('Processos Sem Estudos de Identificação e Delimitação.', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS SEM ESTUDOS DE IDENTIFICAÇÃO E DELIMITAÇÃO.', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -66,41 +47,23 @@ def fase_Rtid():
     conn = conectar_banco_de_dados()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Estudo de Identificação%'")
     total_fase_rtid = cursor.fetchone()[0]
 
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%RTID%'")
+    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Estudo de Identificação%'")
     registros = cursor.fetchall()
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [   
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_rtid}', font='Any 10 bold'),
-                
+                sg.Text(f'Total de processos: {total_fase_rtid}', font=FONTE_DE_AVSIO), 
             ]
         ]
 
-        janela = sg.Window('Processos em Estudo de Identificação e Delimitação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('TERRITÓRIOS EM ESTUDO DE IDENTIFICAÇÃO E DELIMITAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -129,33 +92,15 @@ def fase_publicacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_publicacao}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_publicacao}', font=FONTE_DE_AVSIO)
             ]
-
         ]
 
-        janela = sg.Window('Processos em Fase de Publicação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE PUBLICAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -184,33 +129,15 @@ def fase_notificacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_notificacao}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_notificacao}', font=FONTE_DE_AVSIO)
             ]
-
         ]
 
-        janela = sg.Window('Processos em Fase de Notificação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE NOTIFICAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -239,33 +166,15 @@ def fase_portaria():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_portaria}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_portaria}', font=FONTE_DE_AVSIO)
             ]
-
         ]
 
-        janela = sg.Window('Processos em Fase de Portaria', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE PORTARIA', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -294,33 +203,15 @@ def fase_decreto():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_decreto}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_decreto}', font=FONTE_DE_AVSIO)
             ]
-
         ]
 
-        janela = sg.Window('Áreas Decretadas', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('ÁREAS DECRETADAS', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -349,35 +240,17 @@ def fase_titulacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                   values=registros, 
-                   headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_titulacao}', font='Any 10 bold'),
+                sg.Text(f'Total de processos: {total_fase_titulacao}', font=FONTE_DE_AVSIO),
                 sg.Button('Área Total', button_color='#ac4e04'),
                 sg.Button('Número de Famílias', button_color='green'),
-                
             ]
         ]
 
-        janela = sg.Window('Processos em Fase de Titulação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE TITULAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -400,61 +273,6 @@ def fase_titulacao():
         sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
 
 
-def fase_desintrusao():
-    conn = conectar_banco_de_dados()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT COUNT(*) as Total FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
-    total_fase_desintrusao = cursor.fetchone()[0]
-
-    cursor.execute("SELECT * FROM SISREQ WHERE Fase_Processo LIKE '%Desintrusão%'")
-    registros = cursor.fetchall()
-
-    if registros:
-        layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
-            [
-                sg.Button('Fechar', button_color='#ac4e04'),
-                sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_desintrusao}', font='Any 10 bold')
-            ]
-
-        ]
-
-        janela = sg.Window('Processos em Fase de Desintrusão', layout, size=(1200, 700), resizable=True)
-
-        while True:
-            event, _ = janela.read()
-
-            if event == sg.WINDOW_CLOSED or event == 'Fechar':
-                break
-
-            elif event == 'Extrato':
-                salvar_extrato_planilha(registros)
-
-        janela.close()
-
-    else:
-        sg.popup('Não há registros para exibir.', title='Erro', font=FONTE)
-
-
 def fase_contestacao():
     conn = conectar_banco_de_dados()
     cursor = conn.cursor()
@@ -467,33 +285,15 @@ def fase_contestacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros, 
-                    headings=[
-                            'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                            'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                            'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                            'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                            'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                            'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-                    
+            [criar_tabela(registros)],                    
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_contestacao}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_contestacao}', font=FONTE_DE_AVSIO)
             ]
-            
         ]
 
-        janela = sg.Window('Processos em Fase de Contestação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE CONTESTAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -522,32 +322,15 @@ def fase_recurso():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_recurso}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_recurso}', font=FONTE_DE_AVSIO)
             ]
-
         ]
-        janela = sg.Window('Processos em Fase de Recurso', layout, size=(1200, 700), resizable=True)
+
+        janela = sg.Window('PROCESSOS EM FASE DE RECURSO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()
@@ -576,33 +359,15 @@ def fase_desapropriacao():
 
     if registros:
         layout = [
-            [
-                sg.Table(
-                    values=registros,
-                    headings=[
-                        'ID ', 'Numero', 'Data_Abertura', 'Comunidade', 'Municipio', 'Area_ha',
-                        'Num_familias', 'Fase_Processo', 'Etapa_RTID', 'Edital_DOU', 'Edital_DOE',
-                        'Portaria_DOU', 'Decreto_DOU', 'Área_Titulada_ha', '  PNRA   ', 'Relatorio_Antropologico',
-                        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', 'Sobreposicao',
-                        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
-                        'Outras_Informacoes'
-                    ],
-                    justification='left', 
-                    auto_size_columns=True, 
-                    hide_vertical_scroll=False,
-                    vertical_scroll_only=False, 
-                    num_rows=35)
-            ],
-
+            [criar_tabela(registros)],
             [
                 sg.Button('Fechar', button_color='#ac4e04'),
                 sg.Button('Extrato', button_color='green'),
-                sg.Text(f'Total de processos: {total_fase_desapropriacao}', font='Any 10 bold')
+                sg.Text(f'Total de processos: {total_fase_desapropriacao}', font=FONTE_DE_AVSIO)
             ]
-
         ]
         
-        janela = sg.Window('Processos em Fase de Desapropriação', layout, size=(1200, 700), resizable=True)
+        janela = sg.Window('PROCESSOS EM FASE DE DESAPROPRIAÇÃO', layout, size=(1200, 700), resizable=True)
 
         while True:
             event, _ = janela.read()

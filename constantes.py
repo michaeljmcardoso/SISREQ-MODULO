@@ -1,4 +1,4 @@
-from PySimpleGUI import theme, Text
+from PySimpleGUI import theme, Text, Table
 import datetime
 
 """CONSTANTES DE JANELA"""
@@ -9,6 +9,7 @@ JANELA_TEMA = theme('DarkGreen')
 
 JANELA_RODAPE = Text(f"Desenvolvido por Michael JM Cardoso. © {ANO_ATUAL}\n             Todos os direitos reservados.", text_color='black', font='Helvetica 8 bold')
 
+BOTOES = button_color='#ac4e04'
 
 """CONSTANTES DE FONTES"""
 
@@ -20,16 +21,16 @@ FONTE_DE_AVSIO = font='Any 10 bold'
 """CONSTANTES DE LISTAS"""
 
 TIPO_SOBREPOSICAO = [
-    'PA_INCRA', 
-    'PA_ESTADUAL', 
-    'AREA_PARTICULAR', 
-    'OUTRO_TQ', 
-    'TERRAS_DE_MARINHA', 
-    'TERRAS_DEVOLUTAS', 
-    'TERRAS_INDÍGENAS', 
-    'TERRAS_DA_UNIÃO', 
-    'SEM_SOBREPOSIÇÃO',  
-    'SEM_INFORMAÇÃO'                      
+    'PA INCRA', 
+    'PA ESTADUAL', 
+    'AREA PARTICULAR', 
+    'OUTRO TQ', 
+    'TERRAS DE MARINHA', 
+    'TERRAS DEVOLUTAS', 
+    'TERRAS INDÍGENAS', 
+    'TERRAS DAUNIÃO', 
+    'SEM SOBREPOSIÇÃO',  
+    'SEM INFORMAÇÃO'                      
     ]
 
 ETAPA_RTID = [
@@ -50,7 +51,7 @@ ETAPA_RTID = [
 
 FASE_PROCESSO = [ 
     'Inicial', 
-    'RTID',
+    'Estudo de Identificação',
     'Publicação', 
     'Notificação', 
     'Contestação', 
@@ -68,12 +69,12 @@ CERTIFICACAO_FCP = [
     ]
 
 ACAO_CIVIL_PUBLICA = [
-    'Com_Sentença', 
-    'Sem_Sentença', 
-    'Com_Decisão_Liminar', 
-    'Sentença_Cumprida', 
-    'Sem_ACP', 
-    'Corte_InterAmericana'
+    'Com Sentença', 
+    'Sem Sentença', 
+    'Decisão Liminar', 
+    'Sentença Cumprida', 
+    'Sem ACP', 
+    'Corte InterAmericana'
     ] 
 
 RELATORIO_ANTROPOLOGICO = [
@@ -84,6 +85,8 @@ RELATORIO_ANTROPOLOGICO = [
     'Termo_Execução_Descentralizada',
     'Sem_Relatório'
     ]
+
+FORMA_TITULO = ['CCDRU', 'TITULO DEFINITIVO']  
 
 PNRA = ['ANDAMENTO','CONCLUIDO','NAO-INICIADO']
 
@@ -306,3 +309,29 @@ MUNICIPIOS = [
     'Vitorino Freire',
     'Zé Doca'
     ]
+
+headings=[
+        'ID ', '    Numero   ', 'Data_Abertura', '  Comunidade  ', '  Municipio  ', ' Area_ha ',
+        'Num_familias', 'Fase_Processo', ' Etapa_RTID ', ' Edital_DOU ', 'Edital_DOE',
+        'Portaria_DOU', 'Decreto_DOU', 'Area_ha_Titulada', ' Titulo ', '  PNRA   ', 'Relatorio_Antropologico',
+        'Latitude', 'Longitude', 'Certidao_FCP', 'Data_Certificacao', '  Sobreposicao  ',
+        'Analise_de_Sobreposicao', 'Acao_Civil_Publica', 'Data_Decisao', 'Teor_Decisao_Prazo_Sentença',
+        '          Outras_Informacoes'
+    ]
+
+def criar_tabela(registros):
+    return(
+        Table(
+            values=registros,
+            headings=headings,
+            display_row_numbers=False,
+            justification='left', 
+            auto_size_columns=True, 
+            hide_vertical_scroll=False,
+            vertical_scroll_only=False, 
+            num_rows=35,
+            key="-TABLE-",
+            header_text_color='white',  # Cor do texto dos cabeçalhos
+            header_background_color='blue'  # Cor de fundo dos cabeçalhos
+        )
+    )
