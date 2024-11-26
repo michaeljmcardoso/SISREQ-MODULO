@@ -5,5 +5,4 @@ seaborn
 plotly
 pandas
 tk
-libtcl8
 libtk8
