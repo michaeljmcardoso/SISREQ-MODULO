@@ -7,7 +7,7 @@ import webbrowser
 from constantes import FONTE
 from funcoes_registro import conectar_banco_de_dados
 
-plt.switch_backend('Agg') # Backend específico para exibir gráficos
+#plt.switch_backend('Agg') # Backend específico para exibir gráficos
 
 """Funções para criar visualizações gráficas"""
 
