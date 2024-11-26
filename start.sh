@@ -1,0 +1,1 @@
+xvfb-run -a streamlit run main_consulta.py
