@@ -1,10 +1,8 @@
 
 PySimpleGUI==4.60.5
 matplotlib>=3.0
-webbrowser
 seaborn
 plotly
-datetime
 os
 sys
 pandas
