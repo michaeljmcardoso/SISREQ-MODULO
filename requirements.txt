@@ -1,8 +1,9 @@
+
 PySimpleGUI==4.60.5
-matplotlib.pyplot
+matplotlib>=3.0
 webbrowser
 seaborn
-plotly.express
+plotly
 datetime
 os
 sys
