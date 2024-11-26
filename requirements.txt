@@ -5,3 +5,7 @@ seaborn
 plotly
 pandas
 tkinter
+tk 
+tk-dev 
+libtcl8.6 
+libtk8.6
