@@ -177,5 +177,5 @@ class Aplicacao:
             [sg.Text('', size=(68, 1)), JANELA_RODAPE, sg.Text('', size=(0, 1))]
         ]
 
-        janela = sg.Window("                                                                                                                                     SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.2.0) - MÓDULO DE CONSULTA", layout, size=(1400, 800), resizable=True)
+        janela = sg.Window("SISREQ - SISTEMA DE REGULARIZAÇÃO QUILOMBOLA (v.1.2.0) - MÓDULO DE CONSULTA", layout, size=(1400, 800), resizable=True)
         return janela

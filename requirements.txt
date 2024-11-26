@@ -1,0 +1,10 @@
+PySimpleGUI
+matplotlib.pyplot
+webbrowser
+seaborn
+plotly.express
+datetime
+os
+sys
+pandas
+sqlite3
