@@ -4,7 +4,6 @@ matplotlib>=3.0
 seaborn
 plotly
 pandas
-tk 
-tk-dev 
+tk
 libtcl8.6 
 libtk8.6
